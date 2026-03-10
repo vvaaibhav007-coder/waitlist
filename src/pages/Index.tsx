@@ -8,7 +8,11 @@ const Index = () => {
 
       </h1>
 
-      <div className="relative mt-4 h-40 w-[40rem] max-w-full">
+      <p className="mt-4 max-w-xl text-center text-base text-muted-foreground/80 leading-relaxed px-4">
+        Clarity.ai is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.
+      </p>
+
+      <div className="relative mt-6 h-40 w-[40rem] max-w-full">
         {/* Gradients */}
         <div className="absolute inset-x-1/4 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
         <div className="absolute inset-x-1/4 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
