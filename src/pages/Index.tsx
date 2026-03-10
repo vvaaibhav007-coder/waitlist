@@ -1,43 +1,34 @@
 import React from "react";
 import { SparklesCore } from "@/components/ui/sparkles";
-import { motion } from "framer-motion";
 
 const Index = () => {
   return (
-    <main className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
-      {/* Atmospheric particle field */}
-      <div className="absolute inset-0 h-screen w-full">
+    <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
+      <h1 className="text-5xl font-bold text-light md:text-7xl lg:text-9xl">
+        Acme
+      </h1>
+
+      <div className="relative mt-4 h-40 w-[40rem] max-w-full">
+        {/* Gradients */}
+        <div className="absolute inset-x-1/4 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
+        <div className="absolute inset-x-1/4 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+        <div className="absolute inset-x-[35%] top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-sky-500 to-transparent blur-sm" />
+        <div className="absolute inset-x-[35%] top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-sky-500 to-transparent" />
+
+        {/* Core sparkles component */}
         <SparklesCore
-          id="tsparticles-stillpoint"
           background="transparent"
           minSize={0.4}
           maxSize={1}
-          particleDensity={100}
+          particleDensity={1200}
           className="h-full w-full"
           particleColor="#FFFFFF"
         />
-      </div>
 
-      {/* Stark typographic content */}
-      <motion.div
-        className="relative z-20 flex flex-col items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <h1 className="text-5xl font-extrabold tracking-tight text-light md:text-7xl lg:text-9xl">
-          Stillpoint
-        </h1>
-        <motion.p
-          className="mt-4 text-lg font-normal text-light/70"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        >
-          Architecture, not interfaces.
-        </motion.p>
-      </motion.div>
-    </main>
+        {/* Radial gradient to prevent sharp edges */}
+        <div className="absolute inset-0 h-full w-full bg-void [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
+      </div>
+    </div>
   );
 };
 
