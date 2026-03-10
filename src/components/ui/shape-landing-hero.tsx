@@ -136,6 +136,7 @@ function HeroGeometric({
           height={40}
           rotate={-25}
           gradient="from-white/[0.05]"
+          neon
           className="left-[15%] top-[10%]"
         />
       </div>
