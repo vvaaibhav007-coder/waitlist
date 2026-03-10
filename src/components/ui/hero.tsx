@@ -132,6 +132,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
               ))}
             </motion.div>
           )}
+          {children}
         </div>
       </div>
     );
