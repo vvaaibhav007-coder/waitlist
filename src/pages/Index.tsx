@@ -16,28 +16,12 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
       <h1 className="text-5xl lg:text-9xl text-primary-foreground px-0 py-px mx-0 my-px font-extrabold md:text-7xl">Clarity.ai</h1>
 
       <p className="mt-4 max-w-xl text-center text-base text-muted-foreground/80 leading-relaxed px-4">
         Clarity.ai is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.
       </p>
-
-      <form onSubmit={handleSubmit} className="mt-6 flex w-full max-w-md px-4">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          className="flex-1 rounded-none border border-muted-foreground/30 bg-transparent px-4 py-3 text-sm text-primary-foreground placeholder:text-muted-foreground/50 outline-none focus:border-muted-foreground/60"
-        />
-        <button
-          type="submit"
-          className="border border-l-0 border-muted-foreground/30 bg-primary-foreground px-5 py-3 text-sm font-medium text-void transition-opacity hover:opacity-80"
-        >
-          Join
-        </button>
-      </form>
 
       <div className="relative mt-6 h-40 w-[40rem] max-w-full">
         {/* Gradients */}
@@ -56,6 +40,16 @@ const Index = () => {
 
         <div className="absolute inset-0 h-full w-full bg-void [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
       </div>
+
+      <form onSubmit={handleSubmit} className="mt-4 w-full max-w-lg px-4">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="hi@manuarora.in"
+          className="w-full rounded-lg border border-muted-foreground/20 bg-transparent px-4 py-3 text-sm text-primary-foreground placeholder:text-muted-foreground/40 outline-none focus:border-muted-foreground/40"
+        />
+      </form>
     </div>
   );
 };
