@@ -4,8 +4,8 @@ import { SparklesCore } from "@/components/ui/sparkles";
 const Index = () => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
-      <h1 className="text-5xl font-bold text-light md:text-7xl lg:text-9xl">
-        Acme
+      <h1 className="text-5xl font-bold text-light md:text-7xl lg:text-9xl">Stop guessing. Start deciding.
+
       </h1>
 
       <div className="relative mt-4 h-40 w-[40rem] max-w-full">
@@ -22,14 +22,14 @@ const Index = () => {
           maxSize={1}
           particleDensity={1200}
           className="h-full w-full"
-          particleColor="#FFFFFF"
-        />
+          particleColor="#FFFFFF" />
+        
 
         {/* Radial gradient to prevent sharp edges */}
         <div className="absolute inset-0 h-full w-full bg-void [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
