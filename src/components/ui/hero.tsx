@@ -50,41 +50,21 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         {...props}
       >
         {gradient && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            {blur && (
-              <div className="absolute inset-0 bg-void/80 backdrop-blur-3xl" />
-            )}
+          <div className="absolute inset-0">
+            {/* Main large glow - lamp spotlight */}
+            <div className="absolute left-1/2 top-0 h-[70%] w-[80%] -translate-x-1/2 bg-gradient-to-b from-white/20 via-white/5 to-transparent" 
+              style={{ clipPath: "polygon(40% 0%, 60% 0%, 90% 100%, 10% 100%)" }} 
+            />
 
-            {/* Main glow */}
-            <div className="absolute top-1/2 h-[300px] w-[600px] -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+            {/* Bright center glow */}
+            <div className="absolute left-1/2 top-0 h-[500px] w-[600px] -translate-x-1/2 rounded-full bg-white/10 blur-[100px]" />
 
-            {/* Lamp effect */}
-            <div className="absolute top-[40%] h-px w-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+            {/* Top edge bright line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[2px] w-1/3 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[4px] w-1/4 bg-gradient-to-r from-transparent via-white/60 to-transparent blur-sm" />
 
-            {/* Top line */}
-            <div className="absolute top-[40%] h-[2px] w-1/3 bg-gradient-to-r from-transparent via-primary/80 to-transparent blur-sm" />
-
-            {/* Left gradient cone */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute left-1/4 top-[35%] h-[200px] w-[2px]"
-            >
-              <div className="h-full w-full bg-gradient-to-b from-primary/60 to-transparent" />
-              <div className="absolute inset-0 h-full w-[80px] -translate-x-1/2 bg-gradient-to-b from-primary/10 to-transparent blur-2xl" />
-            </motion.div>
-
-            {/* Right gradient cone */}
-            <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute right-1/4 top-[35%] h-[200px] w-[2px]"
-            >
-              <div className="h-full w-full bg-gradient-to-b from-primary/60 to-transparent" />
-              <div className="absolute inset-0 h-full w-[80px] -translate-x-1/2 bg-gradient-to-b from-primary/10 to-transparent blur-2xl" />
-            </motion.div>
+            {/* Softer wide ambient */}
+            <div className="absolute left-1/2 top-0 h-[400px] w-[900px] -translate-x-1/2 rounded-full bg-white/5 blur-[150px]" />
           </div>
         )}
 
