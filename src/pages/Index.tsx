@@ -4,7 +4,7 @@ import { SparklesCore } from "@/components/ui/sparkles";
 const Index = () => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
-      <h1 className="text-5xl lg:text-9xl md:text-5xl text-primary-foreground px-0 py-px mx-0 my-px font-extrabold">Stop guessing. Start deciding.
+      <h1 className="text-5xl lg:text-9xl md:text-5xl text-primary-foreground px-0 py-px mx-0 my-px font-extrabold">Clarity.ai
 
       </h1>
 
