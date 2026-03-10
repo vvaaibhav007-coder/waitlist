@@ -4,7 +4,7 @@ import { SparklesCore } from "@/components/ui/sparkles";
 const Index = () => {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-void">
-      <h1 className="text-5xl font-bold text-light md:text-7xl lg:text-9xl">Stop guessing. Start deciding.
+      <h1 className="text-5xl font-bold text-light lg:text-9xl md:text-5xl">Stop guessing. Start deciding.
 
       </h1>
 
