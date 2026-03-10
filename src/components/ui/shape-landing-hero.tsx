@@ -11,6 +11,7 @@ function ElegantShape({
   height = 100,
   rotate = 0,
   gradient = "from-white/[0.08]",
+  neon = false,
 }: {
   className?: string;
   delay?: number;
@@ -18,6 +19,7 @@ function ElegantShape({
   height?: number;
   rotate?: number;
   gradient?: string;
+  neon?: boolean;
 }) {
   return (
     <motion.div
@@ -46,10 +48,14 @@ function ElegantShape({
             "absolute inset-0 rounded-full",
             "bg-gradient-to-r to-transparent",
             gradient,
-            "border border-white/[0.08] backdrop-blur-[2px]",
-            "shadow-[0_8px_32px_0_rgba(255,255,255,0.04)]",
+            neon
+              ? "border border-[#6E9EEB]/40 shadow-[0_0_15px_rgba(110,158,235,0.3),inset_0_0_15px_rgba(110,158,235,0.1)]"
+              : "border border-white/[0.08] shadow-[0_8px_32px_0_rgba(255,255,255,0.04)]",
+            "backdrop-blur-[2px]",
             "after:absolute after:inset-0 after:rounded-full",
-            "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.06),transparent_70%)]"
+            neon
+              ? "after:bg-[radial-gradient(circle_at_50%_50%,rgba(110,158,235,0.1),transparent_70%)]"
+              : "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.06),transparent_70%)]"
           )}
         />
       </motion.div>
@@ -96,6 +102,7 @@ function HeroGeometric({
           height={140}
           rotate={12}
           gradient="from-white/[0.07]"
+          neon
           className="-left-[10%] top-[15%] md:left-[-5%]"
         />
         <ElegantShape
@@ -112,6 +119,7 @@ function HeroGeometric({
           height={80}
           rotate={-8}
           gradient="from-white/[0.06]"
+          neon
           className="-left-[5%] bottom-[15%] md:left-[5%]"
         />
         <ElegantShape
@@ -128,6 +136,7 @@ function HeroGeometric({
           height={40}
           rotate={-25}
           gradient="from-white/[0.05]"
+          neon
           className="left-[15%] top-[10%]"
         />
       </div>
