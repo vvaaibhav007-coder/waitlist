@@ -14,10 +14,20 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    const trimmed = email.trim();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       toast.error("Please enter a valid email address.");
+      return;
+    }
+    const { error } = await supabase.from("waitlist").insert({ email: trimmed });
+    if (error) {
+      if (error.code === "23505") {
+        toast.info("You're already on the list!");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
       return;
     }
     toast.success("You're on the list!");
