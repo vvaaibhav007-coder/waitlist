@@ -27,6 +27,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
   (
     {
       className,
+      children,
       gradient = true,
       blur = true,
       title,
