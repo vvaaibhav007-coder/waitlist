@@ -102,6 +102,7 @@ function HeroGeometric({
           height={140}
           rotate={12}
           gradient="from-white/[0.07]"
+          neon
           className="-left-[10%] top-[15%] md:left-[-5%]"
         />
         <ElegantShape
