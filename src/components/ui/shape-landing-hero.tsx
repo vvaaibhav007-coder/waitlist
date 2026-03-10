@@ -11,6 +11,7 @@ function ElegantShape({
   height = 100,
   rotate = 0,
   gradient = "from-white/[0.08]",
+  neon = false,
 }: {
   className?: string;
   delay?: number;
@@ -18,6 +19,7 @@ function ElegantShape({
   height?: number;
   rotate?: number;
   gradient?: string;
+  neon?: boolean;
 }) {
   return (
     <motion.div
