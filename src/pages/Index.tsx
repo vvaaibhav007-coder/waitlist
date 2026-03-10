@@ -3,6 +3,7 @@ import { AnimatedText } from "@/components/ui/animated-underline-text-one";
 import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
