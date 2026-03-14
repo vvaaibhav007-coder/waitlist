@@ -180,7 +180,7 @@ function HeroGeometric({
             variants={fadeUpVariants}
             initial="hidden"
             animate="visible"
-            className="mt-6 max-w-xl text-base text-muted-foreground/70 leading-relaxed md:text-lg"
+            className="mt-6 max-w-xl text-base leading-relaxed md:text-lg animate-shimmer bg-[size:200%_auto] bg-gradient-to-r from-muted-foreground/70 via-white/90 to-muted-foreground/70 bg-clip-text text-transparent"
           >
             {subtitle}
           </motion.p>
