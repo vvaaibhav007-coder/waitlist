@@ -3,7 +3,7 @@ import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface AnimatedTextProps extends React.HTMLAttributes<HTMLDivElement> {
-  text: string;
+  text: string | React.ReactNode;
   textClassName?: string;
   underlineClassName?: string;
   underlinePath?: string;

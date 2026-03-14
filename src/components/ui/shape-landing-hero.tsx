@@ -70,9 +70,9 @@ function HeroGeometric({
   subtitle,
   children,
 }: {
-  badge?: string;
-  title1?: string;
-  title2?: string;
+  badge?: React.ReactNode;
+  title1?: React.ReactNode;
+  title2?: React.ReactNode;
   subtitle?: string;
   children?: React.ReactNode;
 }) {

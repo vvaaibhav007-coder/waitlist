@@ -46,7 +46,11 @@ const Index = () => {
           transition={{ duration: 0.6 }}
         >
           <AnimatedText
-            text="Clarity.ai"
+            text={
+              <>
+                Clarity<span className="text-[#6E9EEB]">.ai</span>
+              </>
+            }
             textClassName="text-6xl md:text-8xl font-extrabold"
             underlineDuration={1.8}
           />
@@ -60,7 +64,11 @@ const Index = () => {
         >
           <HeroGeometric
             badge="Clarity.ai"
-            title1="Clarity.ai"
+            title1={
+              <>
+                Clarity<span className="text-[#6E9EEB]">.ai</span>
+              </>
+            }
             title2=""
             subtitle="Clarity.ai is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access."
           >
