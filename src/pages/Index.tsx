@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import confetti from "canvas-confetti";
+import { CountrySelect } from "@/components/ui/country-select";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -136,9 +137,10 @@ const Index = () => {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.4 }}
                     onSubmit={handleSubmit}
-                    className="relative flex flex-col sm:flex-row items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-2 backdrop-blur-md shadow-2xl"
+                    className="relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-md shadow-2xl"
                   >
-                    <div className="flex w-full flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+                    {/* Email + Country row */}
+                    <div className="flex w-full flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-white/10 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                       <input
                         type="email"
                         value={email}
@@ -146,37 +148,15 @@ const Index = () => {
                         placeholder="Enter your email"
                         className="w-full sm:w-[55%] bg-transparent px-4 py-3 text-sm text-primary-foreground placeholder:text-muted-foreground/50 outline-none"
                       />
-                      <div className="relative w-full sm:w-[45%]">
-                        <select
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
-                          className="w-full h-full bg-transparent px-4 py-3 text-sm text-primary-foreground focus:outline-none appearance-none cursor-pointer [&>option]:bg-slate-900 border-none"
-                        >
-                          <option value="" disabled hidden className="text-muted-foreground/50">Country</option>
-                          <option value="United States">United States</option>
-                          <option value="United Kingdom">United Kingdom</option>
-                          <option value="Canada">Canada</option>
-                          <option value="Australia">Australia</option>
-                          <option value="India">India</option>
-                          <option value="Germany">Germany</option>
-                          <option value="France">France</option>
-                          <option value="Japan">Japan</option>
-                          <option value="Brazil">Brazil</option>
-                          <option value="Other">Other</option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-muted-foreground/50">
-                          <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                          </svg>
-                        </div>
-                      </div>
+                      <CountrySelect value={country} onChange={setCountry} />
                     </div>
+                    {/* Submit button */}
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto whitespace-nowrap rounded-xl bg-[#6E9EEB]/90 hover:bg-[#6E9EEB] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(110,158,235,0.4)] transition-all hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full whitespace-nowrap rounded-xl bg-[#6E9EEB]/90 hover:bg-[#6E9EEB] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(110,158,235,0.4)] transition-all hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isSubmitting ? "Joining..." : "Join Waitlist"}
+                      {isSubmitting ? "Joining..." : "Join Waitlist →"}
                     </button>
                   </motion.form>
                 ) : (
