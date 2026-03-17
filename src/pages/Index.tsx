@@ -345,9 +345,15 @@ const Index = () => {
                     key="success"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="relative flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/10 bg-[#6E9EEB]/10 p-8 py-10 backdrop-blur-md shadow-2xl"
+                    className="relative flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-8 py-10 backdrop-blur-xl shadow-2xl overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)',
+                    }}
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#6E9EEB]/20 text-[#6E9EEB]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                    <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#6E9EEB]/30 rounded-full blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+                    <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#6E9EEB]/20 text-[#6E9EEB]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6"
@@ -359,8 +365,8 @@ const Index = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-semibold text-white">You're on the list!</h3>
-                    <p className="text-sm text-muted-foreground text-center">
+                    <h3 className="relative z-10 text-xl font-semibold text-white">You're on the list!</h3>
+                    <p className="relative z-10 text-sm text-muted-foreground text-center">
                       We'll notify you as soon as early access is available.
                     </p>
                   </motion.div>
