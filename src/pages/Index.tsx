@@ -15,11 +15,16 @@ import {
   ChevronUp,
   Heart,
   Download,
-  Mail,
   Globe,
   Star,
   ArrowRight
 } from "lucide-react";
+
+const AppName = () => (
+  <span>
+    Clarit<span className="text-[#6E9EEB]">ee</span>
+  </span>
+);
 
 const features = [
   {
@@ -76,13 +81,13 @@ const testimonials = [
   {
     name: "Sarah Chen",
     role: "Product Manager",
-    content: "Clarity.ai helped me decide between two job offers. The trade-off analysis was incredibly insightful!",
+    content: "Claritee helped me decide between two job offers. The trade-off analysis was incredibly insightful!",
     rating: 5
   },
   {
     name: "Marcus Johnson",
     role: "Startup Founder",
-    content: "I was stuck on a major business decision for weeks. Clarity.ai gave me clarity in minutes.",
+    content: "I was stuck on a major business decision for weeks. Claritee gave me clarity in minutes.",
     rating: 5
   },
   {
@@ -95,12 +100,12 @@ const testimonials = [
 
 const faqs = [
   {
-    question: "When will Clarity.ai be available?",
+    question: "When will Claritee be available?",
     answer: "We're aiming for early access in Q2 2026. Join the waitlist to get notified first!"
   },
   {
-    question: "What platforms will Clarity.ai support?",
-    answer: "Clarity.ai will be available on iOS first, with Android and web versions coming later."
+    question: "What platforms will Claritee support?",
+    answer: "Claritee will be available on iOS first, with Android and web versions coming later."
   },
   {
     question: "Is there a free version?",
@@ -122,11 +127,67 @@ const Index = () => {
   const [isJoined, setIsJoined] = useState(false);
   const [donationAmount, setDonationAmount] = useState(45);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [suggestion, setSuggestion] = useState("");
+  const [isSubmittingSuggestion, setIsSubmittingSuggestion] = useState(false);
+  const [suggestionSubmitted, setSuggestionSubmitted] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!showSplash) {
+      const feedbackToast = toast(
+        <div className="flex items-center justify-between w-full gap-4">
+          <span>Tell us what you expect from Claritee! Share your suggestions below.</span>
+          <button 
+            onClick={() => toast.dismiss(feedbackToast)}
+            className="text-white/60 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>,
+        {
+          duration: 10000,
+          onDismiss: () => {
+            const el = document.getElementById("feedback-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          },
+          onAutoClose: () => {
+            const el = document.getElementById("feedback-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          },
+        }
+      );
+    }
+  }, [showSplash]);
+
+  const handleSuggestionSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = suggestion.trim();
+    if (!trimmed) {
+      toast.error("Please enter your suggestion.");
+      return;
+    }
+
+    setIsSubmittingSuggestion(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+
+    const { error } = await supabase.from("feedback").insert({
+      suggestion: trimmed
+    });
+
+    setIsSubmittingSuggestion(false);
+
+    if (error) {
+      toast.error("Failed to submit. Please try again.");
+      return;
+    }
+
+    toast.success("Thanks for your feedback!");
+    setSuggestionSubmitted(true);
+  };
 
   const triggerConfetti = () => {
     const duration = 3000;
@@ -135,7 +196,7 @@ const Index = () => {
 
     const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-    const interval: any = setInterval(function () {
+    const interval: ReturnType<typeof setInterval> = setInterval(function () {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -213,7 +274,7 @@ const Index = () => {
           <AnimatedText
             text={
               <>
-                Clarity<span className="text-[#6E9EEB]">.ai</span>
+                Claritee
               </>
             }
             textClassName="text-6xl md:text-8xl font-extrabold"
@@ -229,14 +290,14 @@ const Index = () => {
           className="bg-void"
         >
           <HeroGeometric
-            badge="Clarity.ai"
+            badge={<><AppName /></>}
             title1={
               <>
-                Clarity<span className="text-[#6E9EEB]">.ai</span>
+                Claritee
               </>
             }
             title2=""
-            subtitle="Clarity.ai is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access."
+            subtitle={<><AppName /> is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.</>}
           >
             <div className="mt-12 w-full max-w-lg">
               <AnimatePresence mode="wait">
@@ -309,7 +370,7 @@ const Index = () => {
                 className="text-center mb-16"
               >
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Why <span className="text-[#6E9EEB]">Clarity.ai</span>?
+                  Why <AppName />?
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                   Make better decisions with AI-powered analysis that uncovers what truly matters to you.
@@ -393,7 +454,7 @@ const Index = () => {
                   What People <span className="text-[#6E9EEB]">Say</span>
                 </h2>
                 <p className="text-muted-foreground text-lg">
-                  Early testers love Clarity.ai
+                  Early testers love <AppName />
                 </p>
               </motion.div>
 
@@ -434,7 +495,7 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Get <span className="text-[#6E9EEB]">Clarity.ai</span> on Your Device
+                  Get <AppName /> on Your Device
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
                   Be among the first to experience decision-making made simple. Download on iOS when we launch!
@@ -480,14 +541,14 @@ const Index = () => {
               >
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    Support Clarity.ai
-                  </h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                  Support <AppName />
+                </h2>
                 </div>
                 
                 <p className="text-muted-foreground text-center mb-8 text-lg">
                   I need money to publish this app in Apple's App Store and to pay for Apple's Developer Program. 
-                  Your support helps bring Clarity.ai to life!
+                  Your support helps bring <AppName /> to life!
                 </p>
 
                 <div className="mb-8">
@@ -582,24 +643,82 @@ const Index = () => {
             </div>
           </section>
 
+          {/* Feedback Section */}
+          <section id="feedback-section" className="relative py-24 px-4">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-12"
+              >
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  Share Your <span className="text-[#6E9EEB]">Expectations</span>
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  What features would you like to see in <AppName />? Your input helps us build the best app for you.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                {!suggestionSubmitted ? (
+                  <form onSubmit={handleSuggestionSubmit} className="space-y-4">
+                    <textarea
+                      value={suggestion}
+                      onChange={(e) => setSuggestion(e.target.value)}
+                      placeholder="I would love to see..."
+                      className="w-full h-40 p-4 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-[#6E9EEB] resize-none"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isSubmittingSuggestion}
+                      className="w-full py-4 rounded-xl bg-[#6E9EEB]/90 hover:bg-[#6E9EEB] text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(110,158,235,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmittingSuggestion ? "Submitting..." : "Submit Your Suggestion"}
+                    </button>
+                  </form>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-8 rounded-2xl border border-[#6E9EEB]/30 bg-[#6E9EEB]/5 text-center"
+                  >
+                    <CheckCircle2 className="w-12 h-12 text-[#6E9EEB] mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">Thank you!</h3>
+                    <p className="text-muted-foreground">
+                      Your suggestion has been recorded. We'll consider it when building <AppName />.
+                    </p>
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
+          </section>
+
           {/* Footer */}
           <footer className="relative py-12 px-4 border-t border-white/10">
             <div className="max-w-6xl mx-auto">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl font-bold text-white">
-                    Clarity<span className="text-[#6E9EEB]">.ai</span>
+                    <AppName />
                   </span>
                 </div>
                 
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                  <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
                   <a href="#" className="hover:text-white transition-colors">Contact</a>
                 </div>
                 
                 <p className="text-sm text-muted-foreground">
-                  © 2026 Clarity.ai. All rights reserved.
+                  © 2026 Claritee. All rights reserved.
                 </p>
               </div>
             </div>
