@@ -6,18 +6,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import confetti from "canvas-confetti";
 import { CountrySelect } from "@/components/ui/country-select";
-import { 
-  Brain, 
-  TrendingUp, 
-  Zap, 
-  CheckCircle2, 
-  ChevronDown, 
+import {
+  Brain,
+  TrendingUp,
+  Zap,
+  CheckCircle2,
+  ChevronDown,
   ChevronUp,
   Heart,
   Download,
   Globe,
   Star,
-  ArrowRight
+  ArrowRight,
+  Target,
+  Clock,
+  Users,
+  Award,
+  Check,
+  X,
+  Sparkles,
+  BarChart3,
+  Shield,
+  Lightbulb,
+  ArrowDown
 } from "lucide-react";
 
 const AppNameColored = () => (
@@ -146,7 +157,7 @@ const Index = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-3">
           <span className="text-sm sm:text-base">Tell us what you expect from Claritee!</span>
           <div className="flex items-center gap-2">
-            <button 
+            <button
               onClick={() => {
                 const el = document.getElementById("feedback-section");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -156,7 +167,7 @@ const Index = () => {
             >
               Share Now
             </button>
-            <button 
+            <button
               onClick={() => toast.dismiss(feedbackToast)}
               className="text-white/60 hover:text-white p-1"
             >
@@ -240,14 +251,14 @@ const Index = () => {
     }
 
     setIsSubmitting(true);
-    
+
     await new Promise((resolve) => setTimeout(resolve, 600));
 
-    const { error } = await supabase.from("waitlist").insert({ 
+    const { error } = await supabase.from("waitlist").insert({
       email: trimmed,
       country: country
     });
-    
+
     setIsSubmitting(false);
 
     if (error) {
@@ -260,7 +271,7 @@ const Index = () => {
       }
       return;
     }
-    
+
     toast.success("You've been added to the waitlist!");
     setIsJoined(true);
     triggerConfetti();
@@ -280,11 +291,7 @@ const Index = () => {
           transition={{ duration: 0.6 }}
         >
           <AnimatedText
-            text={
-              <>
-                Claritee
-              </>
-            }
+            text={<AppNameColored />}
             textClassName="text-6xl md:text-8xl font-extrabold"
             underlineDuration={1.8}
           />
@@ -298,12 +305,8 @@ const Index = () => {
           className="bg-void"
         >
           <HeroGeometric
-            badge={<><AppNamePlain /></>}
-            title1={
-              <>
-                Claritee
-              </>
-            }
+            badge={<AppNameColored />}
+            title1={<AppNameColored />}
             title2=""
             subtitle={<><AppNamePlain /> is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.</>}
           >
@@ -370,7 +373,7 @@ const Index = () => {
           <section className="relative py-24 px-4">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-6xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -410,7 +413,7 @@ const Index = () => {
           <section className="relative py-24 px-4 bg-white/[0.02]">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-6xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -451,7 +454,7 @@ const Index = () => {
           <section className="relative py-24 px-4">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-6xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -496,7 +499,7 @@ const Index = () => {
           <section className="relative py-24 px-4 bg-white/[0.02]">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-4xl mx-auto text-center">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -508,9 +511,9 @@ const Index = () => {
                 <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
                   Be among the first to experience decision-making made simple. Download on iOS when we launch!
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button 
+                  <button
                     disabled
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
                   >
@@ -518,8 +521,8 @@ const Index = () => {
                     <span>App Store</span>
                     <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
                   </button>
-                  
-                  <button 
+
+                  <button
                     disabled
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
                   >
@@ -528,7 +531,7 @@ const Index = () => {
                     <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
                   </button>
                 </div>
-                
+
                 <p className="mt-6 text-sm text-muted-foreground">
                   Join {Math.floor(Math.random() * 500 + 1200)}+ others on the waitlist
                 </p>
@@ -540,7 +543,7 @@ const Index = () => {
           <section className="relative py-24 px-4">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-3xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -549,13 +552,13 @@ const Index = () => {
               >
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Support <AppNameColored />
-                </h2>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">
+                    Support <AppNameColored />
+                  </h2>
                 </div>
-                
+
                 <p className="text-muted-foreground text-center mb-8 text-lg">
-                  I need money to publish this app in Apple's App Store and to pay for Apple's Developer Program. 
+                  I need money to publish this app in Apple's App Store and to pay for Apple's Developer Program.
                   Your support helps bring <AppNamePlain /> to life!
                 </p>
 
@@ -565,7 +568,7 @@ const Index = () => {
                     <span className="text-muted-foreground">Goal: ${GOAL_AMOUNT}</span>
                   </div>
                   <div className="h-6 rounded-full bg-white/10 overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="h-full rounded-full bg-[#6e9eeb]"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${progressPercentage}%` }}
@@ -579,7 +582,7 @@ const Index = () => {
                 </div>
 
                 <div className="flex justify-center">
-                  <button 
+                  <button
                     disabled
                     className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#6E9EEB] hover:bg-[#5a8bd6] text-white font-semibold text-lg transition-all shadow-[0_0_20px_rgba(110,158,235,0.4)] hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] cursor-not-allowed opacity-70"
                   >
@@ -587,7 +590,7 @@ const Index = () => {
                     <span>Donate with Stripe</span>
                   </button>
                 </div>
-                
+
                 <p className="text-center text-xs text-muted-foreground mt-4">
                   Stripe payment link coming soon
                 </p>
@@ -599,7 +602,7 @@ const Index = () => {
           <section className="relative py-24 px-4 bg-white/[0.02]">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-3xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -655,7 +658,7 @@ const Index = () => {
           <section id="feedback-section" className="relative py-24 px-4">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
             <div className="relative z-10 max-w-3xl mx-auto">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -718,13 +721,13 @@ const Index = () => {
                     <AppNamePlain />
                   </span>
                 </div>
-                
+
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
                   <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
                   <a href="#" className="hover:text-white transition-colors">Contact</a>
                 </div>
-                
+
                 <p className="text-sm text-muted-foreground">
                   © 2026 Claritee. All rights reserved.
                 </p>
