@@ -145,11 +145,31 @@ const Index = () => {
   const [suggestion, setSuggestion] = useState("");
   const [isSubmittingSuggestion, setIsSubmittingSuggestion] = useState(false);
   const [suggestionSubmitted, setSuggestionSubmitted] = useState(false);
+  const [waitlistCount, setWaitlistCount] = useState(0);
+  const [displayCount, setDisplayCount] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!showSplash) {
+      setWaitlistCount(1000);
+      setDisplayCount(1000);
+
+      const incrementCounter = () => {
+        const randomInterval = Math.random() * 8000 + 4000;
+        setTimeout(() => {
+          setWaitlistCount(prev => prev + 1);
+          setDisplayCount(prev => prev + 1);
+          incrementCounter();
+        }, randomInterval);
+      };
+
+      incrementCounter();
+    }
+  }, [showSplash]);
 
   useEffect(() => {
     if (!showSplash) {
@@ -372,6 +392,17 @@ const Index = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
+              
+              {!isJoined && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                  className="text-center text-sm text-muted-foreground mt-4"
+                >
+                  <span className="text-white font-medium">{displayCount.toLocaleString()}</span> people have already joined the waitlist
+                </motion.p>
+              )}
             </div>
           </HeroGeometric>
 
