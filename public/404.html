@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claritee</title>
+  <meta name="description" content="Claritee is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation." />
+  <meta name="author" content="Claritee" />
+
+  <meta property="og:title" content="Claritee" />
+  <meta property="og:description" content="A decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps." />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary" />
+
+  <!-- App Icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  
+  <script>
+    // Redirect all 404s to index.html for SPA routing
+    sessionStorage.redirect = location.href;
+    location.replace('/waitlist/');
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
