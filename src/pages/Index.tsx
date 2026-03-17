@@ -159,7 +159,7 @@ const Index = () => {
       setDisplayCount(1000);
 
       const incrementCounter = () => {
-        const randomInterval = Math.random() * 8000 + 4000;
+        const randomInterval = Math.random() * 50000 + 5000;
         setTimeout(() => {
           setWaitlistCount(prev => prev + 1);
           setDisplayCount(prev => prev + 1);
