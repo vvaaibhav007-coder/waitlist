@@ -20,10 +20,14 @@ import {
   ArrowRight
 } from "lucide-react";
 
-const AppName = () => (
+const AppNameColored = () => (
   <span>
     Clarit<span className="text-[#6E9EEB]">ee</span>
   </span>
+);
+
+const AppNamePlain = () => (
+  <span>Claritee</span>
 );
 
 const features = [
@@ -290,14 +294,14 @@ const Index = () => {
           className="bg-void"
         >
           <HeroGeometric
-            badge={<><AppName /></>}
+            badge={<><AppNamePlain /></>}
             title1={
               <>
                 Claritee
               </>
             }
             title2=""
-            subtitle={<><AppName /> is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.</>}
+            subtitle={<><AppNamePlain /> is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.</>}
           >
             <div className="mt-12 w-full max-w-lg">
               <AnimatePresence mode="wait">
@@ -370,7 +374,7 @@ const Index = () => {
                 className="text-center mb-16"
               >
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Why <AppName />?
+                  Why <AppNameColored />?
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                   Make better decisions with AI-powered analysis that uncovers what truly matters to you.
@@ -454,7 +458,7 @@ const Index = () => {
                   What People <span className="text-[#6E9EEB]">Say</span>
                 </h2>
                 <p className="text-muted-foreground text-lg">
-                  Early testers love <AppName />
+                  Early testers love <AppNamePlain />
                 </p>
               </motion.div>
 
@@ -495,7 +499,7 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Get <AppName /> on Your Device
+                  Get <AppNameColored /> on Your Device
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
                   Be among the first to experience decision-making made simple. Download on iOS when we launch!
@@ -542,13 +546,13 @@ const Index = () => {
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
                 <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Support <AppName />
+                  Support <AppNameColored />
                 </h2>
                 </div>
                 
                 <p className="text-muted-foreground text-center mb-8 text-lg">
                   I need money to publish this app in Apple's App Store and to pay for Apple's Developer Program. 
-                  Your support helps bring <AppName /> to life!
+                  Your support helps bring <AppNamePlain /> to life!
                 </p>
 
                 <div className="mb-8">
@@ -658,7 +662,7 @@ const Index = () => {
                   Share Your <span className="text-[#6E9EEB]">Expectations</span>
                 </h2>
                 <p className="text-muted-foreground text-lg">
-                  What features would you like to see in <AppName />? Your input helps us build the best app for you.
+                  What features would you like to see in <AppNamePlain />? Your input helps us build the best app for you.
                 </p>
               </motion.div>
 
@@ -693,7 +697,7 @@ const Index = () => {
                     <CheckCircle2 className="w-12 h-12 text-[#6E9EEB] mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-white mb-2">Thank you!</h3>
                     <p className="text-muted-foreground">
-                      Your suggestion has been recorded. We'll consider it when building <AppName />.
+                      Your suggestion has been recorded. We'll consider it when building <AppNamePlain />.
                     </p>
                   </motion.div>
                 )}
@@ -707,7 +711,7 @@ const Index = () => {
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl font-bold text-white">
-                    <AppName />
+                    <AppNamePlain />
                   </span>
                 </div>
                 
