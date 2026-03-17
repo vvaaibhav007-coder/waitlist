@@ -143,25 +143,29 @@ const Index = () => {
   useEffect(() => {
     if (!showSplash) {
       const feedbackToast = toast(
-        <div className="flex items-center justify-between w-full gap-4">
-          <span>Tell us what you expect from Claritee! Share your suggestions below.</span>
-          <button 
-            onClick={() => toast.dismiss(feedbackToast)}
-            className="text-white/60 hover:text-white"
-          >
-            ✕
-          </button>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-3">
+          <span className="text-sm sm:text-base">Tell us what you expect from Claritee!</span>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => {
+                const el = document.getElementById("feedback-section");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                toast.dismiss(feedbackToast);
+              }}
+              className="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-[#6E9EEB] text-white hover:bg-[#5a8bd6] transition-colors"
+            >
+              Share Now
+            </button>
+            <button 
+              onClick={() => toast.dismiss(feedbackToast)}
+              className="text-white/60 hover:text-white p-1"
+            >
+              ✕
+            </button>
+          </div>
         </div>,
         {
           duration: 10000,
-          onDismiss: () => {
-            const el = document.getElementById("feedback-section");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          },
-          onAutoClose: () => {
-            const el = document.getElementById("feedback-section");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          },
         }
       );
     }
