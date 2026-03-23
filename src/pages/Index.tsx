@@ -88,19 +88,22 @@ const testimonials = [
     name: "Sarah Chen",
     role: "Product Manager",
     content: "Claritee helped me decide between two job offers. The trade-off analysis was incredibly insightful!",
-    rating: 5
+    rating: 5,
+    image: "/avatar_1.png"
   },
   {
     name: "Marcus Johnson",
     role: "Startup Founder",
     content: "I was stuck on a major business decision for weeks. Claritee gave me clarity in minutes.",
-    rating: 5
+    rating: 5,
+    image: "/avatar_2.png"
   },
   {
     name: "Emily Rodriguez",
     role: "Software Engineer",
     content: "The nine-step framework is brilliant. It feels like having a personal decision coach.",
-    rating: 5
+    rating: 5,
+    image: "/avatar_3.png"
   }
 ];
 
@@ -249,10 +252,6 @@ const Index = () => {
       toast.error("Please enter a valid email address.");
       return;
     }
-    if (!country) {
-      toast.error("Please select a country.");
-      return;
-    }
 
     setIsSubmitting(true);
 
@@ -266,7 +265,7 @@ const Index = () => {
 
     const { error } = await supabase.from("waitlist").insert({
       email: trimmed,
-      country: country
+      ...(country ? { country } : {})
     });
 
     setIsSubmitting(false);
@@ -293,9 +292,9 @@ const Index = () => {
     <div className="bg-void">
           <HeroGeometric
             badge={<><Circle className="h-2 w-2 fill-green-400/80 text-green-400/80 inline mr-2" />Now in early access — {displayCount.toLocaleString()} spots claimed</>}
-            title1="Stop second-guessing."
-            title2={<>Make decisions with Clarit<span className="text-[#6e9eeb]">ee</span></>}
-            subtitle="Decisions feel overwhelming. Claritee analyzes your options, scores trade-offs, and gives you AI-powered clarity — in 9 simple steps."
+            title1="Make your most difficult"
+            title2={<>decisions with <span className="text-[#6e9eeb]">100% confidence.</span></>}
+            subtitle="Get AI-powered clarity in minutes, not days."
           >
             <div className="mt-12 w-full max-w-lg">
               <AnimatePresence mode="wait">
@@ -309,15 +308,14 @@ const Index = () => {
                     onSubmit={handleSubmit}
                     className="relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-md shadow-2xl"
                   >
-                    <div className="flex w-full flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-white/10 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex w-full rounded-xl bg-white/[0.03] border border-white/[0.06]">
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
-                        className="w-full sm:w-[55%] bg-transparent px-4 py-3 text-sm text-primary-foreground placeholder:text-muted-foreground/50 outline-none"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-primary-foreground placeholder:text-muted-foreground/50 outline-none"
                       />
-                      <CountrySelect value={country} onChange={setCountry} />
                     </div>
                     <button
                       type="submit"
@@ -391,6 +389,59 @@ const Index = () => {
               )}
             </div>
           </HeroGeometric>
+
+          {/* Problem Section */}
+          <section className="relative py-24 px-4 border-b border-white/5 bg-void/50">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center max-w-3xl mx-auto mb-16"
+              >
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                  The Decision Paralysis <span className="text-[#6E9EEB]">Problem</span>
+                </h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  When faced with a tough choice, the mental load becomes overwhelming. You overthink, delay, and let opportunities slip away because it's impossible to track dozens of variables, pros, and cons in your head alone.
+                </p>
+              </motion.div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: "Endless Overthinking",
+                    desc: "You spend weeks researching and endlessly comparing options without ever getting closer to a confident answer."
+                  },
+                  {
+                    title: "Missed Opportunities",
+                    desc: "By delaying your decision, you often let the best options expire, letting circumstances decide for you."
+                  },
+                  {
+                    title: "Mental Exhaustion",
+                    desc: "Your cognitive load maxes out from trying to constantly weigh trade-offs and remember every little detail."
+                  }
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                    className="p-8 rounded-2xl border border-rose-500/10 bg-rose-500/5 hover:bg-rose-500/10 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center mb-6">
+                      <span className="text-rose-400 font-bold">0{index + 1}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Features Section */}
           <section className="relative py-24 px-4">
@@ -485,64 +536,57 @@ const Index = () => {
                 className="p-8 md:p-12 rounded-3xl border border-[#6E9EEB]/30 bg-gradient-to-br from-[#6E9EEB]/5 to-transparent"
               >
                 <div className="flex items-center justify-center gap-3 mb-6">
-                  <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
+                  <Star className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
                   <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    Help Build <AppNameColored />
+                    Become a Founding Supporter
                   </h2>
                 </div>
 
                 <p className="text-muted-foreground text-center mb-6 text-lg">
-                  To launch this app, I need to pay for Apple's Developer Program ($99/year) and App Store publishing fees.
+                  Join our exclusive inner circle to help launch <AppNameColored /> to the world.
                 </p>
 
-                <div className="bg-white/5 rounded-xl p-4 mb-6 border border-white/10">
-                  <p className="text-sm text-white/80 mb-2 font-medium">Where your donation goes:</p>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      <span>Apple Developer Program: $99/year</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      <span>App Store publishing fee</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      <span>100% goes to development costs</span>
-                    </div>
+                <div className="bg-[#6E9EEB]/10 rounded-xl p-5 mb-6 border border-[#6E9EEB]/20 relative overflow-hidden z-10">
+                  <div className="absolute -top-4 -right-4 bg-[#6e9eeb]/20 blur-xl w-32 h-32 rounded-full pointer-events-none" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                    <p className="text-base text-white font-semibold tracking-wide">Founding Supporter Reward</p>
                   </div>
+                  <p className="text-lg text-white/90 font-medium">
+                    Supporters get 10 months of Pro access (worth over $100) when we launch.
+                  </p>
                 </div>
 
-                <div className="mb-8">
+                <div className="mb-8 relative z-20">
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-white font-medium">${donationAmount} raised</span>
                     <span className="text-muted-foreground">Goal: ${GOAL_AMOUNT}</span>
                   </div>
-                  <div className="h-6 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-6 rounded-full bg-white/10 overflow-hidden shadow-inner">
                     <motion.div
-                      className="h-full rounded-full bg-[#6e9eeb]"
+                      className="h-full rounded-full bg-gradient-to-r from-[#6e9eeb] to-[#8fb8f9]"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${progressPercentage}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1, delay: 0.3 }}
                     />
                   </div>
-                  <p className="text-center text-sm text-muted-foreground mt-2">
+                  <p className="text-center text-sm text-[#6e9eeb]/80 font-medium mt-3">
                     {progressPercentage.toFixed(0)}% funded • {GOAL_AMOUNT - donationAmount} more needed
                   </p>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center relative z-20">
                   <button
                     disabled
                     className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#6E9EEB] hover:bg-[#5a8bd6] text-white font-semibold text-lg transition-all shadow-[0_0_20px_rgba(110,158,235,0.4)] hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] cursor-not-allowed opacity-70"
                   >
-                    <Heart className="w-5 h-5 fill-white" />
-                    <span>Donate with Stripe</span>
+                    <Star className="w-5 h-5 fill-white" />
+                    <span>Become a Supporter with Stripe</span>
                   </button>
                 </div>
 
-                <p className="text-center text-xs text-muted-foreground mt-4">
+                <p className="text-center text-xs text-muted-foreground mt-4 relative z-20">
                   Secure payment via Stripe • Coming soon
                 </p>
               </motion.div>
@@ -583,14 +627,67 @@ const Index = () => {
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    <p className="text-muted-foreground mb-4">"{testimonial.content}"</p>
-                    <div>
-                      <p className="font-semibold text-white">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    <p className="text-muted-foreground mb-4 flex-grow">"{testimonial.content}"</p>
+                    <div className="flex items-center gap-3">
+                      <img src={testimonial.image} alt={testimonial.name} className="w-10 h-10 rounded-full object-cover border border-white/10" />
+                      <div>
+                        <p className="font-semibold text-white">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* Meet the Founder Section */}
+          <section className="relative py-24 px-4 bg-void/30 border-y border-white/5">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="flex flex-col md:flex-row gap-8 md:gap-16 items-center p-8 md:p-12 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-md"
+              >
+                <div className="w-full md:w-2/5 flex justify-center">
+                  <div className="relative group overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f1219] via-transparent to-transparent z-10 opacity-80" />
+                    <img 
+                      src="/founder_img.png" 
+                      alt="Claritee Founder"
+                      className="w-full max-w-[280px] rounded-2xl md:rounded-[2rem] object-cover aspect-[4/5] filter brightness-90 group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-center w-full">
+                      <p className="text-white font-bold text-xl drop-shadow-md">Vaibhav</p>
+                      <p className="text-[#6E9EEB] text-sm tracking-wide">Builder</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="w-full md:w-3/5 text-center md:text-left">
+                  <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-1.5">
+                    <Star className="w-4 h-4 text-yellow-500" />
+                    <span className="text-sm text-yellow-400 font-medium tracking-wide">Meet the Maker</span>
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                    A Note From the <span className="text-[#6E9EEB]">Founder</span>
+                  </h2>
+                  <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+                    <p>
+                      Like many of you, I've lost countless hours paralyzed by difficult choices. I was finding myself constantly second-guessing and wishing I had a structured, objective way to evaluate my options.
+                    </p>
+                    <p>
+                      <strong className="text-white">That's why I'm building Claritee.</strong> I wanted to create an AI companion that doesn't just give answers, but helps you elegantly break down the trade-offs so you can think clearly.
+                    </p>
+                    <p>
+                      I'm incredibly passionate about solving this problem elegantly, and I'd love for you to join me on this journey.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </section>
 
@@ -777,7 +874,6 @@ const Index = () => {
                       placeholder="Enter your email"
                       className="w-full sm:flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-muted-foreground/50 outline-none focus:border-[#6E9EEB] transition-colors"
                     />
-                    <CountrySelect value={country} onChange={setCountry} />
                     <button
                       onClick={handleSubmit}
                       disabled={isSubmitting}
