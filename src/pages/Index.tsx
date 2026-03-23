@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { AnimatedText } from "@/components/ui/animated-underline-text-one";
 import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,17 +17,9 @@ import {
   Globe,
   Star,
   ArrowRight,
-  Target,
-  Clock,
-  Users,
-  Award,
-  Check,
-  X,
-  Sparkles,
-  BarChart3,
   Shield,
-  Lightbulb,
-  ArrowDown
+  Check,
+  Circle
 } from "lucide-react";
 
 const AppNameColored = () => (
@@ -108,7 +99,7 @@ const testimonials = [
   {
     name: "Emily Rodriguez",
     role: "Software Engineer",
-    description: "The nine-step framework is brilliant. It feels like having a personal decision coach.",
+    content: "The nine-step framework is brilliant. It feels like having a personal decision coach.",
     rating: 5
   }
 ];
@@ -135,7 +126,6 @@ const faqs = [
 const GOAL_AMOUNT = 200;
 
 const Index = () => {
-  const [showSplash, setShowSplash] = useState(true);
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -145,62 +135,52 @@ const Index = () => {
   const [suggestion, setSuggestion] = useState("");
   const [isSubmittingSuggestion, setIsSubmittingSuggestion] = useState(false);
   const [suggestionSubmitted, setSuggestionSubmitted] = useState(false);
-  const [waitlistCount, setWaitlistCount] = useState(0);
-  const [displayCount, setDisplayCount] = useState(0);
+  const [displayCount, setDisplayCount] = useState(1000);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 3000);
-    return () => clearTimeout(timer);
+    let timeoutId: ReturnType<typeof setTimeout>;
+    
+    const incrementCounter = () => {
+      const randomInterval = Math.random() * 50000 + 5000;
+      timeoutId = setTimeout(() => {
+        setDisplayCount(prev => prev + 1);
+        incrementCounter();
+      }, randomInterval);
+    };
+
+    incrementCounter();
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
-    if (!showSplash) {
-      setWaitlistCount(1000);
-      setDisplayCount(1000);
-
-      const incrementCounter = () => {
-        const randomInterval = Math.random() * 50000 + 5000;
-        setTimeout(() => {
-          setWaitlistCount(prev => prev + 1);
-          setDisplayCount(prev => prev + 1);
-          incrementCounter();
-        }, randomInterval);
-      };
-
-      incrementCounter();
-    }
-  }, [showSplash]);
-
-  useEffect(() => {
-    if (!showSplash) {
-      const feedbackToast = toast(
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-3">
-          <span className="text-sm sm:text-base">Tell us what you expect from Claritee!</span>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                const el = document.getElementById("feedback-section");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-                toast.dismiss(feedbackToast);
-              }}
-              className="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-[#6E9EEB] text-white hover:bg-[#5a8bd6] transition-colors"
-            >
-              Share Now
-            </button>
-            <button
-              onClick={() => toast.dismiss(feedbackToast)}
-              className="text-white/60 hover:text-white p-1"
-            >
-              ✕
-            </button>
-          </div>
-        </div>,
-        {
-          duration: 10000,
-        }
-      );
-    }
-  }, [showSplash]);
+    const feedbackToast = toast(
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-3">
+        <span className="text-sm sm:text-base">Tell us what you expect from Claritee!</span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => {
+              const el = document.getElementById("feedback-section");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+              toast.dismiss(feedbackToast);
+            }}
+            className="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-[#6E9EEB] text-white hover:bg-[#5a8bd6] transition-colors"
+          >
+            Share Now
+          </button>
+          <button
+            onClick={() => toast.dismiss(feedbackToast)}
+            className="text-white/60 hover:text-white p-1"
+          >
+            ✕
+          </button>
+        </div>
+      </div>,
+      {
+        duration: 10000,
+      }
+    );
+  }, []);
 
   const handleSuggestionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -213,6 +193,10 @@ const Index = () => {
     setIsSubmittingSuggestion(true);
     await new Promise((resolve) => setTimeout(resolve, 600));
 
+    if (!supabase) {
+      toast.error("Service unavailable. Please try again later.");
+      return;
+    }
     const { error } = await supabase.from("feedback").insert({
       suggestion: trimmed
     });
@@ -274,6 +258,12 @@ const Index = () => {
 
     await new Promise((resolve) => setTimeout(resolve, 600));
 
+    if (!supabase) {
+      toast.error("Service unavailable. Please try again later.");
+      setIsSubmitting(false);
+      return;
+    }
+
     const { error } = await supabase.from("waitlist").insert({
       email: trimmed,
       country: country
@@ -300,35 +290,12 @@ const Index = () => {
   const progressPercentage = Math.min((donationAmount / GOAL_AMOUNT) * 100, 100);
 
   return (
-    <AnimatePresence mode="wait">
-      {showSplash ? (
-        <motion.div
-          key="splash"
-          className="flex min-h-screen w-full items-center justify-center bg-void"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <AnimatedText
-            text={<AppNameColored />}
-            textClassName="text-6xl md:text-8xl font-extrabold"
-            underlineDuration={1.8}
-          />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="main"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="bg-void"
-        >
+    <div className="bg-void">
           <HeroGeometric
-            badge={<AppNameColored />}
-            title1={<AppNameColored />}
-            title2=""
-            subtitle={<><AppNamePlain /> is a decision intelligence tool that scores your options, surfaces your trade-offs, and gives you a clear recommendation — in nine steps. Join the waitlist for early access.</>}
+            badge={<><Circle className="h-2 w-2 fill-green-400/80 text-green-400/80 inline mr-2" />Now in early access — {displayCount.toLocaleString()} spots claimed</>}
+            title1="Stop second-guessing."
+            title2={<>Make decisions with Clarit<span className="text-[#6e9eeb]">ee</span></>}
+            subtitle="Decisions feel overwhelming. Claritee analyzes your options, scores trade-offs, and gives you AI-powered clarity — in 9 simple steps."
           >
             <div className="mt-12 w-full max-w-lg">
               <AnimatePresence mode="wait">
@@ -357,7 +324,7 @@ const Index = () => {
                       disabled={isSubmitting}
                       className="w-full whitespace-nowrap rounded-xl bg-[#6E9EEB]/90 hover:bg-[#6E9EEB] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(110,158,235,0.4)] transition-all hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isSubmitting ? "Joining..." : "Join Waitlist →"}
+                      {isSubmitting ? "Joining..." : "Get early access →"}
                     </button>
                   </motion.form>
                 ) : (
@@ -394,14 +361,33 @@ const Index = () => {
               </AnimatePresence>
               
               {!isJoined && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
-                  className="text-center text-sm text-muted-foreground mt-4"
-                >
-                  <span className="text-white font-medium">{displayCount.toLocaleString()}</span> people have already joined the waitlist
-                </motion.p>
+                <>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="text-center text-sm text-muted-foreground mt-4"
+                  >
+                    <span className="text-white font-medium">{displayCount.toLocaleString()}</span> people have already joined the waitlist
+                  </motion.p>
+                  <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Shield className="w-3.5 h-3.5 text-green-400" />
+                      <span>No spam, ever</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#6E9EEB]" />
+                      <span>Early access</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3.5 h-3.5 text-yellow-400" />
+                      <span>Free to join</span>
+                    </div>
+                  </div>
+                  <p className="text-center text-xs text-[#6E9EEB] mt-2 font-medium">
+                    Limited spots available for early access
+                  </p>
+                </>
               )}
             </div>
           </HeroGeometric>
@@ -487,6 +473,82 @@ const Index = () => {
             </div>
           </section>
 
+          {/* Donation Section */}
+          <section className="relative py-24 px-4">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="p-8 md:p-12 rounded-3xl border border-[#6E9EEB]/30 bg-gradient-to-br from-[#6E9EEB]/5 to-transparent"
+              >
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">
+                    Help Build <AppNameColored />
+                  </h2>
+                </div>
+
+                <p className="text-muted-foreground text-center mb-6 text-lg">
+                  To launch this app, I need to pay for Apple's Developer Program ($99/year) and App Store publishing fees.
+                </p>
+
+                <div className="bg-white/5 rounded-xl p-4 mb-6 border border-white/10">
+                  <p className="text-sm text-white/80 mb-2 font-medium">Where your donation goes:</p>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                      <span>Apple Developer Program: $99/year</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                      <span>App Store publishing fee</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                      <span>100% goes to development costs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-white font-medium">${donationAmount} raised</span>
+                    <span className="text-muted-foreground">Goal: ${GOAL_AMOUNT}</span>
+                  </div>
+                  <div className="h-6 rounded-full bg-white/10 overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full bg-[#6e9eeb]"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${progressPercentage}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </div>
+                  <p className="text-center text-sm text-muted-foreground mt-2">
+                    {progressPercentage.toFixed(0)}% funded • {GOAL_AMOUNT - donationAmount} more needed
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
+                  <button
+                    disabled
+                    className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#6E9EEB] hover:bg-[#5a8bd6] text-white font-semibold text-lg transition-all shadow-[0_0_20px_rgba(110,158,235,0.4)] hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] cursor-not-allowed opacity-70"
+                  >
+                    <Heart className="w-5 h-5 fill-white" />
+                    <span>Donate with Stripe</span>
+                  </button>
+                </div>
+
+                <p className="text-center text-xs text-muted-foreground mt-4">
+                  Secure payment via Stripe • Coming soon
+                </p>
+              </motion.div>
+            </div>
+          </section>
+
           {/* Testimonials Section */}
           <section className="relative py-24 px-4">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
@@ -526,165 +588,6 @@ const Index = () => {
                       <p className="font-semibold text-white">{testimonial.name}</p>
                       <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* App Download Section */}
-          <section className="relative py-24 px-4 bg-white/[0.02]">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-            <div className="relative z-10 max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Get <AppNameColored /> on Your Device
-                </h2>
-                <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                  Be among the first to experience decision-making made simple. Download on iOS when we launch!
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
-                    disabled
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
-                  >
-                    <Download className="w-5 h-5" />
-                    <span>App Store</span>
-                    <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
-                  </button>
-
-                  <button
-                    disabled
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
-                  >
-                    <Globe className="w-5 h-5" />
-                    <span>Google Play</span>
-                    <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
-                  </button>
-                </div>
-
-                <p className="mt-6 text-sm text-muted-foreground">
-                  Join {Math.floor(Math.random() * 500 + 1200)}+ others on the waitlist
-                </p>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* Donation Section */}
-          <section className="relative py-24 px-4">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-            <div className="relative z-10 max-w-3xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="p-8 md:p-12 rounded-3xl border border-[#6E9EEB]/30 bg-gradient-to-br from-[#6E9EEB]/5 to-transparent"
-              >
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <Heart className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    Support <AppNameColored />
-                  </h2>
-                </div>
-
-                <p className="text-muted-foreground text-center mb-8 text-lg">
-                  I need money to publish this app in Apple's App Store and to pay for Apple's Developer Program.
-                  Your support helps bring <AppNamePlain /> to life!
-                </p>
-
-                <div className="mb-8">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-white font-medium">${donationAmount} raised</span>
-                    <span className="text-muted-foreground">Goal: ${GOAL_AMOUNT}</span>
-                  </div>
-                  <div className="h-6 rounded-full bg-white/10 overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full bg-[#6e9eeb]"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${progressPercentage}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.3 }}
-                    />
-                  </div>
-                  <p className="text-center text-sm text-muted-foreground mt-2">
-                    {progressPercentage.toFixed(0)}% funded
-                  </p>
-                </div>
-
-                <div className="flex justify-center">
-                  <button
-                    disabled
-                    className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#6E9EEB] hover:bg-[#5a8bd6] text-white font-semibold text-lg transition-all shadow-[0_0_20px_rgba(110,158,235,0.4)] hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] cursor-not-allowed opacity-70"
-                  >
-                    <Heart className="w-5 h-5 fill-white" />
-                    <span>Donate with Stripe</span>
-                  </button>
-                </div>
-
-                <p className="text-center text-xs text-muted-foreground mt-4">
-                  Stripe payment link coming soon
-                </p>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* FAQ Section */}
-          <section className="relative py-24 px-4 bg-white/[0.02]">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-            <div className="relative z-10 max-w-3xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-16"
-              >
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                  Frequently Asked <span className="text-[#6E9EEB]">Questions</span>
-                </h2>
-              </motion.div>
-
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
-                  >
-                    <button
-                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                      className="w-full flex items-center justify-between p-5 text-left"
-                    >
-                      <span className="font-medium text-white">{faq.question}</span>
-                      {openFaq === index ? (
-                        <ChevronUp className="w-5 h-5 text-[#6E9EEB] flex-shrink-0" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openFaq === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <p className="px-5 pb-5 text-muted-foreground">{faq.answer}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </motion.div>
                 ))}
               </div>
@@ -749,6 +652,159 @@ const Index = () => {
             </div>
           </section>
 
+          {/* App Download Section */}
+          <section className="relative py-24 px-4 bg-white/[0.02]">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-4xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  Get <AppNameColored /> on Your Device
+                </h2>
+                <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
+                  Be among the first to experience decision-making made simple. Download on iOS when we launch!
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button
+                    disabled
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
+                  >
+                    <Download className="w-5 h-5" />
+                    <span>App Store</span>
+                    <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
+                  </button>
+
+                  <button
+                    disabled
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all cursor-not-allowed opacity-70"
+                  >
+                    <Globe className="w-5 h-5" />
+                    <span>Google Play</span>
+                    <span className="text-xs text-muted-foreground ml-1">(Coming Soon)</span>
+                  </button>
+                </div>
+
+                <p className="mt-6 text-sm text-muted-foreground">
+                  Join {displayCount.toLocaleString()}+ others on the waitlist
+                </p>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="relative py-24 px-4 bg-white/[0.02]">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  Frequently Asked <span className="text-[#6E9EEB]">Questions</span>
+                </h2>
+              </motion.div>
+
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden"
+                  >
+                    <button
+                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                      className="w-full flex items-center justify-between p-5 text-left"
+                    >
+                      <span className="font-medium text-white">{faq.question}</span>
+                      {openFaq === index ? (
+                        <ChevronUp className="w-5 h-5 text-[#6E9EEB] flex-shrink-0" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                      )}
+                    </button>
+                    <AnimatePresence>
+                      {openFaq === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <p className="px-5 pb-5 text-muted-foreground">{faq.answer}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Final CTA Section */}
+          <section className="relative py-20 px-4 bg-gradient-to-t from-[#6E9EEB]/10 to-transparent">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+            <div className="relative z-10 max-w-3xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  Ready to Make Better Decisions?
+                </h2>
+                <p className="text-muted-foreground text-lg mb-8">
+                  Join thousands of others on the waitlist. Early access is limited.
+                </p>
+                {!isJoined && (
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      className="w-full sm:flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-muted-foreground/50 outline-none focus:border-[#6E9EEB] transition-colors"
+                    />
+                    <CountrySelect value={country} onChange={setCountry} />
+                    <button
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto whitespace-nowrap rounded-xl bg-[#6E9EEB] hover:bg-[#5a8bd6] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(110,158,235,0.4)] transition-all hover:shadow-[0_0_30px_rgba(110,158,235,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? "Joining..." : "Get early access →"}
+                    </button>
+                  </div>
+                )}
+                <div className="flex items-center justify-center gap-4 mt-6 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Shield className="w-3.5 h-3.5 text-green-400" />
+                    <span>No spam</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#6E9EEB]" />
+                    <span>Early access</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 text-yellow-400" />
+                    <span>Free forever</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+
           {/* Footer */}
           <footer className="relative py-12 px-4 border-t border-white/10">
             <div className="max-w-6xl mx-auto">
@@ -771,9 +827,7 @@ const Index = () => {
               </div>
             </div>
           </footer>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </div>
   );
 };
 
