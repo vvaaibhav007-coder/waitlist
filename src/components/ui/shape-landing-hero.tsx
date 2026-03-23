@@ -82,8 +82,8 @@ function HeroGeometric({
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1,
-        delay: 0.5 + i * 0.2,
+        duration: 0.6,
+        delay: i * 0.1,
         ease: [0.25, 0.4, 0.25, 1] as const,
       },
     }),
@@ -97,7 +97,7 @@ function HeroGeometric({
       {/* Floating shapes */}
       <div className="absolute inset-0 overflow-hidden">
         <ElegantShape
-          delay={0.3}
+          delay={0.1}
           width={600}
           height={140}
           rotate={12}
@@ -106,7 +106,7 @@ function HeroGeometric({
           className="-left-[10%] top-[15%] md:left-[-5%]"
         />
         <ElegantShape
-          delay={0.5}
+          delay={0.2}
           width={500}
           height={120}
           rotate={-15}
@@ -114,7 +114,7 @@ function HeroGeometric({
           className="-right-[10%] top-[20%] md:right-[-5%]"
         />
         <ElegantShape
-          delay={0.4}
+          delay={0.15}
           width={300}
           height={80}
           rotate={-8}
@@ -123,7 +123,7 @@ function HeroGeometric({
           className="-left-[5%] bottom-[15%] md:left-[5%]"
         />
         <ElegantShape
-          delay={0.6}
+          delay={0.25}
           width={200}
           height={60}
           rotate={20}
@@ -131,7 +131,7 @@ function HeroGeometric({
           className="-right-[5%] bottom-[20%] md:right-[10%]"
         />
         <ElegantShape
-          delay={0.7}
+          delay={0.3}
           width={150}
           height={40}
           rotate={-25}
@@ -151,10 +151,9 @@ function HeroGeometric({
           variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-muted-foreground/20 px-4 py-1.5"
+          className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-1.5"
         >
-          <Circle className="h-2 w-2 fill-rose-400/80 text-rose-400/80" />
-          <span className="text-sm text-muted-foreground">{badge}</span>
+          <span className="text-sm text-white/80 font-medium">{badge}</span>
         </motion.div>
 
         <motion.div
@@ -163,12 +162,12 @@ function HeroGeometric({
           initial="hidden"
           animate="visible"
         >
-          <h1 className="text-5xl font-bold tracking-tight text-primary-foreground md:text-7xl lg:text-8xl">
-            <span className="bg-gradient-to-b from-primary-foreground to-primary-foreground/80 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
+            <span>
               {title1}
             </span>
             <br />
-            <span className="bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 bg-clip-text text-transparent">
+            <span>
               {title2}
             </span>
           </h1>
