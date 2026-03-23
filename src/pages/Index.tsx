@@ -650,42 +650,54 @@ const Index = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="flex flex-col md:flex-row gap-8 md:gap-16 items-center p-8 md:p-12 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-md"
+                className="grid md:grid-cols-[2fr_1fr] gap-12 p-8 md:p-12 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-md"
               >
-                <div className="w-full md:w-2/5 flex justify-center">
-                  <div className="relative group overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f1219] via-transparent to-transparent z-10 opacity-80" />
-                    <img 
-                      src="/founder_img.png" 
-                      alt="Claritee Founder"
-                      className="w-full max-w-[280px] rounded-2xl md:rounded-[2rem] object-cover aspect-[4/5] filter brightness-90 group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-center w-full">
-                      <p className="text-white font-bold text-xl drop-shadow-md">Vaibhav</p>
-                      <p className="text-[#6E9EEB] text-sm tracking-wide">Builder</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="w-full md:w-3/5 text-center md:text-left">
+                {/* The Letter */}
+                <div>
                   <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-1.5">
                     <Star className="w-4 h-4 text-yellow-500" />
                     <span className="text-sm text-yellow-400 font-medium tracking-wide">Meet the Maker</span>
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
                     A Note From the <span className="text-[#6E9EEB]">Founder</span>
                   </h2>
-                  <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+                  <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
                     <p>
-                      Like many of you, I've lost countless hours paralyzed by difficult choices. I was finding myself constantly second-guessing and wishing I had a structured, objective way to evaluate my options.
+                      Two years ago, I was agonizing over a major life pivot. I spent weeks staring at blank spreadsheets, trying to forcefully logic my way out of a confusing crossroads. I was exhausted, overloaded with advice, and completely paralyzed by the fear of making the "wrong" choice.
                     </p>
                     <p>
-                      <strong className="text-white">That's why I'm building Claritee.</strong> I wanted to create an AI companion that doesn't just give answers, but helps you elegantly break down the trade-offs so you can think clearly.
+                      That's when I realized: <strong className="text-white">our brains aren't built to cleanly juggle dozens of competing variables and emotions at once.</strong> 
                     </p>
                     <p>
-                      I'm incredibly passionate about solving this problem elegantly, and I'd love for you to join me on this journey.
+                      I built <AppNameColored /> to be the objective sounding board I desperately needed. My vision is a world where anyone facing a complex, high-stakes choice can find instant clarity and confidence, powered by unbiased AI analysis. No more second-guessing. No more sleepless nights.
+                    </p>
+                    <p>
+                      We are building a tool that doesn't dictate your path, but elegantly hands you the map. I'm incredibly passionate about solving this problem, and I'd love for you to join me as a Founding Supporter on this journey.
                     </p>
                   </div>
+                  <div className="mt-10">
+                    <p className="font-[Caveat,cursive,sans-serif] text-4xl text-white opacity-90 transform -rotate-2">
+                      Vaibhav
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-2 font-medium tracking-wide uppercase">Founder & Lead Developer</p>
+                  </div>
+                </div>
+
+                {/* Professional Bio */}
+                <div className="md:border-l md:border-white/10 md:pl-12 pt-12 md:pt-0 border-t border-white/10 md:border-t-0 flex flex-col justify-center">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 rounded-2xl bg-[#6E9EEB]/10 flex items-center justify-center border border-[#6E9EEB]/20 mb-6">
+                      <Star className="w-8 h-8 text-[#6E9EEB] fill-[#6E9EEB]/30" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">About Vaibhav</h3>
+                    <p className="text-[#6E9EEB] text-sm font-semibold tracking-wide mb-4">PRODUCT DEVELOPER & AI ENTHUSIAST</p>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed text-sm">
+                    With a rich background in software engineering and product development, Vaibhav has spent the last half-decade building tools that simplify complex human workflows.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed text-sm mt-4">
+                    Combining a deep interest in behavioral psychology with cutting-edge LLM architectures, his core mission is to create technology that actively reduces cognitive load rather than adding to it.
+                  </p>
                 </div>
               </motion.div>
             </div>
