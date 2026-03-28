@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weighted Pros/Cons Calculator — Weight what matters. See who wins.</title>
+  <meta name="description" content="A free, no-login decision-making tool. Enter two options, weight your pros and cons, and instantly see which choice leads. No signup required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --color-bg: #09090F;
+      --color-surface: #111122;
+      --color-surface-secondary: #1E1E30;
+      --color-border: #2A2A44;
+      --color-text-primary: #EEEEFF;
+      --color-text-secondary: #8888AA;
+      --color-accent: #6e9eeb;
+      --color-accent-hover: #5A95FF;
+      --color-green: #00D48C;
+      --color-amber: #FFAD33;
+      --color-red: #FF4560;
+      --color-purple: #7B61FF;
+      --font-ui: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-card: 12px;
+      --radius-input: 8px;
+      --radius-btn: 8px;
+      --transition: 150ms ease;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .header p {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+    }
+
+    /* ===== DECISION INPUT ===== */
+    .decision-section {
+      margin-bottom: 24px;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--color-surface-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-input);
+      color: var(--color-text-primary);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .text-input::placeholder {
+      color: var(--color-text-secondary);
+      opacity: 0.6;
+    }
+
+    .text-input:focus {
+      border-color: var(--color-accent);
+    }
+
+    /* ===== OPTIONS GRID ===== */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+    }
+
+    .option-name-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--color-surface-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-input);
+      color: var(--color-text-primary);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 600;
+      outline: none;
+      margin-bottom: 24px;
+      transition: border-color var(--transition);
+    }
+
+    .option-name-input::placeholder {
+      color: var(--color-text-secondary);
+      opacity: 0.6;
+      font-weight: 400;
+    }
+
+    .option-name-input:focus {
+      border-color: var(--color-accent);
+    }
+
+    /* ===== SECTION LABELS ===== */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .section-label.pros {
+      color: var(--color-green);
+    }
+
+    .section-label.cons {
+      color: var(--color-red);
+    }
+
+    /* ===== FACTOR ROWS ===== */
+    .factors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .factor-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .factor-input {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 12px;
+      background: var(--color-surface-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-input);
+      color: var(--color-text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .factor-input::placeholder {
+      color: var(--color-text-secondary);
+      opacity: 0.5;
+    }
+
+    .factor-input:focus {
+      border-color: var(--color-accent);
+    }
+
+    /* ===== SLIDER ===== */
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .weight-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 80px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--color-surface-secondary);
+      outline: none;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .weight-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--color-accent);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .weight-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 8px rgba(110, 158, 235, 0.4);
+    }
+
+    .weight-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--color-accent);
+      cursor: pointer;
+    }
+
+    .weight-slider::-moz-range-track {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--color-surface-secondary);
+    }
+
+    .weight-value {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      min-width: 16px;
+      text-align: center;
+    }
+
+    /* ===== DELETE BUTTON ===== */
+    .delete-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      color: var(--color-text-secondary);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+
+    .delete-btn:hover {
+      border-color: var(--color-red);
+      color: var(--color-red);
+      background: rgba(255, 69, 96, 0.08);
+    }
+
+    /* ===== ADD BUTTON ===== */
+    .add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-btn);
+      color: var(--color-text-secondary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .add-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .add-btn.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .add-btn .plus-icon {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 20px 0;
+      opacity: 0.5;
+    }
+
+    /* ===== CALCULATE BUTTON ===== */
+    .calculate-btn {
+      width: 100%;
+      padding: 16px 32px;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      letter-spacing: -0.01em;
+    }
+
+    .calculate-btn:hover:not(:disabled) {
+      background: var(--color-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(110, 158, 235, 0.3);
+    }
+
+    .calculate-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .calculate-btn:disabled {
+      background: var(--color-surface-secondary);
+      color: var(--color-text-secondary);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    .results-section {
+      margin-top: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 300ms ease, transform 300ms ease;
+      pointer-events: none;
+    }
+
+    .results-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .results-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .results-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    /* ===== SCORE CARDS ===== */
+    .score-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .score-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .score-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 300ms ease;
+    }
+
+    .score-card.winner {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 24px rgba(110, 158, 235, 0.15), 0 0 0 1px var(--color-accent);
+    }
+
+    .score-card-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 24px;
+    }
+
+    .score-ring-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin-bottom: 16px;
+    }
+
+    .score-ring-svg {
+      width: 140px;
+      height: 140px;
+      transform: rotate(-90deg);
+    }
+
+    .score-ring-bg {
+      fill: none;
+      stroke: var(--color-surface-secondary);
+      stroke-width: 8;
+    }
+
+    .score-ring-progress {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 600ms ease;
+    }
+
+    .score-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .score-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ===== RESULT SUMMARY ===== */
+    .result-summary {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .result-summary p {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      line-height: 1.6;
+    }
+
+    /* ===== ADJUST BUTTON ===== */
+    .adjust-btn {
+      display: block;
+      margin: 0 auto 48px;
+      padding: 12px 32px;
+      background: transparent;
+      border: 1px solid var(--color-accent);
+      border-radius: var(--radius-btn);
+      color: var(--color-accent);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .adjust-btn:hover {
+      background: rgba(110, 158, 235, 0.1);
+      border-color: var(--color-accent-hover);
+      color: var(--color-accent-hover);
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .cta-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .cta-text h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .cta-text p {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 24px;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cta-btn:hover {
+      background: var(--color-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(110, 158, 235, 0.3);
+    }
+
+    /* ===== WINNER BADGE ===== */
+    .winner-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .winner-badge.is-winner {
+      background: rgba(110, 158, 235, 0.15);
+      color: var(--color-accent);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 375px) {
+      .container {
+        padding: 24px 16px 60px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .factor-row {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .factor-input {
+        width: 100%;
+        flex: unset;
+      }
+
+      .slider-wrapper {
+        flex: 1;
+      }
+
+      .weight-slider {
+        flex: 1;
+      }
+
+      .score-number {
+        font-size: 36px;
+      }
+
+      .score-ring-wrapper {
+        width: 120px;
+        height: 120px;
+      }
+
+      .score-ring-svg {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="page-header">
+      <h1>Weighted Pros/Cons Calculator</h1>
+      <p>Weight what matters. See who wins.</p>
+    </header>
+
+    <!-- ===== FORM SECTION ===== -->
+    <section id="input-form">
+      <!-- Decision Question -->
+      <div class="decision-section card">
+        <label class="input-label" for="decision-input">Your Decision</label>
+        <input
+          type="text"
+          id="decision-input"
+          class="text-input"
+          placeholder="e.g. Should I take the new job offer?"
+          autocomplete="off"
+        >
+      </div>
+
+      <!-- Options Grid -->
+      <div class="options-grid" id="options-grid">
+        <!-- Option A -->
+        <div class="option-card" id="option-a-card">
+          <input
+            type="text"
+            class="option-name-input"
+            id="option-a-name"
+            placeholder="Option A"
+            autocomplete="off"
+            data-option="a"
+          >
+
+          <!-- Pros Section -->
+          <div class="section-label pros">PROS</div>
+          <div class="factors-list" id="option-a-pros"></div>
+          <button class="add-btn" id="add-pro-a" onclick="addFactor('a', 'pros')">
+            <span class="plus-icon">+</span> Add Pro
+          </button>
+
+          <div class="section-divider"></div>
+
+          <!-- Cons Section -->
+          <div class="section-label cons">CONS</div>
+          <div class="factors-list" id="option-a-cons"></div>
+          <button class="add-btn" id="add-con-a" onclick="addFactor('a', 'cons')">
+            <span class="plus-icon">+</span> Add Con
+          </button>
+        </div>
+
+        <!-- Option B -->
+        <div class="option-card" id="option-b-card">
+          <input
+            type="text"
+            class="option-name-input"
+            id="option-b-name"
+            placeholder="Option B"
+            autocomplete="off"
+            data-option="b"
+          >
+
+          <!-- Pros Section -->
+          <div class="section-label pros">PROS</div>
+          <div class="factors-list" id="option-b-pros"></div>
+          <button class="add-btn" id="add-pro-b" onclick="addFactor('b', 'pros')">
+            <span class="plus-icon">+</span> Add Pro
+          </button>
+
+          <div class="section-divider"></div>
+
+          <!-- Cons Section -->
+          <div class="section-label cons">CONS</div>
+          <div class="factors-list" id="option-b-cons"></div>
+          <button class="add-btn" id="add-con-b" onclick="addFactor('b', 'cons')">
+            <span class="plus-icon">+</span> Add Con
+          </button>
+        </div>
+      </div>
+
+      <!-- Calculate Button -->
+      <button class="calculate-btn" id="calculate-btn" disabled onclick="calculateWinner()">
+        Calculate Winner
+      </button>
+    </section>
+
+    <!-- ===== RESULTS SECTION ===== -->
+    <section class="results-section" id="results-section">
+      <div class="results-header">
+        <h2>Decision Outcome</h2>
+      </div>
+
+      <div class="score-cards-grid" id="score-cards-grid">
+        <!-- Score Card A -->
+        <div class="score-card" id="score-card-a">
+          <span class="winner-badge" id="badge-a"></span>
+          <div class="score-card-name" id="score-name-a">Option A</div>
+          <div class="score-ring-wrapper">
+            <svg class="score-ring-svg" viewBox="0 0 140 140">
+              <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
+              <circle class="score-ring-progress" id="ring-a" cx="70" cy="70" r="58"
+                stroke-dasharray="364.42" stroke-dashoffset="364.42"></circle>
+            </svg>
+            <div class="score-number" id="score-a">0</div>
+          </div>
+          <div class="score-label" id="label-a">—</div>
+        </div>
+
+        <!-- Score Card B -->
+        <div class="score-card" id="score-card-b">
+          <span class="winner-badge" id="badge-b"></span>
+          <div class="score-card-name" id="score-name-b">Option B</div>
+          <div class="score-ring-wrapper">
+            <svg class="score-ring-svg" viewBox="0 0 140 140">
+              <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
+              <circle class="score-ring-progress" id="ring-b" cx="70" cy="70" r="58"
+                stroke-dasharray="364.42" stroke-dashoffset="364.42"></circle>
+            </svg>
+            <div class="score-number" id="score-b">0</div>
+          </div>
+          <div class="score-label" id="label-b">—</div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="result-summary" id="result-summary">
+        <p></p>
+      </div>
+
+      <!-- Adjust Button -->
+      <button class="adjust-btn" id="adjust-btn" onclick="scrollToForm()">
+        Adjust Weights
+      </button>
+
+      <!-- CTA Banner -->
+      <div class="cta-banner" id="cta-banner">
+        <div class="cta-text">
+          <h3>Want the full 9-step decision analysis?</h3>
+          <p>Clarity.ai is launching soon — join the waitlist for early access.</p>
+        </div>
+        <a href="https://clariteeai.me" class="cta-btn" target="_blank" rel="noopener noreferrer">
+          Join the Waitlist →
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ===== STATE =====
+    const MAX_FACTORS = 5;
+    const state = {
+      a: { pros: [], cons: [] },
+      b: { pros: [], cons: [] }
+    };
+    let factorIdCounter = 0;
+
+    // ===== INITIALIZATION =====
+    function init() {
+      addFactor('a', 'pros');
+      addFactor('a', 'cons');
+      addFactor('b', 'pros');
+      addFactor('b', 'cons');
+      validateForm();
+    }
+
+    // ===== ADD FACTOR =====
+    function addFactor(option, type) {
+      const list = state[option][type];
+      if (list.length >= MAX_FACTORS) return;
+
+      const id = ++factorIdCounter;
+      list.push({ id, text: '', weight: 3 });
+      renderFactors(option, type);
+      updateAddButtons();
+      validateForm();
+    }
+
+    // ===== DELETE FACTOR =====
+    function deleteFactor(option, type, id) {
+      const list = state[option][type];
+      if (list.length <= 1) return; // min 1
+      const idx = list.findIndex(f => f.id === id);
+      if (idx !== -1) list.splice(idx, 1);
+      renderFactors(option, type);
+      updateAddButtons();
+      validateForm();
+    }
+
+    // ===== RENDER FACTORS =====
+    function renderFactors(option, type) {
+      const container = document.getElementById(`option-${option}-${type}`);
+      const list = state[option][type];
+
+      container.innerHTML = list.map(factor => `
+        <div class="factor-row" data-factor-id="${factor.id}">
+          <input
+            type="text"
+            class="factor-input"
+            placeholder="${type === 'pros' ? 'Add a pro...' : 'Add a con...'}"
+            value="${escapeHtml(factor.text)}"
+            oninput="updateFactorText('${option}', '${type}', ${factor.id}, this.value)"
+            autocomplete="off"
+          >
+          <div class="slider-wrapper">
+            <input
+              type="range"
+              class="weight-slider"
+              min="1"
+              max="5"
+              step="1"
+              value="${factor.weight}"
+              oninput="updateFactorWeight('${option}', '${type}', ${factor.id}, this.value, this)"
+            >
+            <span class="weight-value">${factor.weight}</span>
+          </div>
+          <button
+            class="delete-btn"
+            onclick="deleteFactor('${option}', '${type}', ${factor.id})"
+            title="Remove"
+            ${list.length <= 1 ? 'style="opacity:0.25;pointer-events:none"' : ''}
+          >×</button>
+        </div>
+      `).join('');
+
+      // Apply slider fill styling to all sliders
+      container.querySelectorAll('.weight-slider').forEach(slider => {
+        applySliderFill(slider);
+      });
+    }
+
+    // ===== UPDATE FACTOR =====
+    function updateFactorText(option, type, id, value) {
+      const factor = state[option][type].find(f => f.id === id);
+      if (factor) factor.text = value;
+      validateForm();
+    }
+
+    function updateFactorWeight(option, type, id, value, slider) {
+      const factor = state[option][type].find(f => f.id === id);
+      if (factor) factor.weight = parseInt(value);
+      slider.parentElement.querySelector('.weight-value').textContent = value;
+      applySliderFill(slider);
+      validateForm();
+    }
+
+    // ===== SLIDER FILL =====
+    function applySliderFill(slider) {
+      const min = parseInt(slider.min);
+      const max = parseInt(slider.max);
+      const val = parseInt(slider.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      slider.style.background = `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${pct}%, var(--color-surface-secondary) ${pct}%, var(--color-surface-secondary) 100%)`;
+    }
+
+    // ===== ADD BUTTON STATE =====
+    function updateAddButtons() {
+      ['a', 'b'].forEach(option => {
+        ['pros', 'cons'].forEach(type => {
+          const btn = document.getElementById(`add-${type === 'pros' ? 'pro' : 'con'}-${option}`);
+          if (state[option][type].length >= MAX_FACTORS) {
+            btn.classList.add('disabled');
+          } else {
+            btn.classList.remove('disabled');
+          }
+        });
+      });
+    }
+
+    // ===== VALIDATION =====
+    function validateForm() {
+      const nameA = document.getElementById('option-a-name').value.trim();
+      const nameB = document.getElementById('option-b-name').value.trim();
+
+      const allFactorsHaveText = ['a', 'b'].every(option =>
+        ['pros', 'cons'].every(type =>
+          state[option][type].every(f => f.text.trim() !== '')
+        )
+      );
+
+      const hasMinFactors = ['a', 'b'].every(option =>
+        state[option].pros.length >= 1 && state[option].cons.length >= 1
+      );
+
+      const isValid = nameA !== '' && nameB !== '' && allFactorsHaveText && hasMinFactors;
+      document.getElementById('calculate-btn').disabled = !isValid;
+    }
+
+    // ===== SCORING LOGIC =====
+    function calculateWinner() {
+      const nameA = document.getElementById('option-a-name').value.trim();
+      const nameB = document.getElementById('option-b-name').value.trim();
+
+      // Raw score for each option
+      function rawScore(option) {
+        const pros = state[option].pros;
+        const cons = state[option].cons;
+        const proAvg = pros.reduce((sum, f) => sum + f.weight, 0) / pros.length;
+        const conAvg = cons.reduce((sum, f) => sum + f.weight, 0) / cons.length;
+        return proAvg - conAvg;
+      }
+
+      const rawA = rawScore('a');
+      const rawB = rawScore('b');
+
+      // Normalize against absolute scale
+      // Theoretical range: best = 5 - 1 = 4, worst = 1 - 5 = -4
+      // Decision Strength = ((raw + 4) / 8) × 100, clamped to [0, 100]
+      function normalizeScore(raw) {
+        return Math.round(Math.min(100, Math.max(0, ((raw + 4) / 8) * 100)));
+      }
+
+      const scoreA = normalizeScore(rawA);
+      const scoreB = normalizeScore(rawB);
+
+      // Display results
+      showResults(nameA, nameB, scoreA, scoreB);
+    }
+
+    // ===== SHOW RESULTS =====
+    function showResults(nameA, nameB, scoreA, scoreB) {
+      const section = document.getElementById('results-section');
+      const cardA = document.getElementById('score-card-a');
+      const cardB = document.getElementById('score-card-b');
+
+      // Set names
+      document.getElementById('score-name-a').textContent = nameA;
+      document.getElementById('score-name-b').textContent = nameB;
+
+      // Determine winner
+      const aWins = scoreA > scoreB;
+      const bWins = scoreB > scoreA;
+      const tie = scoreA === scoreB;
+
+      cardA.classList.toggle('winner', aWins);
+      cardB.classList.toggle('winner', bWins);
+
+      // Badges
+      const badgeA = document.getElementById('badge-a');
+      const badgeB = document.getElementById('badge-b');
+      badgeA.textContent = aWins ? 'WINNER' : '';
+      badgeB.textContent = bWins ? 'WINNER' : '';
+      badgeA.className = 'winner-badge' + (aWins ? ' is-winner' : '');
+      badgeB.className = 'winner-badge' + (bWins ? ' is-winner' : '');
+
+      // Get ring colors and labels
+      function getScoreInfo(score) {
+        if (score >= 85) return { color: 'var(--color-green)', label: 'Clear Leader' };
+        if (score >= 65) return { color: 'var(--color-accent)', label: 'Strong Choice' };
+        if (score >= 45) return { color: 'var(--color-amber)', label: 'Competitive' };
+        return { color: 'var(--color-purple)', label: 'Marginal' };
+      }
+
+      const infoA = getScoreInfo(scoreA);
+      const infoB = getScoreInfo(scoreB);
+
+      // Set labels
+      document.getElementById('label-a').textContent = infoA.label;
+      document.getElementById('label-b').textContent = infoB.label;
+
+      // Set ring colors
+      document.getElementById('ring-a').style.stroke = infoA.color;
+      document.getElementById('ring-b').style.stroke = infoB.color;
+
+      // Animate ring and score
+      const circumference = 2 * Math.PI * 58; // ~364.42
+
+      // Show section first
+      section.classList.add('visible');
+
+      // Smooth scroll to results
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+
+      // Animate scores
+      animateScore('score-a', 'ring-a', scoreA, circumference, infoA.color);
+      animateScore('score-b', 'ring-b', scoreB, circumference, infoB.color);
+
+      // Summary
+      const margin = Math.abs(scoreA - scoreB);
+      const summaryEl = document.getElementById('result-summary').querySelector('p');
+      if (margin > 5) {
+        const winnerName = aWins ? nameA : nameB;
+        summaryEl.textContent = `${winnerName} leads with a ${margin}-point margin.`;
+      } else {
+        summaryEl.textContent = 'These options are closely matched. Adjusting weights may shift the result.';
+      }
+    }
+
+    // ===== ANIMATE SCORE =====
+    function animateScore(scoreElId, ringElId, targetScore, circumference, color) {
+      const scoreEl = document.getElementById(scoreElId);
+      const ringEl = document.getElementById(ringElId);
+
+      const duration = 400;
+      const startTime = performance.now();
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        const currentScore = Math.round(eased * targetScore);
+        scoreEl.textContent = currentScore;
+
+        const dashOffset = circumference - (circumference * (eased * targetScore) / 100);
+        ringEl.style.strokeDashoffset = dashOffset;
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      // Reset
+      scoreEl.textContent = '0';
+      ringEl.style.strokeDashoffset = circumference;
+
+      requestAnimationFrame(step);
+    }
+
+    // ===== SCROLL TO FORM =====
+    function scrollToForm() {
+      document.getElementById('page-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== UTILITY =====
+    function escapeHtml(str) {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return str.replace(/[&<>"']/g, c => map[c]);
+    }
+
+    // ===== INPUT LISTENERS =====
+    document.getElementById('option-a-name').addEventListener('input', validateForm);
+    document.getElementById('option-b-name').addEventListener('input', validateForm);
+
+    // ===== START =====
+    init();
+  </script>
+</body>
+</html>
