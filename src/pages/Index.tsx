@@ -924,8 +924,8 @@ const Index = () => {
                 </div>
 
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <a href="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</a>
-                  <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                  <a href="https://clariteeai.me/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</a>
+                  <a href="https://clariteeai.me/terms" className="hover:text-white transition-colors">Terms of Service</a>
                   <a href="#" className="hover:text-white transition-colors">Contact</a>
                 </div>
 
