@@ -35,7 +35,7 @@ const AppNameColored = () => (
 const Landing = () => {
   return (
     <div className="bg-void min-h-screen selection:bg-[#6e9eeb]/30 text-white font-sans overflow-x-hidden">
-      
+
       {/* Bloom-style Full Screen Hero */}
       <section className="relative min-h-screen w-full flex flex-col lg:flex-row overflow-hidden">
         {/* Background Video */}
@@ -48,14 +48,14 @@ const Landing = () => {
         >
           <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4" type="video/mp4" />
         </video>
-        
+
         {/* WebGL Shader Background Overlay (Tinted #6e9eeb) */}
         <WebGLShader />
 
         {/* Left Panel */}
         <div className="relative z-10 w-full lg:w-[52%] flex flex-col p-4 lg:p-6 min-h-screen">
           <div className="liquid-glass-strong absolute inset-4 lg:inset-6 rounded-3xl z-[-1]" />
-          
+
           <div className="flex justify-between items-center p-4 lg:p-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-[#6e9eeb]/20 flex items-center justify-center border border-[#6e9eeb]/50">
@@ -65,7 +65,7 @@ const Landing = () => {
                 claritee
               </span>
             </div>
-            
+
             <button className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-transform">
               <Menu className="w-5 h-5 text-white" />
             </button>
@@ -75,15 +75,15 @@ const Landing = () => {
             <div className="w-20 h-20 rounded-3xl bg-[#6e9eeb]/20 flex items-center justify-center border border-[#6e9eeb]/40 mb-8 backdrop-blur-md">
               <Brain className="w-10 h-10 text-[#6e9eeb]" />
             </div>
-            
+
             <h1 className="text-6xl lg:text-7xl font-medium tracking-[-0.05em] text-white leading-[1.1] mb-8 font-['Poppins']">
-              Stop guessing. <br/>
+              Stop guessing. <br />
               <em className="font-['Source_Serif_4'] italic text-white/80">Start deciding.</em>
             </h1>
-            
+
             <div className="flex flex-wrap items-center gap-4 mb-8">
-              <LiquidButton 
-                size="xl" 
+              <LiquidButton
+                size="xl"
                 className="rounded-full font-['Poppins']"
                 onClick={() => document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' })}
               >
@@ -93,7 +93,7 @@ const Landing = () => {
                 Download
               </LiquidButton>
             </div>
-            
+
             <div className="flex flex-wrap gap-3 mb-12">
               <div className="liquid-glass px-4 py-2 rounded-full text-xs text-white/80 font-['Poppins']">Career</div>
               <div className="liquid-glass px-4 py-2 rounded-full text-xs text-white/80 font-['Poppins']">Business</div>
@@ -111,7 +111,7 @@ const Landing = () => {
             </p>
             <div className="flex items-center gap-4 mt-2">
               <div className="h-px bg-white/20 w-8" />
-              <span className="text-xs tracking-widest uppercase text-white/60 font-['Poppins']">MARCUS AURELIO</span>
+              <span className="text-xs tracking-widest uppercase text-white/60 font-['Poppins']"> VAIBHAV, FOUNDER OF CLARITEE </span>
               <div className="h-px bg-white/20 w-8" />
             </div>
           </div>
@@ -121,13 +121,13 @@ const Landing = () => {
         <div className="relative z-10 hidden lg:flex w-[48%] flex-col justify-between p-6">
           <div className="flex justify-between items-center w-full">
             <div className="liquid-glass rounded-full flex items-center gap-2 p-1.5 pr-4">
-              <a href="https://x.com/VaibhavRaj009" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Twitter className="w-4 h-4"/></a>
-              <a href="https://www.linkedin.com/in/vaibhav-raj09/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Linkedin className="w-4 h-4"/></a>
-              <button onClick={() => toast("Instagram coming soon!")} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Instagram className="w-4 h-4"/></button>
+              <a href="https://x.com/VaibhavRaj009" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Twitter className="w-4 h-4" /></a>
+              <a href="https://www.linkedin.com/in/vaibhav-raj09/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Linkedin className="w-4 h-4" /></a>
+              <button onClick={() => toast("Instagram coming soon!")} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Instagram className="w-4 h-4" /></button>
               <div className="w-px h-6 bg-white/20 mx-2" />
               <ArrowRight className="w-5 h-5 text-white/80" />
             </div>
-            
+
             <button className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-transform">
               <Sparkles className="w-5 h-5 text-[#6e9eeb]" />
             </button>
@@ -153,7 +153,7 @@ const Landing = () => {
                 <span className="text-white text-sm font-medium mt-1 font-['Poppins']">Decision History</span>
               </div>
             </div>
-            
+
             <div className="liquid-glass rounded-[2rem] p-3 flex items-center gap-4 hover:scale-[1.01] transition-transform cursor-pointer">
               <div className="w-24 h-16 rounded-2xl bg-white/10 overflow-hidden shrink-0">
                 <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" alt="Thumbnail" className="w-full h-full object-cover" />
@@ -173,7 +173,7 @@ const Landing = () => {
       {/* The Problem Section */}
       <section id="problem" className="relative py-32 px-4 border-t border-white/5 bg-void">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-        
+
         <div className="relative z-10 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -246,7 +246,7 @@ const Landing = () => {
               <span className="text-sm text-[#6E9EEB] font-medium tracking-wide uppercase font-['Poppins']">How It Works</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-medium text-white mb-6 font-['Poppins']">
-              From confusion to clarity <br className="hidden md:block"/> in nine structured steps.
+              From confusion to clarity <br className="hidden md:block" /> in nine structured steps.
             </h2>
           </motion.div>
 
@@ -292,7 +292,7 @@ const Landing = () => {
       {/* Pricing Section (Bento) */}
       <section id="pricing" className="relative py-32 px-4 bg-void">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(110,158,235,0.05)_0%,transparent_100%)] pointer-events-none" />
-        
+
         <div className="relative z-10 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -329,8 +329,8 @@ const Landing = () => {
             <p className="text-lg md:text-xl text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto font-['Poppins']">
               Built by one person who was tired of making decisions based on spreadsheets, gut feelings, and infinite browser tabs. We're on a mission to bring mathematical rigor and AI intelligence to personal and professional strategy.
             </p>
-            <a 
-              href="mailto:support@clariteeai.me" 
+            <a
+              href="mailto:support@clariteeai.me"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white font-['Poppins']"
             >
               <Mail className="w-4 h-4 text-white/60" />
@@ -351,11 +351,11 @@ const Landing = () => {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-medium text-white tracking-tight mb-8 font-['Poppins']">
-              Make your next decision <br/> your <em className="font-['Source_Serif_4'] italic text-white/90">best decision.</em>
+              Make your next decision <br /> your <em className="font-['Source_Serif_4'] italic text-white/90">best decision.</em>
             </h2>
             <Link to="/waitlist" className="inline-block mt-4">
               <LiquidButton size="xl" className="font-['Poppins'] bg-[#6E9EEB] text-[#09090F] hover:bg-[#6E9EEB]/90 font-semibold border-none">
-                Join the waitlist today <ArrowRight className="w-5 h-5 ml-2"/>
+                Join the waitlist today <ArrowRight className="w-5 h-5 ml-2" />
               </LiquidButton>
             </Link>
           </motion.div>
