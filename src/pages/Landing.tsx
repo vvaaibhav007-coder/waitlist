@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
+import { toast } from "sonner";
 import { BentoPricing } from "@/components/ui/bento-pricing";
 
 const AppNameColored = () => (
@@ -81,11 +82,15 @@ const Landing = () => {
             </h1>
             
             <div className="flex flex-wrap items-center gap-4 mb-8">
-              <LiquidButton size="xl" className="rounded-full font-['Poppins']">
+              <LiquidButton 
+                size="xl" 
+                className="rounded-full font-['Poppins']"
+                onClick={() => document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
                   <Download className="w-4 h-4 text-white" />
                 </div>
-                Explore Now
+                Download
               </LiquidButton>
             </div>
             
@@ -116,9 +121,9 @@ const Landing = () => {
         <div className="relative z-10 hidden lg:flex w-[48%] flex-col justify-between p-6">
           <div className="flex justify-between items-center w-full">
             <div className="liquid-glass rounded-full flex items-center gap-2 p-1.5 pr-4">
-              <a href="#" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Twitter className="w-4 h-4"/></a>
-              <a href="#" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Linkedin className="w-4 h-4"/></a>
-              <a href="#" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Instagram className="w-4 h-4"/></a>
+              <a href="https://x.com/VaibhavRaj009" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Twitter className="w-4 h-4"/></a>
+              <a href="https://www.linkedin.com/in/vaibhav-raj09/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Linkedin className="w-4 h-4"/></a>
+              <button onClick={() => toast("Instagram coming soon!")} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Instagram className="w-4 h-4"/></button>
               <div className="w-px h-6 bg-white/20 mx-2" />
               <ArrowRight className="w-5 h-5 text-white/80" />
             </div>
@@ -336,7 +341,7 @@ const Landing = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-32 px-4 border-t border-white/5 overflow-hidden bg-void">
+      <section id="waitlist-cta" className="relative py-32 px-4 border-t border-white/5 overflow-hidden bg-void">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#6E9EEB]/5 blur-[100px] rounded-[100%] pointer-events-none" />
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div
