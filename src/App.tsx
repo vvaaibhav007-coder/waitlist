@@ -7,6 +7,8 @@ import Index from "./pages/Index.tsx";
 import PrivacyPolicy from "./pages/website/PrivacyPolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
+import Landing from "./pages/Landing.tsx";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -16,7 +18,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/waitlist" element={<Index />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
