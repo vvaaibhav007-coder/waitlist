@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Readiness Checker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #09090F;
+            --color-surface: #111122;
+            --color-surface-secondary: #1E1E30;
+            --color-border: #2A2A44;
+            --color-text-primary: #EEEEFF;
+            --color-text-secondary: #8888AA;
+            --color-accent: #6E9EEB;
+            --color-accent-hover: #5A95FF;
+            --color-green: #00D48C;
+            --color-amber: #FFAD33;
+            --color-red: #FF4560;
+            --color-purple: #7B61FF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Screen 1: Intro */
+        .intro-container {
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: var(--color-accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Screen 2: Questions */
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--color-border);
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--color-accent);
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            cursor: pointer;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-primary);
+            text-align: left;
+        }
+
+        .option-card:hover {
+            border-color: var(--color-text-secondary);
+            background-color: var(--color-surface-secondary);
+        }
+
+        .option-card.selected {
+            border-color: var(--color-accent);
+            background-color: rgba(110, 158, 235, 0.1); 
+        }
+
+        /* Screen 3: Results */
+        .result-container {
+            align-items: center;
+            text-align: center;
+        }
+
+        .score-ring-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin-bottom: 32px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .score-ring {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-ring-bg {
+            fill: none;
+            stroke: var(--color-surface-secondary);
+            stroke-width: 16;
+        }
+
+        .score-ring-fill {
+            fill: none;
+            stroke: var(--color-accent); /* Updated dynamically */
+            stroke-width: 16;
+            stroke-linecap: round;
+            stroke-dasharray: 502; /* 2 * PI * r (r=80 roughly for viewBox 200) */
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .result-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+        }
+
+        .result-message {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            max-width: 480px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .share-nudge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .share-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        .share-btn {
+            background: none;
+            color: var(--color-accent);
+            width: auto;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .share-btn:hover {
+            background: none;
+            color: var(--color-accent-hover);
+        }
+
+        .cta-banner {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cta-line1 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .cta-line2 {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .cta-banner button {
+            font-size: 14px;
+            width: auto;
+            align-self: center;
+            padding: 12px 32px;
+        }
+        
+        .cta-banner a {
+            text-decoration: none;
+        }
+
+        .retake-btn {
+            background: none;
+            color: var(--color-text-secondary);
+            font-weight: 400;
+            width: auto;
+            margin: 0 auto;
+            padding: 8px 16px;
+        }
+
+        .retake-btn:hover {
+            background: none;
+            color: var(--color-text-primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Screen 1: Intro -->
+        <div id="screen-intro" class="screen intro-container active visible">
+            <h1>Decision Readiness Checker</h1>
+            <p class="subtitle">Answer 5 questions. Find out if you're ready to decide.</p>
+            <button onclick="startCheck()">Start</button>
+        </div>
+
+        <!-- Screen 2: Questions -->
+        <div id="screen-questions" class="screen">
+            <div class="progress-dots" id="dots-container">
+                <!-- Dots generated by JS -->
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="options-grid" id="options-container">
+                <!-- Options generated by JS -->
+            </div>
+        </div>
+
+        <!-- Screen 3: Results -->
+        <div id="screen-results" class="screen result-container">
+            <div class="score-ring-container">
+                <svg class="score-ring" viewBox="0 0 200 200">
+                    <!-- r=88 implies circumference = 2 * PI * 88 = 552.92. Stroke dasharray requires update. -->
+                    <circle class="score-ring-bg" cx="100" cy="100" r="88" />
+                    <circle class="score-ring-fill" id="ring-fill" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="553" />
+                </svg>
+                <div class="score-text" id="score-text">0</div>
+            </div>
+            
+            <div class="result-label" id="result-label">Analyzing...</div>
+            <div class="result-message" id="result-message"></div>
+
+            <div class="share-nudge">
+                <span class="share-text">Know someone stuck in a decision loop?</span>
+                <button class="share-btn" onclick="shareTool()">Share this tool</button>
+            </div>
+
+            <div class="cta-banner">
+                <div class="cta-line1">Ready to structure your actual decision?</div>
+                <div class="cta-line2">Claritee is launching soon — join the waitlist for early access.</div>
+                <a href="https://clariteeai.me">
+                    <button>Join the Waitlist &rarr;</button>
+                </a>
+            </div>
+
+            <button class="retake-btn" onclick="resetCheck()">Retake</button>
+        </div>
+    </div>
+
+    <script>
+        const THEME = {
+            green: '#00D48C',
+            accent: '#6E9EEB',
+            amber: '#FFAD33',
+            red: '#FF4560'
+        };
+
+        const QUESTIONS = [
+            {
+                text: "How much do you know about your options?",
+                options: [
+                    { label: "I've researched them thoroughly", points: 4 },
+                    { label: "I know the basics", points: 3 },
+                    { label: "I have a rough idea", points: 2 },
+                    { label: "I'm still figuring out what my options are", points: 1 }
+                ]
+            },
+            {
+                text: "How reversible is this decision?",
+                options: [
+                    { label: "Easily reversible — I can change course anytime", points: 4 },
+                    { label: "Somewhat reversible with some effort", points: 3 },
+                    { label: "Difficult to reverse once made", points: 2 },
+                    { label: "Completely irreversible", points: 1 }
+                ]
+            },
+            {
+                text: "How are you feeling about making this decision right now?",
+                options: [
+                    { label: "Clear-headed and calm", points: 4 },
+                    { label: "Slightly anxious but focused", points: 3 },
+                    { label: "Overwhelmed and stressed", points: 2 },
+                    { label: "Emotionally charged — I can't think straight", points: 1 }
+                ]
+            },
+            {
+                text: "Do you know what matters most to you in this decision?",
+                options: [
+                    { label: "Yes — my priorities are clear", points: 4 },
+                    { label: "Mostly — a few things are still unclear", points: 3 },
+                    { label: "Not really — everything feels equally important", points: 2 },
+                    { label: "No — I haven't thought about it yet", points: 1 }
+                ]
+            },
+            {
+                text: "How long have you been sitting on this decision?",
+                options: [
+                    { label: "Just started thinking about it", points: 2 },
+                    { label: "A few days", points: 4 },
+                    { label: "A few weeks", points: 3 },
+                    { label: "Months — I keep going in circles", points: 1 }
+                ]
+            }
+        ];
+
+        let currentIndex = 0;
+        let totalScore = 0;
+        let isTransitioning = false;
+
+        const screens = {
+            intro: document.getElementById('screen-intro'),
+            questions: document.getElementById('screen-questions'),
+            results: document.getElementById('screen-results')
+        };
+
+        // Screen transition logic
+        function goScreen(toScreenId) {
+            Object.values(screens).forEach(s => {
+                if(s.classList.contains('active')) {
+                    s.classList.remove('visible');
+                    setTimeout(() => {
+                        s.classList.remove('active');
+                    }, 300);
+                }
+            });
+
+            setTimeout(() => {
+                const target = screens[toScreenId];
+                target.classList.add('active');
+                
+                // Allow display flex to apply before transitioning opacity
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        target.classList.add('visible');
+                    });
+                });
+            }, 300);
+        }
+
+        // Initialize / Start
+        function startCheck() {
+            currentIndex = 0;
+            totalScore = 0;
+            renderQuestion();
+            goScreen('questions');
+        }
+
+        // Render Current Question
+        function renderQuestion() {
+            isTransitioning = false;
+            const q = QUESTIONS[currentIndex];
+            
+            // Render dots
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < QUESTIONS.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentIndex ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            }
+
+            // Render text
+            document.getElementById('question-text').innerText = q.text;
+
+            // Render options
+            const optionsContainer = document.getElementById('options-container');
+            // Fade out current options before injecting new ones
+            optionsContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                optionsContainer.innerHTML = '';
+                q.options.forEach((opt) => {
+                    const card = document.createElement('div');
+                    card.className = 'option-card';
+                    card.innerText = opt.label;
+                    card.onclick = () => selectOption(card, opt.points);
+                    optionsContainer.appendChild(card);
+                });
+                optionsContainer.style.transition = 'opacity 0.2s';
+                optionsContainer.style.opacity = '1';
+            }, 150);
+        }
+
+        // Option Selection Handle
+        function selectOption(cardElements, points) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            // Add selected styling
+            cardElements.classList.add('selected');
+            totalScore += points;
+
+            // Advance
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex >= QUESTIONS.length) {
+                    showResults();
+                } else {
+                    renderQuestion();
+                }
+            }, 400);
+        }
+
+        // Result Calculation and Render
+        function showResults() {
+            goScreen('results');
+            
+            let color = '';
+            let label = '';
+            let message = '';
+
+            if (totalScore >= 17 && totalScore <= 20) {
+                color = THEME.green;
+                label = 'Ready to Decide';
+                message = "You have the information, the clarity, and the headspace. The data is in — trust your framework, not your gut.";
+            } else if (totalScore >= 13 && totalScore <= 16) {
+                color = THEME.accent;
+                label = 'Almost There';
+                message = "You're close. One or two things are still fuzzy. Clarify your top priority before you commit.";
+            } else if (totalScore >= 9 && totalScore <= 12) {
+                color = THEME.amber;
+                label = 'Not Quite Ready';
+                message = "You need more information or more clarity on what matters. Deciding now increases the chance of regret.";
+            } else {
+                color = THEME.red;
+                label = "Stop. You're Overthinking.";
+                message = "You've been in this loop too long. The problem isn't information — it's structure. Break the decision down before you go further.";
+            }
+
+            // Animate Score Counter
+            const scoreText = document.getElementById('score-text');
+            const ringFill = document.getElementById('ring-fill');
+            
+            // Set initial state
+            scoreText.innerText = '0';
+            ringFill.style.stroke = color;
+            ringFill.style.strokeDashoffset = '553';
+            
+            document.getElementById('result-label').innerText = label;
+            document.getElementById('result-message').innerText = message;
+
+            // Trigger animation after visibility propagation
+            setTimeout(() => {
+                let currentCount = 0;
+                const duration = 400; // ms
+                const interval = duration / totalScore;
+                
+                const counter = setInterval(() => {
+                    currentCount++;
+                    scoreText.innerText = currentCount;
+                    if(currentCount >= totalScore) clearInterval(counter);
+                }, interval);
+
+                // Calculate dash offset: (1 - score/20) * circumference
+                const dashoffsetLength = 553 - (totalScore / 20) * 553;
+                ringFill.style.strokeDashoffset = dashoffsetLength;
+                
+            }, 400); // 400ms delay to allow screen 3 fade-in
+        }
+
+        function resetCheck() {
+            goScreen('intro');
+        }
+
+        function shareTool() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Decision Readiness Checker',
+                    text: 'Find out if you are ready to make a decision.',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert("Link copied to clipboard!");
+                });
+            }
+        }
+    </script>
+</body>
+</html>
