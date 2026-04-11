@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Brain,
   Timer,
@@ -19,7 +19,8 @@ import {
   Linkedin,
   Instagram,
   Menu,
-  Plus
+  Plus,
+  X
 } from "lucide-react";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
@@ -33,6 +34,8 @@ const AppNameColored = () => (
 );
 
 const Landing = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-void min-h-screen selection:bg-[#6e9eeb]/30 text-white font-sans overflow-x-hidden">
 
@@ -66,17 +69,20 @@ const Landing = () => {
               </span>
             </div>
 
-            <button className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+            <button 
+              onClick={() => setIsMenuOpen(true)}
+              className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+            >
               <Menu className="w-5 h-5 text-white" />
             </button>
           </div>
 
           <div className="flex-1 flex flex-col justify-center px-4 lg:px-12 relative z-10">
-            <div className="w-20 h-20 rounded-3xl bg-[#6e9eeb]/20 flex items-center justify-center border border-[#6e9eeb]/40 mb-8 backdrop-blur-md">
-              <Brain className="w-10 h-10 text-[#6e9eeb]" />
+            <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl lg:rounded-3xl bg-[#6e9eeb]/20 flex items-center justify-center border border-[#6e9eeb]/40 mb-6 lg:mb-8 backdrop-blur-md">
+              <Brain className="w-8 h-8 lg:w-10 lg:h-10 text-[#6e9eeb]" />
             </div>
 
-            <h1 className="text-6xl lg:text-7xl font-medium tracking-[-0.05em] text-white leading-[1.1] mb-8 font-['Poppins']">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[-0.05em] text-white leading-[1.1] mb-6 lg:mb-8 font-['Poppins']">
               Stop guessing. <br />
               <em className="font-['Source_Serif_4'] italic text-white/80">Start deciding.</em>
             </h1>
@@ -84,11 +90,11 @@ const Landing = () => {
             <div className="flex flex-wrap items-center gap-4 mb-8">
               <LiquidButton
                 size="xl"
-                className="rounded-full font-['Poppins']"
+                className="rounded-full font-['Poppins'] bg-[#6e9eeb] text-black border-none bg-opacity-100 lg:bg-transparent lg:text-white"
                 onClick={() => document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                  <Download className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-full bg-black/20 lg:bg-white/15 flex items-center justify-center shrink-0">
+                  <Download className="w-4 h-4 text-black lg:text-white" />
                 </div>
                 Download
               </LiquidButton>
@@ -104,18 +110,62 @@ const Landing = () => {
 
           <div className="px-4 lg:px-12 pb-8 flex flex-col gap-2 relative z-10">
             <span className="text-xs tracking-widest uppercase text-[#6e9eeb]/80 font-semibold font-['Poppins']">Decision Intelligence</span>
-            <p className="text-lg text-white">
+            <p className="text-base lg:text-lg text-white">
               <span className="font-['Poppins']">"Most decisions aren't hard. </span>
               <em className="font-['Source_Serif_4'] italic text-white/80">They're just unstructured.</em>
               <span className="font-['Poppins']">"</span>
             </p>
             <div className="flex items-center gap-4 mt-2">
               <div className="h-px bg-white/20 w-8" />
-              <span className="text-xs tracking-widest uppercase text-white/60 font-['Poppins']"> VAIBHAV, FOUNDER OF CLARITEE </span>
+              <span className="text-[10px] sm:text-xs tracking-widest uppercase text-white/60 font-['Poppins']"> VAIBHAV, FOUNDER OF CLARITEE </span>
               <div className="h-px bg-white/20 w-8" />
             </div>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu Overlay */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-4 left-4 right-4 z-[50] rounded-3xl p-6 bg-void/90 backdrop-blur-2xl border border-white/10 shadow-2xl flex flex-col gap-6"
+            >
+              <div className="flex justify-between items-center w-full">
+                <span className="font-semibold text-xl text-white font-['Poppins']">Menu</span>
+                <button 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <div className="flex flex-col gap-4">
+                <p className="text-white/60 text-sm font-['Poppins'] text-center">Join the community & stay updated</p>
+                <div className="flex items-center justify-center gap-4">
+                  <a href="https://x.com/VaibhavRaj009" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Twitter className="w-5 h-5" /></a>
+                  <a href="https://www.linkedin.com/in/vaibhav-raj09/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Linkedin className="w-5 h-5" /></a>
+                  <button onClick={() => toast("Instagram coming soon!")} className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors text-white hover:scale-105 transition-transform"><Instagram className="w-5 h-5" /></button>
+                </div>
+              </div>
+              
+              <div className="w-full h-px bg-white/10 my-2" />
+              
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="w-full py-4 rounded-xl bg-[#6e9eeb]/20 text-[#6e9eeb] font-semibold text-center font-['Poppins'] border border-[#6e9eeb]/30"
+              >
+                Join the Waitlist
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Right Panel */}
         <div className="relative z-10 hidden lg:flex w-[48%] flex-col justify-between p-6">
