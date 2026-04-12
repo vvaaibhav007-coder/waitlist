@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weighted Pros/Cons Calculator — Weight what matters. See who wins.</title>
-  <meta name="description" content="A free, no-login decision-making tool. Enter two options, weight your pros and cons, and instantly see which choice leads. No signup required.">
+  <meta name="description"
+    content="A free, no-login decision-making tool. Enter two options, weight your pros and cons, and instantly see which choice leads. No signup required.">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+  <!-- End Google Tag Manager -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
   <style>
     /* ===== CSS VARIABLES ===== */
     :root {
-      --color-bg: #09090F;
-      --color-surface: #111122;
-      --color-surface-secondary: #1E1E30;
-      --color-border: #2A2A44;
-      --color-text-primary: #EEEEFF;
-      --color-text-secondary: #8888AA;
+      --color-bg: #131319;
+      --color-surface: #1f1f26;
+      --color-surface-secondary: #2a2930;
+      --color-surface-glass: rgba(31, 31, 38, 0.85);
+      --color-border: #424751;
+      --color-text-primary: #e4e1ea;
+      --color-text-secondary: #c2c6d2;
       --color-accent: #6e9eeb;
       --color-accent-hover: #5A95FF;
+      --color-accent-glow: rgba(110, 158, 235, 0.3);
       --color-green: #00D48C;
       --color-amber: #FFAD33;
       --color-red: #FF4560;
@@ -29,10 +42,13 @@
       --radius-input: 8px;
       --radius-btn: 8px;
       --transition: 150ms ease;
+      --glass-blur: 20px;
     }
 
     /* ===== RESET & BASE ===== */
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -50,13 +66,32 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      background:
+        radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+        var(--color-bg);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ===== LAYOUT ===== */
     .container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 48px 24px 80px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ===== HEADER ===== */
@@ -66,10 +101,10 @@
     }
 
     .header h1 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
       color: var(--color-text-primary);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       letter-spacing: -0.02em;
     }
 
@@ -81,10 +116,12 @@
 
     /* ===== CARDS ===== */
     .card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: var(--color-surface-glass);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-card);
       padding: 24px;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
     }
 
     /* ===== DECISION INPUT ===== */
@@ -94,32 +131,36 @@
 
     .input-label {
       display: block;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--color-text-secondary);
       margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     .text-input {
       width: 100%;
-      padding: 12px 16px;
-      background: var(--color-surface-secondary);
-      border: 1px solid var(--color-border);
+      padding: 14px 18px;
+      background: var(--color-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-input);
       color: var(--color-text-primary);
       font-family: var(--font-ui);
       font-size: 15px;
       outline: none;
-      transition: border-color var(--transition);
+      transition: all var(--transition);
     }
 
     .text-input::placeholder {
       color: var(--color-text-secondary);
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     .text-input:focus {
       border-color: var(--color-accent);
+      background: var(--color-surface-secondary);
+      box-shadow: 0 0 0 3px rgba(110, 158, 235, 0.1);
     }
 
     /* ===== OPTIONS GRID ===== */
@@ -137,44 +178,54 @@
     }
 
     .option-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: var(--color-surface-glass);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-card);
-      padding: 24px;
+      padding: 28px;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      transition: all 0.3s ease;
+    }
+
+    .option-card:hover {
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
     }
 
     .option-name-input {
       width: 100%;
-      padding: 12px 16px;
-      background: var(--color-surface-secondary);
-      border: 1px solid var(--color-border);
+      padding: 14px 18px;
+      background: var(--color-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-input);
       color: var(--color-text-primary);
       font-family: var(--font-ui);
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 600;
       outline: none;
       margin-bottom: 24px;
-      transition: border-color var(--transition);
+      transition: all var(--transition);
     }
 
     .option-name-input::placeholder {
       color: var(--color-text-secondary);
-      opacity: 0.6;
+      opacity: 0.5;
       font-weight: 400;
     }
 
     .option-name-input:focus {
       border-color: var(--color-accent);
+      background: var(--color-surface-secondary);
+      box-shadow: 0 0 0 3px rgba(110, 158, 235, 0.1);
     }
 
     /* ===== SECTION LABELS ===== */
     .section-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
     }
 
     .section-label.pros {
@@ -202,24 +253,25 @@
     .factor-input {
       flex: 1;
       min-width: 0;
-      padding: 10px 12px;
-      background: var(--color-surface-secondary);
-      border: 1px solid var(--color-border);
+      padding: 12px 14px;
+      background: var(--color-surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-input);
       color: var(--color-text-primary);
       font-family: var(--font-ui);
       font-size: 14px;
       outline: none;
-      transition: border-color var(--transition);
+      transition: all var(--transition);
     }
 
     .factor-input::placeholder {
       color: var(--color-text-secondary);
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
     .factor-input:focus {
       border-color: var(--color-accent);
+      background: var(--color-surface-secondary);
     }
 
     /* ===== SLIDER ===== */
@@ -256,7 +308,7 @@
 
     .weight-slider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
-      box-shadow: 0 0 8px rgba(110, 158, 235, 0.4);
+      box-shadow: 0 0 12px rgba(110, 158, 235, 0.5);
     }
 
     .weight-slider::-moz-range-thumb {
@@ -277,7 +329,7 @@
     .weight-value {
       font-family: var(--font-mono);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--color-text-primary);
       min-width: 16px;
       text-align: center;
@@ -291,7 +343,7 @@
       align-items: center;
       justify-content: center;
       background: transparent;
-      border: 1px solid var(--color-border);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 6px;
       color: var(--color-text-secondary);
       font-size: 16px;
@@ -303,7 +355,7 @@
     .delete-btn:hover {
       border-color: var(--color-red);
       color: var(--color-red);
-      background: rgba(255, 69, 96, 0.08);
+      background: rgba(255, 69, 96, 0.1);
     }
 
     /* ===== ADD BUTTON ===== */
@@ -311,9 +363,9 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 10px 16px;
       background: transparent;
-      border: 1px dashed var(--color-border);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-btn);
       color: var(--color-text-secondary);
       font-family: var(--font-ui);
@@ -326,6 +378,7 @@
     .add-btn:hover {
       border-color: var(--color-accent);
       color: var(--color-accent);
+      background: rgba(110, 158, 235, 0.08);
     }
 
     .add-btn.disabled {
@@ -342,17 +395,16 @@
     /* ===== SECTION DIVIDER ===== */
     .section-divider {
       height: 1px;
-      background: var(--color-border);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
       margin: 20px 0;
-      opacity: 0.5;
     }
 
     /* ===== CALCULATE BUTTON ===== */
     .calculate-btn {
       width: 100%;
-      padding: 16px 32px;
-      background: var(--color-accent);
-      color: var(--color-bg);
+      padding: 18px 32px;
+      background: linear-gradient(135deg, var(--color-accent) 0%, #5a8fe0 100%);
+      color: #000;
       border: none;
       border-radius: var(--radius-btn);
       font-family: var(--font-ui);
@@ -361,12 +413,13 @@
       cursor: pointer;
       transition: all var(--transition);
       letter-spacing: -0.01em;
+      box-shadow: 0 4px 24px rgba(110, 158, 235, 0.25);
     }
 
     .calculate-btn:hover:not(:disabled) {
-      background: var(--color-accent-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(110, 158, 235, 0.3);
+      background: linear-gradient(135deg, #7aafff 0%, var(--color-accent-hover) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(110, 158, 235, 0.35);
     }
 
     .calculate-btn:active:not(:disabled) {
@@ -402,7 +455,7 @@
     }
 
     .results-header h2 {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
       color: var(--color-text-primary);
       margin-bottom: 4px;
@@ -423,24 +476,26 @@
     }
 
     .score-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: var(--color-surface-glass);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-card);
-      padding: 32px 24px;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       transition: all 300ms ease;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
     }
 
     .score-card.winner {
       border-color: var(--color-accent);
-      box-shadow: 0 0 24px rgba(110, 158, 235, 0.15), 0 0 0 1px var(--color-accent);
+      box-shadow: 0 0 40px rgba(110, 158, 235, 0.2), 0 0 0 1px var(--color-accent);
     }
 
     .score-card-name {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
       color: var(--color-text-primary);
       margin-bottom: 24px;
@@ -462,12 +517,12 @@
     .score-ring-bg {
       fill: none;
       stroke: var(--color-surface-secondary);
-      stroke-width: 8;
+      stroke-width: 10;
     }
 
     .score-ring-progress {
       fill: none;
-      stroke-width: 8;
+      stroke-width: 10;
       stroke-linecap: round;
       transition: stroke-dashoffset 600ms ease;
     }
@@ -478,14 +533,14 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: var(--font-mono);
-      font-size: 48px;
+      font-size: 52px;
       font-weight: 700;
       color: var(--color-text-primary);
     }
 
     .score-label {
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--color-text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -498,7 +553,7 @@
     }
 
     .result-summary p {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 400;
       color: var(--color-text-primary);
       line-height: 1.6;
@@ -508,7 +563,7 @@
     .adjust-btn {
       display: block;
       margin: 0 auto 48px;
-      padding: 12px 32px;
+      padding: 14px 32px;
       background: transparent;
       border: 1px solid var(--color-accent);
       border-radius: var(--radius-btn);
@@ -528,8 +583,8 @@
 
     /* ===== CTA BANNER ===== */
     .cta-banner {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-secondary) 100%);
+      border: 1px solid rgba(110, 158, 235, 0.2);
       border-radius: var(--radius-card);
       padding: 32px;
       display: flex;
@@ -546,10 +601,10 @@
     }
 
     .cta-text h3 {
-      font-size: 16px;
-      font-weight: 400;
+      font-size: 17px;
+      font-weight: 500;
       color: var(--color-text-primary);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .cta-text p {
@@ -562,9 +617,9 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 12px 24px;
-      background: var(--color-accent);
-      color: var(--color-bg);
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--color-accent) 0%, #5a8fe0 100%);
+      color: #000;
       border: none;
       border-radius: var(--radius-btn);
       font-family: var(--font-ui);
@@ -575,28 +630,29 @@
       transition: all var(--transition);
       white-space: nowrap;
       flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(110, 158, 235, 0.25);
     }
 
     .cta-btn:hover {
-      background: var(--color-accent-hover);
+      background: linear-gradient(135deg, #7aafff 0%, var(--color-accent-hover) 100%);
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(110, 158, 235, 0.3);
+      box-shadow: 0 6px 24px rgba(110, 158, 235, 0.35);
     }
 
     /* ===== WINNER BADGE ===== */
     .winner-badge {
       display: inline-block;
-      padding: 2px 10px;
+      padding: 4px 12px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .winner-badge.is-winner {
-      background: rgba(110, 158, 235, 0.15);
+      background: rgba(110, 158, 235, 0.2);
       color: var(--color-accent);
     }
 
@@ -607,7 +663,7 @@
       }
 
       .header h1 {
-        font-size: 24px;
+        font-size: 26px;
       }
 
       .factor-row {
@@ -629,7 +685,7 @@
       }
 
       .score-number {
-        font-size: 36px;
+        font-size: 40px;
       }
 
       .score-ring-wrapper {
@@ -645,9 +701,16 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="container">
     <!-- ===== HEADER ===== -->
     <header class="header" id="page-header">
+      <span
+        style="display:inline-block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin-bottom:16px;font-weight:600;">Claritee</span>
       <h1>Weighted Pros/Cons Calculator</h1>
       <p>Weight what matters. See who wins.</p>
     </header>
@@ -657,27 +720,16 @@
       <!-- Decision Question -->
       <div class="decision-section card">
         <label class="input-label" for="decision-input">Your Decision</label>
-        <input
-          type="text"
-          id="decision-input"
-          class="text-input"
-          placeholder="e.g. Should I take the new job offer?"
-          autocomplete="off"
-        >
+        <input type="text" id="decision-input" class="text-input" placeholder="e.g. Should I take the new job offer?"
+          autocomplete="off">
       </div>
 
       <!-- Options Grid -->
       <div class="options-grid" id="options-grid">
         <!-- Option A -->
         <div class="option-card" id="option-a-card">
-          <input
-            type="text"
-            class="option-name-input"
-            id="option-a-name"
-            placeholder="Option A"
-            autocomplete="off"
-            data-option="a"
-          >
+          <input type="text" class="option-name-input" id="option-a-name" placeholder="Option A" autocomplete="off"
+            data-option="a">
 
           <!-- Pros Section -->
           <div class="section-label pros">PROS</div>
@@ -698,14 +750,8 @@
 
         <!-- Option B -->
         <div class="option-card" id="option-b-card">
-          <input
-            type="text"
-            class="option-name-input"
-            id="option-b-name"
-            placeholder="Option B"
-            autocomplete="off"
-            data-option="b"
-          >
+          <input type="text" class="option-name-input" id="option-b-name" placeholder="Option B" autocomplete="off"
+            data-option="b">
 
           <!-- Pros Section -->
           <div class="section-label pros">PROS</div>
@@ -745,8 +791,8 @@
           <div class="score-ring-wrapper">
             <svg class="score-ring-svg" viewBox="0 0 140 140">
               <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
-              <circle class="score-ring-progress" id="ring-a" cx="70" cy="70" r="58"
-                stroke-dasharray="364.42" stroke-dashoffset="364.42"></circle>
+              <circle class="score-ring-progress" id="ring-a" cx="70" cy="70" r="58" stroke-dasharray="364.42"
+                stroke-dashoffset="364.42"></circle>
             </svg>
             <div class="score-number" id="score-a">0</div>
           </div>
@@ -760,8 +806,8 @@
           <div class="score-ring-wrapper">
             <svg class="score-ring-svg" viewBox="0 0 140 140">
               <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
-              <circle class="score-ring-progress" id="ring-b" cx="70" cy="70" r="58"
-                stroke-dasharray="364.42" stroke-dashoffset="364.42"></circle>
+              <circle class="score-ring-progress" id="ring-b" cx="70" cy="70" r="58" stroke-dasharray="364.42"
+                stroke-dashoffset="364.42"></circle>
             </svg>
             <div class="score-number" id="score-b">0</div>
           </div>
@@ -782,10 +828,10 @@
       <!-- CTA Banner -->
       <div class="cta-banner" id="cta-banner">
         <div class="cta-text">
-          <h3>Want the full 9-step decision analysis?</h3>
-          <p>Clarity.ai is launching soon — join the waitlist for early access.</p>
+          <h3>Want the full 6-step decision analysis?</h3>
+          <p>Claritee is launching soon — join the waitlist for early access.</p>
         </div>
-        <a href="https://clariteeai.me" class="cta-btn" target="_blank" rel="noopener noreferrer">
+        <a href="https://clariteeai.me/waitlist" class="cta-btn" target="_blank" rel="noopener noreferrer">
           Join the Waitlist →
         </a>
       </div>
@@ -1085,4 +1131,5 @@
     init();
   </script>
 </body>
+
 </html>

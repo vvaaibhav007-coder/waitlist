@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Bad Is Your Analysis Paralysis?</title>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #09090F;
+            --color-surface: #111122;
+            --color-surface-secondary: #1E1E30;
+            --color-border: #2A2A44;
+            --color-text-primary: #EEEEFF;
+            --color-text-secondary: #8888AA;
+            --color-accent: #6e9eeb;
+            --color-accent-hover: #5A95FF;
+            --color-green: #00D48C;
+            --color-amber: #FFAD33;
+            --color-red: #FF4560;
+            --color-purple: #7B61FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .screen {
+            display: none;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 300ms ease, transform 300ms ease;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .screen.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .screen.active.visible {
+            display: flex;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: 
+                radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+                var(--color-bg);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .screen.active {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .screen.active > * {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        /* Screen 1: Intro */
+        .intro-container {
+            text-align: center;
+            padding: 48px 24px;
+            background: rgba(17, 17, 34, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .intro-container h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .intro-container .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 200ms ease, transform 100ms ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Screen 2: Questions */
+        .question-container {
+            padding: 24px 0;
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-border);
+            transition: background-color 300ms ease;
+        }
+
+        .dot.active {
+            background: var(--color-accent);
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 32px;
+            line-height: 1.35;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: border-color 150ms ease, background-color 150ms ease;
+            font-size: 15px;
+            color: var(--color-text-primary);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .option-card:hover {
+            border-color: var(--color-text-secondary);
+            background: var(--color-surface-secondary);
+        }
+
+        .option-card.selected {
+            border-color: var(--color-accent);
+            background: rgba(110, 158, 235, 0.1);
+        }
+
+        /* Screen 3: Results */
+        .results-container {
+            text-align: center;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 17, 34, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .results-container > * {
+            max-width: 100%;
+        }
+
+        .score-ring-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 32px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .score-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-ring-bg {
+            fill: none;
+            stroke: var(--color-surface-secondary);
+            stroke-width: 12;
+        }
+
+        .score-ring-fill {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 377;
+            transition: stroke-dashoffset 600ms ease, stroke 300ms ease;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .result-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 16px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-description {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            max-width: 480px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Shareable Result Card */
+        .share-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-accent);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            max-width: 400px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .share-card-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .share-card-subline {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+        }
+
+        .btn-share {
+            background: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 200ms ease;
+            margin-bottom: 32px;
+        }
+
+        .btn-share:hover {
+            background: rgba(110, 158, 235, 0.1);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            max-width: 400px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-line1 {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .cta-line2 {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            width: auto;
+            padding: 14px 24px;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 200ms ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--color-accent-hover);
+        }
+
+        /* Retake Button */
+        .btn-retake {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 12px 24px;
+            transition: color 200ms ease;
+        }
+
+        .btn-retake:hover {
+            color: var(--color-text-primary);
+        }
+
+        @media (max-width: 375px) {
+            .container {
+                padding: 16px;
+            }
+
+            .intro-container h1 {
+                font-size: 28px;
+            }
+
+            .question-text {
+                font-size: 20px;
+            }
+
+            .option-card {
+                font-size: 14px;
+                padding: 16px;
+            }
+
+            .score-text {
+                font-size: 40px;
+            }
+
+            .score-ring-container {
+                width: 140px;
+                height: 140px;
+            }
+
+            .result-label {
+                font-size: 20px;
+            }
+
+            .result-description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="container">
+        <!-- Screen 1: Intro -->
+        <div id="screen-intro" class="screen intro-container active visible">
+            <h1>How Bad Is Your Analysis Paralysis?</h1>
+            <p class="subtitle">6 questions. Brutally honest results.</p>
+            <button class="btn-primary" onclick="startQuiz()">Take the Quiz</button>
+        </div>
+
+        <!-- Screen 2: Questions -->
+        <div id="screen-questions" class="screen question-container">
+            <div class="progress-dots" id="dots-container"></div>
+            <div class="question-text" id="question-text"></div>
+            <div class="options-grid" id="options-container"></div>
+        </div>
+
+        <!-- Screen 3: Results -->
+        <div id="screen-results" class="screen results-container">
+            <div class="score-ring-container">
+                <svg class="score-ring" viewBox="0 0 160 160">
+                    <circle class="score-ring-bg" cx="80" cy="80" r="60"/>
+                    <circle class="score-ring-fill" id="ring-fill" cx="80" cy="80" r="60" stroke-dasharray="377" stroke-dashoffset="377"/>
+                </svg>
+                <div class="score-text" id="score-text">0</div>
+            </div>
+            <div class="result-label" id="result-label"></div>
+            <div class="result-description" id="result-description"></div>
+
+            <div class="share-card">
+                <div class="share-card-label" id="share-label"></div>
+                <div class="share-card-subline">clariteeai.me/tools/paralysis-quiz</div>
+            </div>
+
+            <button class="btn-share" onclick="shareResult()">Share your result</button>
+
+            <div class="cta-banner">
+                <div class="cta-line1">The fix isn't thinking harder. It's a better framework.</div>
+                <div class="cta-line2">Claritee is launching soon — structured decisions in 9 steps.</div>
+                <a href="https://clariteeai.me" class="cta-btn">Join the Waitlist →</a>
+            </div>
+
+            <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const QUESTIONS = [
+            {
+                text: "You need to pick a restaurant for dinner. You:",
+                options: [
+                    { label: "Pick the first decent option and move on", points: 1 },
+                    { label: "Check a couple reviews then decide", points: 2 },
+                    { label: "Spend 20 minutes on Google Maps", points: 3 },
+                    { label: "End up eating at home because you couldn't decide", points: 4 }
+                ]
+            },
+            {
+                text: "A big opportunity comes up but it's not perfect. You:",
+                options: [
+                    { label: "Take it — good enough is good enough", points: 1 },
+                    { label: "Weigh it up quickly and commit", points: 2 },
+                    { label: "Make a pros/cons list and still feel unsure", points: 3 },
+                    { label: "Let it pass while still thinking about it", points: 4 }
+                ]
+            },
+            {
+                text: "How often do you second-guess decisions you've already made?",
+                options: [
+                    { label: "Rarely — done is done", points: 1 },
+                    { label: "Sometimes, but I move on", points: 2 },
+                    { label: "Often — I replay what I could have done differently", points: 3 },
+                    { label: "Almost always — even small decisions haunt me", points: 4 }
+                ]
+            },
+            {
+                text: "You're buying something online. You:",
+                options: [
+                    { label: "Find what I need and checkout", points: 1 },
+                    { label: "Compare two or three options then buy", points: 2 },
+                    { label: "Have 11 tabs open and still haven't bought", points: 3 },
+                    { label: "Add to cart, abandon it, come back three days later", points: 4 }
+                ]
+            },
+            {
+                text: "When facing a major life decision, your first move is:",
+                options: [
+                    { label: "Trust my gut and act", points: 1 },
+                    { label: "Talk it through with one person I trust", points: 2 },
+                    { label: "Research everything until I feel ready", points: 3 },
+                    { label: "Avoid thinking about it and hope clarity comes", points: 4 }
+                ]
+            },
+            {
+                text: "How long does it typically take you to make an important decision?",
+                options: [
+                    { label: "Hours", points: 1 },
+                    { label: "A few days", points: 2 },
+                    { label: "Weeks", points: 3 },
+                    { label: "Months — or I never fully decide", points: 4 }
+                ]
+            }
+        ];
+
+        const RESULTS = [
+            { min: 6, max: 9, label: "The Decisive One", desc: "You make decisions quickly and cleanly. You trust yourself, tolerate uncertainty, and don't waste time second-guessing. Rare trait.", color: "#00D48C" },
+            { min: 10, max: 14, label: "The Careful Thinker", desc: "You think before you act — which is smart. But watch the line between careful and stuck. Structure helps you cross it faster.", color: "#6e9eeb" },
+            { min: 15, max: 19, label: "The Chronic Overthinker", desc: "You gather more information than you need and still don't feel ready. The problem isn't knowledge — it's the framework you're missing.", color: "#FFAD33" },
+            { min: 20, max: 24, label: "Paralysis Mode: Activated", desc: "Decisions pile up and nothing moves. This isn't a personality flaw — it's a system problem. The right structure changes everything.", color: "#FF4560" }
+        ];
+
+        let currentIndex = 0;
+        let totalScore = 0;
+        let isTransitioning = false;
+
+        const screens = {
+            intro: document.getElementById('screen-intro'),
+            questions: document.getElementById('screen-questions'),
+            results: document.getElementById('screen-results')
+        };
+
+        function goScreen(screenName) {
+            Object.values(screens).forEach(s => {
+                if (s.classList.contains('active')) {
+                    s.classList.remove('visible');
+                    setTimeout(() => s.classList.remove('active'), 300);
+                }
+            });
+            setTimeout(() => {
+                const target = screens[screenName];
+                target.classList.add('active');
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => target.classList.add('visible'));
+                });
+            }, 300);
+        }
+
+        function startQuiz() {
+            currentIndex = 0;
+            totalScore = 0;
+            renderQuestion();
+            goScreen('questions');
+        }
+
+        function renderQuestion() {
+            isTransitioning = false;
+            const q = QUESTIONS[currentIndex];
+
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < QUESTIONS.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentIndex ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            }
+
+            document.getElementById('question-text').innerText = q.text;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.style.opacity = '0';
+
+            setTimeout(() => {
+                optionsContainer.innerHTML = '';
+                q.options.forEach((opt, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'option-card';
+                    card.innerText = opt.label;
+                    card.onclick = () => selectOption(card, opt.points);
+                    optionsContainer.appendChild(card);
+                });
+                optionsContainer.style.transition = 'opacity 200ms ease';
+                optionsContainer.style.opacity = '1';
+            }, 150);
+        }
+
+        function selectOption(cardElem, points) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            cardElem.classList.add('selected');
+            totalScore += points;
+
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex >= QUESTIONS.length) {
+                    showResults();
+                } else {
+                    renderQuestion();
+                }
+            }, 400);
+        }
+
+        function showResults() {
+            goScreen('results');
+
+            const result = RESULTS.find(r => totalScore >= r.min && totalScore <= r.max) || RESULTS[3];
+
+            const scoreText = document.getElementById('score-text');
+            const ringFill = document.getElementById('ring-fill');
+
+            ringFill.style.stroke = result.color;
+            ringFill.style.strokeDashoffset = 377;
+            scoreText.innerText = '0';
+
+            document.getElementById('result-label').innerText = result.label;
+            document.getElementById('result-description').innerText = result.desc;
+            document.getElementById('share-label').innerText = result.label;
+
+            setTimeout(() => {
+                let currentCount = 0;
+                const duration = 400;
+                const startTime = performance.now();
+
+                function animateScore(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    currentCount = Math.round(eased * totalScore);
+                    scoreText.innerText = currentCount;
+
+                    const dashOffset = 377 - (377 * (eased * totalScore) / 24);
+                    ringFill.style.strokeDashoffset = dashOffset;
+
+                    if (progress < 1) requestAnimationFrame(animateScore);
+                }
+
+                requestAnimationFrame(animateScore);
+            }, 300);
+        }
+
+        function shareResult() {
+            const result = RESULTS.find(r => totalScore >= r.min && totalScore <= r.max) || RESULTS[3];
+            const shareText = `I got "${result.label}" on the Analysis Paralysis Quiz. How bad is yours? clariteeai.me/tools/paralysis-quiz`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Analysis Paralysis Quiz',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            }
+        }
+
+        function retakeQuiz() {
+            goScreen('intro');
+        }
+    </script>
+</body>
+</html>

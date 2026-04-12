@@ -8,6 +8,7 @@ import PrivacyPolicy from "./pages/website/PrivacyPolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 import Landing from "./pages/Landing.tsx";
+import { GTMTracker } from "./components/GTMTracker";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <GTMTracker />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/waitlist" element={<Index />} />

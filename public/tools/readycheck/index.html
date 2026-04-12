@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decision Readiness Checker</title>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+    <!-- End Google Tag Manager -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --color-bg: #09090F;
-            --color-surface: #111122;
-            --color-surface-secondary: #1E1E30;
-            --color-border: #2A2A44;
-            --color-text-primary: #EEEEFF;
-            --color-text-secondary: #8888AA;
+            --color-bg: #131319;
+            --color-surface: #1f1f26;
+            --color-surface-secondary: #2a2930;
+            --color-surface-glass: rgba(31, 31, 38, 0.8);
+            --color-border: #424751;
+            --color-text-primary: #e4e1ea;
+            --color-text-secondary: #c2c6d2;
             --color-accent: #6E9EEB;
             --color-accent-hover: #5A95FF;
+            --color-accent-glow: rgba(110, 158, 235, 0.3);
             --color-green: #00D48C;
             --color-amber: #FFAD33;
             --color-red: #FF4560;
             --color-purple: #7B61FF;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --glass-blur: 20px;
         }
 
         * {
@@ -32,7 +49,7 @@
         body {
             background-color: var(--color-bg);
             color: var(--color-text-primary);
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-ui), sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,20 +57,43 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            background: 
+                radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+                var(--color-bg);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
         }
 
         .container {
             width: 100%;
-            max-width: 640px;
+            max-width: 480px;
             padding: 24px;
             position: relative;
+            z-index: 1;
         }
 
         .screen {
             display: none;
             opacity: 0;
             transform: translateY(16px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .screen.active {
@@ -66,19 +106,36 @@
             transform: translateY(0);
         }
 
-        /* Screen 1: Intro */
+        /* Screen 1: Intro - Glassmorphism */
         .intro-container {
             align-items: center;
             justify-content: center;
-            min-height: 50vh;
+            min-height: 60vh;
             text-align: center;
+            padding: 48px 24px;
+            background: var(--color-surface-glass);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+        }
+
+        .brand-tag {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 24px;
+            font-weight: 600;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 700;
             color: var(--color-text-primary);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         .subtitle {
@@ -86,27 +143,31 @@
             color: var(--color-text-secondary);
             margin-bottom: 40px;
             font-weight: 400;
+            line-height: 1.5;
         }
 
-        button {
+        .btn-primary {
             width: 100%;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 18px 32px;
+            border-radius: var(--radius-md);
             border: none;
-            background-color: var(--color-accent);
-            color: var(--color-bg);
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #5a8fe0 100%);
+            color: #000;
+            font-family: var(--font-ui), sans-serif;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            transition: all 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 24px rgba(110, 158, 235, 0.25);
         }
 
-        button:hover {
-            background-color: var(--color-accent-hover);
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7aafff 0%, var(--color-accent-hover) 100%);
+            box-shadow: 0 8px 32px rgba(110, 158, 235, 0.35);
+            transform: translateY(-1px);
         }
 
-        button:active {
+        .btn-primary:active {
             transform: scale(0.98);
         }
 
@@ -114,7 +175,7 @@
         .progress-dots {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 40px;
         }
 
@@ -123,63 +184,76 @@
             height: 8px;
             border-radius: 50%;
             background-color: var(--color-border);
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .dot.active {
             background-color: var(--color-accent);
+            box-shadow: 0 0 12px var(--color-accent-glow);
+        }
+
+        .dot.completed {
+            background-color: var(--color-green);
         }
 
         .question-text {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
             margin-bottom: 32px;
             text-align: left;
-            line-height: 1.4;
+            line-height: 1.35;
+            color: var(--color-text-primary);
         }
 
         .options-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .option-card {
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 24px;
+            background: var(--color-surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
             cursor: pointer;
-            transition: border-color 0.15s ease, background-color 0.15s ease;
-            font-size: 16px;
+            transition: all 0.2s ease;
+            font-size: 15px;
             font-weight: 400;
             color: var(--color-text-primary);
             text-align: left;
+            line-height: 1.5;
         }
 
         .option-card:hover {
-            border-color: var(--color-text-secondary);
-            background-color: var(--color-surface-secondary);
+            border-color: var(--color-accent);
+            background: var(--color-surface-secondary);
+            transform: translateX(4px);
         }
 
         .option-card.selected {
             border-color: var(--color-accent);
-            background-color: rgba(110, 158, 235, 0.1); 
+            background: rgba(110, 158, 235, 0.12);
+            box-shadow: 0 0 0 1px var(--color-accent), 0 8px 24px rgba(110, 158, 235, 0.15);
         }
 
         /* Screen 3: Results */
         .result-container {
             align-items: center;
             text-align: center;
+            padding: 32px 24px;
+            background: var(--color-surface-glass);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
         }
 
         .score-ring-container {
             position: relative;
-            width: 240px;
-            height: 240px;
+            width: 220px;
+            height: 220px;
             margin-bottom: 32px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .score-ring {
@@ -191,15 +265,14 @@
         .score-ring-bg {
             fill: none;
             stroke: var(--color-surface-secondary);
-            stroke-width: 16;
+            stroke-width: 12;
         }
 
         .score-ring-fill {
             fill: none;
-            stroke: var(--color-accent); /* Updated dynamically */
-            stroke-width: 16;
+            stroke-width: 12;
             stroke-linecap: round;
-            stroke-dasharray: 502; /* 2 * PI * r (r=80 roughly for viewBox 200) */
+            stroke-dasharray: 502;
             stroke-dashoffset: 502;
             transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
         }
@@ -209,27 +282,26 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 48px;
+            font-family: var(--font-mono), monospace;
+            font-size: 52px;
             font-weight: 700;
             color: var(--color-text-primary);
         }
 
         .result-label {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 26px;
+            font-weight: 700;
             color: var(--color-text-primary);
             margin-bottom: 12px;
+            letter-spacing: -0.01em;
         }
 
         .result-message {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--color-text-secondary);
-            max-width: 480px;
+            max-width: 400px;
             line-height: 1.6;
-            margin-bottom: 48px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 40px;
         }
 
         .share-nudge {
@@ -237,11 +309,11 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
         .share-text {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--color-text-secondary);
         }
 
@@ -252,72 +324,84 @@
             padding: 0;
             font-size: 14px;
             font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
 
         .share-btn:hover {
-            background: none;
             color: var(--color-accent-hover);
         }
 
         .cta-banner {
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: 12px;
-            padding: 32px 24px;
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-secondary) 100%);
+            border: 1px solid rgba(110, 158, 235, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
         .cta-line1 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--color-text-primary);
         }
 
         .cta-line2 {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--color-text-secondary);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .cta-banner button {
             font-size: 14px;
             width: auto;
             align-self: center;
-            padding: 12px 32px;
+            padding: 14px 32px;
         }
-        
+
         .cta-banner a {
             text-decoration: none;
         }
 
         .retake-btn {
-            background: none;
+            background: transparent;
             color: var(--color-text-secondary);
-            font-weight: 400;
+            font-weight: 500;
             width: auto;
             margin: 0 auto;
-            padding: 8px 16px;
+            padding: 12px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .retake-btn:hover {
-            background: none;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--color-text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
         }
-
     </style>
 </head>
+
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <div class="container">
         <!-- Screen 1: Intro -->
         <div id="screen-intro" class="screen intro-container active visible">
+            <span class="brand-tag">Claritee</span>
             <h1>Decision Readiness Checker</h1>
             <p class="subtitle">Answer 5 questions. Find out if you're ready to decide.</p>
-            <button onclick="startCheck()">Start</button>
+            <button class="btn-primary" onclick="startCheck()">Start</button>
         </div>
 
         <!-- Screen 2: Questions -->
@@ -337,11 +421,12 @@
                 <svg class="score-ring" viewBox="0 0 200 200">
                     <!-- r=88 implies circumference = 2 * PI * 88 = 552.92. Stroke dasharray requires update. -->
                     <circle class="score-ring-bg" cx="100" cy="100" r="88" />
-                    <circle class="score-ring-fill" id="ring-fill" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="553" />
+                    <circle class="score-ring-fill" id="ring-fill" cx="100" cy="100" r="88" stroke-dasharray="553"
+                        stroke-dashoffset="553" />
                 </svg>
                 <div class="score-text" id="score-text">0</div>
             </div>
-            
+
             <div class="result-label" id="result-label">Analyzing...</div>
             <div class="result-message" id="result-message"></div>
 
@@ -353,8 +438,8 @@
             <div class="cta-banner">
                 <div class="cta-line1">Ready to structure your actual decision?</div>
                 <div class="cta-line2">Claritee is launching soon — join the waitlist for early access.</div>
-                <a href="https://clariteeai.me">
-                    <button>Join the Waitlist &rarr;</button>
+                <a href="https://clariteeai.me/waitlist">
+                    <button class="btn-primary">Join the Waitlist &rarr;</button>
                 </a>
             </div>
 
@@ -418,6 +503,20 @@
             }
         ];
 
+        // Enhanced dot rendering with completed state
+        function renderDots() {
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < QUESTIONS.length; i++) {
+                const dot = document.createElement('div');
+                let dotClass = 'dot';
+                if (i === currentIndex) dotClass += ' active';
+                else if (i < currentIndex) dotClass += ' completed';
+                dot.className = dotClass;
+                dotsContainer.appendChild(dot);
+            }
+        }
+
         let currentIndex = 0;
         let totalScore = 0;
         let isTransitioning = false;
@@ -431,7 +530,7 @@
         // Screen transition logic
         function goScreen(toScreenId) {
             Object.values(screens).forEach(s => {
-                if(s.classList.contains('active')) {
+                if (s.classList.contains('active')) {
                     s.classList.remove('visible');
                     setTimeout(() => {
                         s.classList.remove('active');
@@ -442,7 +541,7 @@
             setTimeout(() => {
                 const target = screens[toScreenId];
                 target.classList.add('active');
-                
+
                 // Allow display flex to apply before transitioning opacity
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
@@ -464,15 +563,9 @@
         function renderQuestion() {
             isTransitioning = false;
             const q = QUESTIONS[currentIndex];
-            
-            // Render dots
-            const dotsContainer = document.getElementById('dots-container');
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < QUESTIONS.length; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (i === currentIndex ? ' active' : '');
-                dotsContainer.appendChild(dot);
-            }
+
+            // Render dots with enhanced state
+            renderDots();
 
             // Render text
             document.getElementById('question-text').innerText = q.text;
@@ -481,7 +574,7 @@
             const optionsContainer = document.getElementById('options-container');
             // Fade out current options before injecting new ones
             optionsContainer.style.opacity = '0';
-            
+
             setTimeout(() => {
                 optionsContainer.innerHTML = '';
                 q.options.forEach((opt) => {
@@ -519,7 +612,7 @@
         // Result Calculation and Render
         function showResults() {
             goScreen('results');
-            
+
             let color = '';
             let label = '';
             let message = '';
@@ -545,12 +638,12 @@
             // Animate Score Counter
             const scoreText = document.getElementById('score-text');
             const ringFill = document.getElementById('ring-fill');
-            
+
             // Set initial state
             scoreText.innerText = '0';
             ringFill.style.stroke = color;
             ringFill.style.strokeDashoffset = '553';
-            
+
             document.getElementById('result-label').innerText = label;
             document.getElementById('result-message').innerText = message;
 
@@ -559,17 +652,17 @@
                 let currentCount = 0;
                 const duration = 400; // ms
                 const interval = duration / totalScore;
-                
+
                 const counter = setInterval(() => {
                     currentCount++;
                     scoreText.innerText = currentCount;
-                    if(currentCount >= totalScore) clearInterval(counter);
+                    if (currentCount >= totalScore) clearInterval(counter);
                 }, interval);
 
                 // Calculate dash offset: (1 - score/20) * circumference
                 const dashoffsetLength = 553 - (totalScore / 20) * 553;
                 ringFill.style.strokeDashoffset = dashoffsetLength;
-                
+
             }, 400); // 400ms delay to allow screen 3 fade-in
         }
 
@@ -592,4 +685,5 @@
         }
     </script>
 </body>
+
 </html>
