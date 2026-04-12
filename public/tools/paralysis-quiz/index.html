@@ -700,6 +700,10 @@
             const result = RESULTS.find(r => totalScore >= r.min && totalScore <= r.max) || RESULTS[3];
             const shareText = `I got "${result.label}" on the Analysis Paralysis Quiz. How bad is yours? clariteeai.me/tools/paralysis-quiz`;
 
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'share', { method: 'paralysis_quiz', result_type: result.label });
+            }
+
             if (navigator.share) {
                 navigator.share({
                     title: 'Analysis Paralysis Quiz',

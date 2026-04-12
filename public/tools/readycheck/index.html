@@ -688,6 +688,9 @@
         }
 
         function shareTool() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'share', { method: 'readycheck_tool' });
+            }
             if (navigator.share) {
                 navigator.share({
                     title: 'Decision Readiness Checker',

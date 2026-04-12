@@ -26,6 +26,7 @@ import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { toast } from "sonner";
 import { BentoPricing } from "@/components/ui/bento-pricing";
+import { trackEvent } from "@/components/GTMTracker";
 
 const AppNameColored = () => (
   <span className="font-bold">
@@ -403,7 +404,7 @@ const Landing = () => {
             <h2 className="text-4xl md:text-6xl font-medium text-white tracking-tight mb-8 font-['Poppins']">
               Make your next decision <br /> your <em className="font-['Source_Serif_4'] italic text-white/90">best decision.</em>
             </h2>
-            <Link to="/waitlist" className="inline-block mt-4">
+            <Link to="/waitlist" className="inline-block mt-4" onClick={() => trackEvent("click", { button_name: "join_waitlist_landing" })}>
               <LiquidButton size="xl" className="font-['Poppins'] bg-[#6E9EEB] text-[#09090F] hover:bg-[#6E9EEB]/90 font-semibold border-none">
                 Join the waitlist today <ArrowRight className="w-5 h-5 ml-2" />
               </LiquidButton>

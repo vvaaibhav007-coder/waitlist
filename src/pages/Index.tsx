@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import confetti from "canvas-confetti";
 import { CountrySelect } from "@/components/ui/country-select";
+import { trackWaitlistSignUp, trackEvent } from "@/components/GTMTracker";
 import {
   Brain,
   TrendingUp,
@@ -288,6 +289,7 @@ const Index = () => {
     toast.success("You've been added to the waitlist!");
     setIsJoined(true);
     triggerConfetti();
+    trackWaitlistSignUp({ country });
   };
 
   const progressPercentage = Math.min((donationAmount / GOAL_AMOUNT) * 100, 100);
