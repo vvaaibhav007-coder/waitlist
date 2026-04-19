@@ -120,8 +120,18 @@
 
     .logo-wrapper {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
+      gap: 8px;
+    }
+    
+    .claritee-brand-text {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--color-text-secondary);
     }
     
     .claritee-logo {
@@ -749,12 +759,12 @@
 
     /* ===== SEO ARTICLE ===== */
     .seo-article {
-      margin-top: 64px;
+      margin-top: 50vh;
       background: var(--color-surface-glass);
       padding: 48px;
       border-top: 1px solid rgba(110, 158, 235, 0.15);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      border-radius: var(--radius-card);
+      border-radius: var(--radius-lg, 16px);
     }
 
     .seo-article h2.article-title {
@@ -851,15 +861,13 @@
   <div class="container">
     <!-- ===== HEADER ===== -->
     <header class="header" id="page-header">
-      <span
-        style="display:inline-block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin-bottom:16px;font-weight:600;">Claritee</span>
       <div class="logo-wrapper">
+        <div class="claritee-brand-text">CLARITEE</div>
         <div class="claritee-logo">
-          <span class="logo-c">C</span>
-          <span class="logo-dot"></span>
+          <span class="logo-c">C</span><span class="logo-dot"></span>
         </div>
       </div>
-      <h1>Weighted Pros/Cons Calculator</h1>
+      <h1>Pros & Cons Calculator</h1>
       <p>Weight what matters. See who wins.</p>
     </header>
 
