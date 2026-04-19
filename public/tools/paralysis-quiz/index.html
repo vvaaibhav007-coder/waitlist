@@ -531,132 +531,142 @@
                 font-size: 14px;
             }
         }
-    /* ===== SEO ARTICLE ===== */
-    .seo-article {
-      margin-top: 50vh;
-      background: var(--color-surface-glass);
-      padding: 48px;
-      border-top: 1px solid rgba(110, 158, 235, 0.15);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      border-radius: var(--radius-lg, 16px);
-    }
 
-    .seo-article h2.article-title {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--color-text-primary);
-      margin-bottom: 24px;
-      letter-spacing: -0.02em;
-      line-height: 1.3;
-    }
+        /* ===== SEO ARTICLE ===== */
+        .seo-article {
+            margin: 50vh auto 48px auto;
+            max-width: 1100px;
+            width: calc(100% - 48px);
+            box-sizing: border-box;
+            background: var(--color-surface-glass);
+            padding: 48px;
+            border-top: 1px solid rgba(110, 158, 235, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-lg, 16px);
+        }
 
-    .seo-article .article-lead {
-      font-size: 18px;
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-      margin-bottom: 40px;
-      border-left: 4px solid var(--color-accent);
-      padding-left: 20px;
-    }
+        .seo-article h2.article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
 
-    .seo-article h3 {
-      font-size: 22px;
-      font-weight: 600;
-      color: #fff;
-      margin: 32px 0 16px;
-    }
+        .seo-article .article-lead {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--color-accent);
+            padding-left: 20px;
+        }
 
-    .seo-article p {
-      font-size: 16px;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
+        .seo-article h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin: 32px 0 16px;
+        }
 
-    .seo-article strong {
-      color: var(--color-text-primary);
-      font-weight: 600;
-    }
+        .seo-article p {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
 
-    .seo-article ul {
-      margin-bottom: 32px;
-      padding-left: 24px;
-    }
+        .seo-article strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
 
-    .seo-article li {
-      font-size: 16px;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
+        .seo-article ul {
+            margin-bottom: 32px;
+            padding-left: 24px;
+        }
 
-    .seo-article .article-conclusion {
-      margin-top: 48px;
-      padding: 32px;
-      background: rgba(110, 158, 235, 0.05);
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(110, 158, 235, 0.1);
-    }
+        .seo-article li {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
 
-    .seo-article .article-conclusion h4 {
-      font-size: 20px;
-      color: var(--color-text-primary);
-      margin-bottom: 12px;
-    }
+        .seo-article .article-conclusion {
+            margin-top: 48px;
+            padding: 32px;
+            background: rgba(110, 158, 235, 0.05);
+            border-radius: var(--radius-card);
+            border: 1px solid rgba(110, 158, 235, 0.1);
+        }
 
-    .seo-article .article-conclusion a {
-      color: var(--color-accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
+        .seo-article .article-conclusion h4 {
+            font-size: 20px;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+        }
 
-    .seo-article .article-conclusion a:hover {
-      text-decoration: underline;
-    }
+        .seo-article .article-conclusion a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-    .seo-article .fact-box {
-      background: linear-gradient(135deg, rgba(110, 158, 235, 0.1) 0%, rgba(110, 158, 235, 0.05) 100%);
-      border: 1px solid var(--color-accent);
-      border-radius: var(--radius-lg, 16px);
-      padding: 32px;
-      margin-bottom: 48px;
-      position: relative;
-    }
-    .seo-article .fact-box::before {
-      content: '💡 Fact';
-      position: absolute;
-      top: -14px;
-      left: 24px;
-      background: var(--color-accent);
-      color: var(--color-bg);
-      font-size: 14px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-    }
-    .seo-article .fact-box p {
-      margin-bottom: 0;
-      color: var(--color-text-primary);
-      font-size: 18px;
-    }
-    .seo-article .fact-box a {
-      color: var(--color-accent);
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .seo-article .fact-box a:hover {
-      text-decoration: underline;
-    }
+        .seo-article .article-conclusion a:hover {
+            text-decoration: underline;
+        }
 
-    @media (max-width: 768px) {
-      .seo-article {
-        padding: 32px 24px;
-        margin-top: 48px;
-      }
-      .seo-article h2.article-title {
-        font-size: 26px;
-      }
-    }
+        .seo-article .fact-box {
+            background: linear-gradient(135deg, rgba(110, 158, 235, 0.1) 0%, rgba(110, 158, 235, 0.05) 100%);
+            border: 1px solid var(--color-accent);
+            border-radius: var(--radius-lg, 16px);
+            padding: 32px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .seo-article .fact-box::before {
+            content: '💡 Fact';
+            position: absolute;
+            top: -14px;
+            left: 24px;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .seo-article .fact-box p {
+            margin-bottom: 0;
+            color: var(--color-text-primary);
+            font-size: 18px;
+        }
+
+        .seo-article .fact-box a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .seo-article .fact-box a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .seo-article {
+                padding: 32px 24px;
+                margin: 48px auto 48px auto;
+                width: calc(100% - 32px);
+            }
+
+            .seo-article h2.article-title {
+                font-size: 26px;
+            }
+        }
     </style>
 </head>
 
@@ -668,131 +678,190 @@
 
     <div class="container">
         <div class="quiz-wrapper">
-        <!-- Screen 1: Intro -->
-        <div id="screen-intro" class="screen intro-container active visible">
-            <div class="logo-wrapper">
-                <div class="claritee-brand-text">CLARITEE</div>
-                <div class="claritee-logo">
-                    <span class="logo-c">C</span><span class="logo-dot"></span>
+            <!-- Screen 1: Intro -->
+            <div id="screen-intro" class="screen intro-container active visible">
+                <div class="logo-wrapper">
+                    <div class="claritee-brand-text">CLARITEE</div>
+                    <div class="claritee-logo">
+                        <span class="logo-c">C</span><span class="logo-dot"></span>
+                    </div>
                 </div>
+                <h1>How Bad Is Your Analysis Paralysis?</h1>
+                <p class="subtitle">6 questions. Brutally honest results.</p>
+                <button class="btn-primary" onclick="startQuiz()">Take the Quiz</button>
             </div>
-            <h1>How Bad Is Your Analysis Paralysis?</h1>
-            <p class="subtitle">6 questions. Brutally honest results.</p>
-            <button class="btn-primary" onclick="startQuiz()">Take the Quiz</button>
+
+            <!-- Screen 2: Questions -->
+            <div id="screen-questions" class="screen question-container">
+                <div class="progress-dots" id="dots-container"></div>
+                <div class="question-text" id="question-text"></div>
+                <div class="options-grid" id="options-container"></div>
+            </div>
+
+            <!-- Screen 3: Results -->
+            <div id="screen-results" class="screen results-container">
+                <div class="score-ring-container">
+                    <svg class="score-ring" viewBox="0 0 160 160">
+                        <circle class="score-ring-bg" cx="80" cy="80" r="60" />
+                        <circle class="score-ring-fill" id="ring-fill" cx="80" cy="80" r="60" stroke-dasharray="377"
+                            stroke-dashoffset="377" />
+                    </svg>
+                    <div class="score-text" id="score-text">0</div>
+                </div>
+                <div class="result-label" id="result-label"></div>
+                <div class="result-description" id="result-description"></div>
+
+                <div class="share-card">
+                    <div class="share-card-label" id="share-label"></div>
+                    <div class="share-card-subline">clariteeai.me/tools/paralysis-quiz</div>
+                </div>
+
+                <button class="btn-share" onclick="shareResult()">Share your result</button>
+
+                <div class="cta-banner">
+                    <div class="cta-line1">The fix isn't thinking harder. It's a better framework.</div>
+                    <div class="cta-line2">Claritee is launching soon — structured decisions in 9 steps.</div>
+                    <a href="https://clariteeai.me" class="cta-btn">Join the Waitlist →</a>
+                </div>
+
+                <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
+            </div>
+        </div>
+    </div> <!-- close container -->
+    <!-- ===== SEO ARTICLE ===== -->
+    <article class="seo-article">
+        <h2 class="article-title">Analysis Paralysis &amp; Decision Making: The Ultimate Guide to Breaking the
+            Overthinking Loop</h2>
+
+        <div class="fact-box">
+            <p>Did you know? Perplexity's founder and CEO, Aravind Srinivas, openly relies on pros and cons lists to
+                make major decisions for his company and daily life. If a structured pros and cons list helped build a
+                billion-dollar AI powerhouse, it of course can help you achieve extraordinary focus. Visit our <a
+                    href="../prosconscalculator/index.html">pros and cons generator</a> to create your own decision matrix right
+                now and break the loop.</p>
         </div>
 
-        <!-- Screen 2: Questions -->
-        <div id="screen-questions" class="screen question-container">
-            <div class="progress-dots" id="dots-container"></div>
-            <div class="question-text" id="question-text"></div>
-            <div class="options-grid" id="options-container"></div>
+        <p class="article-lead">
+            Overthinking is more than just a bad habit; it is a silent productivity killer that severely limits your
+            potential and destroys cognitive clarity. Understanding exactly why analysis paralysis takes place,
+            recognizing the symptoms of decision fatigue, and adopting proven decision frameworks is the absolute first
+            step to mastering decision-making in both your professional and personal life.
+        </p>
+
+        <h3>The Core Phenomenon: What Exactly is Analysis Paralysis?</h3>
+        <p>
+            Decision making is an incredibly resource-intensive cognitive undertaking. When we are faced with too many
+            choices, highly similar options, or scenarios where the perceived stakes are monumental, our brains often
+            default into a loop of over-analysis. This state of emotional and mental deadlock is formally known as
+            <strong>analysis paralysis</strong>. You become so fixated on finding the "perfect" solution that you end up
+            frozen, incapable of making any choice at all.
+        </p>
+        <p>
+            Whether you are agonizing over which software to integrate into your startup or agonizing over personal life
+            choices, endless overthinking drains your mental energy and causes severe decision fatigue. It creates a
+            false sense of productivity—you feel like you are working hard because you are constantly researching,
+            weighing pros and cons, and turning variables over in your head. But raw thinking without decisive execution
+            is merely spinning your wheels. True clarity is achieved through action, not through infinite hesitation.
+        </p>
+
+        <h3>The Root Causes: Why Analysis Paralysis Takes Place</h3>
+        <p>
+            Why does analysis paralysis take place so frequently in high-achieving individuals? The root cause is almost
+            always rooted in fear: the fear of making a mistake, the fear of missing out on a better option, and the
+            fundamental fear of failure. We operate under the dangerous illusion that if we simply gather a little more
+            data, the ultimate correct path will magically present itself.
+        </p>
+        <p>
+            However, in the real world, perfect information does not exist. The modern era bombards us with an
+            overwhelming abundance of data. If you want to research a restaurant, you have access to exactly ten
+            thousand reviews. This excessive data influx short-circuits the brain. A reliable decision framework acts as
+            a psychological circuit breaker, forcing you to step out of the subjective emotional tornado and into an
+            objective, mathematical evaluation of the facts on the ground.
+        </p>
+
+        <h3>The Toll of Decision Fatigue</h3>
+        <p>
+            Every choice you make, from the clothes you wear to the strategic direction of your business, draws from the
+            same finite well of willpower. Decision fatigue is the scientific term for the deterioration in the quality
+            of decisions made by an individual after a long session of decision making. When your mental battery runs
+            low, your brain seeks shortcuts. You either make impulsive, reckless choices, or you avoid the choice
+            entirely—which is the hallmark of the decision paralysis problem.
+        </p>
+        <p>
+            The world's most productive and effective leaders protect their cognitive energy religiously. They use an
+            online decision matrix or a dedicated pros and cons calculator to offload the heavy lifting from their
+            working memory. By externalizing the variables, they preserve their mental fortitude for executing the tasks
+            that follow the decision, rather than burning out during the deliberation phase.
+        </p>
+
+        <h3>The Illusion of the "Perfect" Choice</h3>
+        <p>
+            One of the most insidious aspects of endless overthinking is the pursuit of perfection. Perfectionism in
+            decision-making is a toxic trait that actively works against your success. A choice that is 80% correct and
+            executed immediately is infinitely more valuable than a choice that is 100% correct but executed six months
+            too late. The opportunity cost of waiting for absolute certainty is staggering.
+        </p>
+        <p>
+            You must realize that highly effective decision-making is largely about risk management and pivotability.
+            Will making the "wrong" choice destroy you, or will it simply require you to course-correct in a few weeks?
+            Most decisions are reversible. When you objectively calculate the worst-case scenario utilizing a weighted
+            pros and cons generator, you often discover that the "disaster" you fear is highly manageable. This
+            realization is profoundly liberating and is the fastest way to overcome anxiety-driven hesitation.
+        </p>
+
+        <h3>How to Overcome Overthinking with Structured Logic</h3>
+        <p>
+            To permanently overcome overthinking, you must shift your focus entirely from perfect choices to functional
+            choices. Utilizing robust digital tools like a pros and cons calculator immediately cuts through the noisy
+            emotional static. Productivity isn't just about doing more tasks in less time; it's about deciding
+            fundamentally faster. Embracing structured decision making frameworks removes the friction of hesitation,
+            helping you build genuine clarity.
+        </p>
+        <p>
+            When you deploy a weighted framework, you are not just listing variables; you are assigning them
+            mathematical relevance. A minor inconvenience is quickly overshadowed by a massive strategic advantage when
+            the numbers are laid bare. Taking deliberate, measured action—backed by a proven algorithm—beats standing
+            still while waiting for absolute certainty every single time.
+        </p>
+
+        <h3>Cognitive Offloading: Your Secret Weapon</h3>
+        <p>
+            The secret to extreme productivity is cognitive offloading. Your brain is a fantastic processor, but it is a
+            terrible hard drive. Trying to hold seven different potential outcomes, four different cost analyses, and
+            the emotional weight of a major life change in your head all at once is a guaranteed recipe for a mental
+            breakdown.
+        </p>
+        <p>
+            By using a dedicated online decision matrix, you dump the contents of your overloaded working memory onto a
+            clean, digital canvas. Seeing the variables laid out visually allows your prefrontal cortex to transition
+            from "panic mode" into "executive mode." The variables haven't changed, but your relationship to them has
+            radically improved. You are no longer the victim of your chaotic thoughts; you are the architect of a
+            structured solution.
+        </p>
+
+        <h3>Building the Muscle of Decisiveness</h3>
+        <p>
+            Decisiveness is not a genetic gift; it is a highly trainable muscle. If you suffer from the decision
+            paralysis problem, you must start small. Give yourself rigid, unyielding time limits for low-stakes
+            decisions. Pick dinner in 60 seconds. Pick a weekend movie in two minutes. Force yourself to tolerate the
+            mild discomfort of a quick choice. As you realize that the world does not end when you make a fast,
+            "imperfect" choice, you will build the psychological resilience necessary to tackle massive decisions with
+            the exact same speed and aggressive confidence.
+        </p>
+        <p>
+            Banish analysis paralysis by embracing the math, trusting the frameworks, and prioritizing forward momentum
+            over flawless execution. Let the data guide you, and then aggressively execute the decision.
+        </p>
+
+        <div class="article-conclusion">
+            <h4>Stop Overthinking. Start Doing.</h4>
+            <p>
+                Ready for a clear, unbreakable path forward? Join the waitlist for <a
+                    href="https://clariteeai.me">Claritee</a>, the ultimate decision-making tool built to banish
+                analysis paralysis forever and turbocharge your execution speed.
+            </p>
         </div>
-
-        <!-- Screen 3: Results -->
-        <div id="screen-results" class="screen results-container">
-            <div class="score-ring-container">
-                <svg class="score-ring" viewBox="0 0 160 160">
-                    <circle class="score-ring-bg" cx="80" cy="80" r="60" />
-                    <circle class="score-ring-fill" id="ring-fill" cx="80" cy="80" r="60" stroke-dasharray="377"
-                        stroke-dashoffset="377" />
-                </svg>
-                <div class="score-text" id="score-text">0</div>
-            </div>
-            <div class="result-label" id="result-label"></div>
-            <div class="result-description" id="result-description"></div>
-
-            <div class="share-card">
-                <div class="share-card-label" id="share-label"></div>
-                <div class="share-card-subline">clariteeai.me/tools/paralysis-quiz</div>
-            </div>
-
-            <button class="btn-share" onclick="shareResult()">Share your result</button>
-
-            <div class="cta-banner">
-                <div class="cta-line1">The fix isn't thinking harder. It's a better framework.</div>
-                <div class="cta-line2">Claritee is launching soon — structured decisions in 9 steps.</div>
-                <a href="https://clariteeai.me" class="cta-btn">Join the Waitlist →</a>
-            </div>
-
-            <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
-        </div>
-        </div>
-        <!-- ===== SEO ARTICLE ===== -->
-        <article class="seo-article">
-            <h2 class="article-title">Analysis Paralysis &amp; Decision Making: The Ultimate Guide to Breaking the Overthinking Loop</h2>
-            
-            <div class="fact-box">
-                <p>Did you know? Perplexity's founder and CEO, Aravind Srinivas, openly relies on pros and cons lists to make major decisions for his company and daily life. If a structured pros and cons list helped build a billion-dollar AI powerhouse, it of course can help you achieve extraordinary focus. Visit our <a href="../prosconscalculator">pros and cons generator</a> to create your own decision matrix right now and break the loop.</p>
-            </div>
-
-            <p class="article-lead">
-                Overthinking is more than just a bad habit; it is a silent productivity killer that severely limits your potential and destroys cognitive clarity. Understanding exactly why analysis paralysis takes place, recognizing the symptoms of decision fatigue, and adopting proven decision frameworks is the absolute first step to mastering decision-making in both your professional and personal life.
-            </p>
-
-            <h3>The Core Phenomenon: What Exactly is Analysis Paralysis?</h3>
-            <p>
-                Decision making is an incredibly resource-intensive cognitive undertaking. When we are faced with too many choices, highly similar options, or scenarios where the perceived stakes are monumental, our brains often default into a loop of over-analysis. This state of emotional and mental deadlock is formally known as <strong>analysis paralysis</strong>. You become so fixated on finding the "perfect" solution that you end up frozen, incapable of making any choice at all. 
-            </p>
-            <p>
-                Whether you are agonizing over which software to integrate into your startup or agonizing over personal life choices, endless overthinking drains your mental energy and causes severe decision fatigue. It creates a false sense of productivity—you feel like you are working hard because you are constantly researching, weighing pros and cons, and turning variables over in your head. But raw thinking without decisive execution is merely spinning your wheels. True clarity is achieved through action, not through infinite hesitation.
-            </p>
-
-            <h3>The Root Causes: Why Analysis Paralysis Takes Place</h3>
-            <p>
-                Why does analysis paralysis take place so frequently in high-achieving individuals? The root cause is almost always rooted in fear: the fear of making a mistake, the fear of missing out on a better option, and the fundamental fear of failure. We operate under the dangerous illusion that if we simply gather a little more data, the ultimate correct path will magically present itself.
-            </p>
-            <p>
-                However, in the real world, perfect information does not exist. The modern era bombards us with an overwhelming abundance of data. If you want to research a restaurant, you have access to exactly ten thousand reviews. This excessive data influx short-circuits the brain. A reliable decision framework acts as a psychological circuit breaker, forcing you to step out of the subjective emotional tornado and into an objective, mathematical evaluation of the facts on the ground.
-            </p>
-
-            <h3>The Toll of Decision Fatigue</h3>
-            <p>
-                Every choice you make, from the clothes you wear to the strategic direction of your business, draws from the same finite well of willpower. Decision fatigue is the scientific term for the deterioration in the quality of decisions made by an individual after a long session of decision making. When your mental battery runs low, your brain seeks shortcuts. You either make impulsive, reckless choices, or you avoid the choice entirely—which is the hallmark of the decision paralysis problem.
-            </p>
-            <p>
-                The world's most productive and effective leaders protect their cognitive energy religiously. They use an online decision matrix or a dedicated pros and cons calculator to offload the heavy lifting from their working memory. By externalizing the variables, they preserve their mental fortitude for executing the tasks that follow the decision, rather than burning out during the deliberation phase.
-            </p>
-
-            <h3>The Illusion of the "Perfect" Choice</h3>
-            <p>
-                One of the most insidious aspects of endless overthinking is the pursuit of perfection. Perfectionism in decision-making is a toxic trait that actively works against your success. A choice that is 80% correct and executed immediately is infinitely more valuable than a choice that is 100% correct but executed six months too late. The opportunity cost of waiting for absolute certainty is staggering. 
-            </p>
-            <p>
-                You must realize that highly effective decision-making is largely about risk management and pivotability. Will making the "wrong" choice destroy you, or will it simply require you to course-correct in a few weeks? Most decisions are reversible. When you objectively calculate the worst-case scenario utilizing a weighted pros and cons generator, you often discover that the "disaster" you fear is highly manageable. This realization is profoundly liberating and is the fastest way to overcome anxiety-driven hesitation.
-            </p>
-
-            <h3>How to Overcome Overthinking with Structured Logic</h3>
-            <p>
-                To permanently overcome overthinking, you must shift your focus entirely from perfect choices to functional choices. Utilizing robust digital tools like a pros and cons calculator immediately cuts through the noisy emotional static. Productivity isn't just about doing more tasks in less time; it's about deciding fundamentally faster. Embracing structured decision making frameworks removes the friction of hesitation, helping you build genuine clarity. 
-            </p>
-            <p>
-                When you deploy a weighted framework, you are not just listing variables; you are assigning them mathematical relevance. A minor inconvenience is quickly overshadowed by a massive strategic advantage when the numbers are laid bare. Taking deliberate, measured action—backed by a proven algorithm—beats standing still while waiting for absolute certainty every single time.
-            </p>
-
-            <h3>Cognitive Offloading: Your Secret Weapon</h3>
-            <p>
-                The secret to extreme productivity is cognitive offloading. Your brain is a fantastic processor, but it is a terrible hard drive. Trying to hold seven different potential outcomes, four different cost analyses, and the emotional weight of a major life change in your head all at once is a guaranteed recipe for a mental breakdown. 
-            </p>
-            <p>
-                By using a dedicated online decision matrix, you dump the contents of your overloaded working memory onto a clean, digital canvas. Seeing the variables laid out visually allows your prefrontal cortex to transition from "panic mode" into "executive mode." The variables haven't changed, but your relationship to them has radically improved. You are no longer the victim of your chaotic thoughts; you are the architect of a structured solution.
-            </p>
-
-            <h3>Building the Muscle of Decisiveness</h3>
-            <p>
-                Decisiveness is not a genetic gift; it is a highly trainable muscle. If you suffer from the decision paralysis problem, you must start small. Give yourself rigid, unyielding time limits for low-stakes decisions. Pick dinner in 60 seconds. Pick a weekend movie in two minutes. Force yourself to tolerate the mild discomfort of a quick choice. As you realize that the world does not end when you make a fast, "imperfect" choice, you will build the psychological resilience necessary to tackle massive decisions with the exact same speed and aggressive confidence.
-            </p>
-            <p>
-                Banish analysis paralysis by embracing the math, trusting the frameworks, and prioritizing forward momentum over flawless execution. Let the data guide you, and then aggressively execute the decision.
-            </p>
-
-            <div class="article-conclusion">
-                <h4>Stop Overthinking. Start Doing.</h4>
-                <p>
-                    Ready for a clear, unbreakable path forward? Join the waitlist for <a href="https://clariteeai.me">Claritee</a>, the ultimate decision-making tool built to banish analysis paralysis forever and turbocharge your execution speed.
-                </p>
-            </div>
-        </article>
-    </div>
+    </article>
 
     <script>
         const QUESTIONS = [
