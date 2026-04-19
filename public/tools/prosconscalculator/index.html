@@ -118,6 +118,40 @@
       margin-bottom: 48px;
     }
 
+    .logo-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    
+    .claritee-logo {
+      width: 48px;
+      height: 48px;
+      background: #000000; /* Dark rounded square */
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo-c {
+      color: #ffffff;
+      font-size: 26px;
+      font-weight: 700;
+      font-family: var(--font-ui);
+      line-height: 1;
+    }
+    
+    .logo-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-accent); /* Blue accent dot */
+      border-radius: 50%;
+      margin-top: 4px;
+      margin-left: 2px;
+    }
+
     .header h1 {
       font-size: 36px;
       font-weight: 700;
@@ -729,6 +763,12 @@
     <header class="header" id="page-header">
       <span
         style="display:inline-block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin-bottom:16px;font-weight:600;">Claritee</span>
+      <div class="logo-wrapper">
+        <div class="claritee-logo">
+          <span class="logo-c">C</span>
+          <span class="logo-dot"></span>
+        </div>
+      </div>
       <h1>Weighted Pros/Cons Calculator</h1>
       <p>Weight what matters. See who wins.</p>
     </header>

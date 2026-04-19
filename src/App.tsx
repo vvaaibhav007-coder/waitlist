@@ -8,6 +8,7 @@ import PrivacyPolicy from "./pages/website/PrivacyPolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 import Landing from "./pages/Landing.tsx";
+import ProsConsCalculator from "./pages/ProsConsCalculator.tsx";
 import { GTMTracker } from "./components/GTMTracker";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/waitlist" element={<Index />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/tools/pros-cons-calculator" element={<ProsConsCalculator />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

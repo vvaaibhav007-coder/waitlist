@@ -1,0 +1,685 @@
+/* ===== CSS VARIABLES ===== */
+.pros-cons-calculator {
+  --color-bg: #131319;
+  --color-surface: #1f1f26;
+  --color-surface-secondary: #2a2930;
+  --color-surface-glass: rgba(31, 31, 38, 0.85);
+  --color-border: #424751;
+  --color-text-primary: #e4e1ea;
+  --color-text-secondary: #c2c6d2;
+  --color-accent: #6e9eeb;
+  --color-accent-hover: #5A95FF;
+  --color-accent-glow: rgba(110, 158, 235, 0.3);
+  --color-green: #00D48C;
+  --color-amber: #FFAD33;
+  --color-red: #FF4560;
+  --color-purple: #7B61FF;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-card: 12px;
+  --radius-input: 8px;
+  --radius-btn: 8px;
+  --transition: 150ms ease;
+  --glass-blur: 20px;
+
+  font-family: var(--font-ui);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+    radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+    var(--color-bg);
+  position: relative;
+}
+
+.pros-cons-calculator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== LAYOUT ===== */
+.pros-cons-calculator .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== HEADER ===== */
+.pros-cons-calculator .header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.pros-cons-calculator .logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.pros-cons-calculator .claritee-logo {
+  width: 48px;
+  height: 48px;
+  background: #000000;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pros-cons-calculator .logo-c {
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  line-height: 1;
+}
+
+.pros-cons-calculator .logo-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+.pros-cons-calculator .header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.pros-cons-calculator .header p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+/* ===== CARDS ===== */
+.pros-cons-calculator .card {
+  background: var(--color-surface-glass);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* ===== DECISION INPUT ===== */
+.pros-cons-calculator .decision-section {
+  margin-bottom: 24px;
+}
+
+.pros-cons-calculator .input-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pros-cons-calculator .text-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  outline: none;
+  transition: all var(--transition);
+}
+
+.pros-cons-calculator .text-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+.pros-cons-calculator .text-input:focus {
+  border-color: var(--color-accent);
+  background: var(--color-surface-secondary);
+  box-shadow: 0 0 0 3px rgba(110, 158, 235, 0.1);
+}
+
+/* ===== OPTIONS GRID ===== */
+.pros-cons-calculator .options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .pros-cons-calculator .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pros-cons-calculator .option-card {
+  background: var(--color-surface-glass);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: all 0.3s ease;
+}
+
+.pros-cons-calculator .option-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.pros-cons-calculator .option-name-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 17px;
+  font-weight: 600;
+  outline: none;
+  margin-bottom: 24px;
+  transition: all var(--transition);
+}
+
+.pros-cons-calculator .option-name-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.pros-cons-calculator .option-name-input:focus {
+  border-color: var(--color-accent);
+  background: var(--color-surface-secondary);
+  box-shadow: 0 0 0 3px rgba(110, 158, 235, 0.1);
+}
+
+/* ===== SECTION LABELS ===== */
+.pros-cons-calculator .section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+.pros-cons-calculator .section-label.pros {
+  color: var(--color-green);
+}
+
+.pros-cons-calculator .section-label.cons {
+  color: var(--color-red);
+}
+
+/* ===== FACTOR ROWS ===== */
+.pros-cons-calculator .factors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pros-cons-calculator .factor-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pros-cons-calculator .factor-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition);
+}
+
+.pros-cons-calculator .factor-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.4;
+}
+
+.pros-cons-calculator .factor-input:focus {
+  border-color: var(--color-accent);
+  background: var(--color-surface-secondary);
+}
+
+/* ===== SLIDER ===== */
+.pros-cons-calculator .slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pros-cons-calculator .weight-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-surface-secondary);
+  outline: none;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.pros-cons-calculator .weight-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--color-accent);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.pros-cons-calculator .weight-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(110, 158, 235, 0.5);
+}
+
+.pros-cons-calculator .weight-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--color-accent);
+  cursor: pointer;
+}
+
+.pros-cons-calculator .weight-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-surface-secondary);
+}
+
+.pros-cons-calculator .weight-value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  min-width: 16px;
+  text-align: center;
+}
+
+/* ===== DELETE BUTTON ===== */
+.pros-cons-calculator .delete-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.pros-cons-calculator .delete-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+  background: rgba(255, 69, 96, 0.1);
+}
+
+/* ===== ADD BUTTON ===== */
+.pros-cons-calculator .add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.pros-cons-calculator .add-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(110, 158, 235, 0.08);
+}
+
+.pros-cons-calculator .add-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pros-cons-calculator .add-btn .plus-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ===== SECTION DIVIDER ===== */
+.pros-cons-calculator .section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 20px 0;
+}
+
+/* ===== CALCULATE BUTTON ===== */
+.pros-cons-calculator .calculate-btn {
+  width: 100%;
+  padding: 18px 32px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #5a8fe0 100%);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 24px rgba(110, 158, 235, 0.25);
+}
+
+.pros-cons-calculator .calculate-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7aafff 0%, var(--color-accent-hover) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(110, 158, 235, 0.35);
+}
+
+.pros-cons-calculator .calculate-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pros-cons-calculator .calculate-btn:disabled {
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== RESULTS SECTION ===== */
+.pros-cons-calculator .results-section {
+  margin-top: 48px;
+}
+
+.pros-cons-calculator .results-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.pros-cons-calculator .results-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+/* ===== SCORE CARDS ===== */
+.pros-cons-calculator .score-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .pros-cons-calculator .score-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pros-cons-calculator .score-card {
+  background: var(--color-surface-glass);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 300ms ease;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.pros-cons-calculator .score-card.winner {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 40px rgba(110, 158, 235, 0.2), 0 0 0 1px var(--color-accent);
+}
+
+.pros-cons-calculator .score-card-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+.pros-cons-calculator .score-ring-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 16px;
+}
+
+.pros-cons-calculator .score-ring-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+
+.pros-cons-calculator .score-ring-bg {
+  fill: none;
+  stroke: var(--color-surface-secondary);
+  stroke-width: 10;
+}
+
+.pros-cons-calculator .score-ring-progress {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 600ms ease;
+}
+
+.pros-cons-calculator .score-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.pros-cons-calculator .score-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ===== RESULT SUMMARY ===== */
+.pros-cons-calculator .result-summary {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pros-cons-calculator .result-summary p {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* ===== ADJUST BUTTON ===== */
+.pros-cons-calculator .adjust-btn {
+  display: block;
+  margin: 0 auto 48px;
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-btn);
+  color: var(--color-accent);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.pros-cons-calculator .adjust-btn:hover {
+  background: rgba(110, 158, 235, 0.1);
+  border-color: var(--color-accent-hover);
+  color: var(--color-accent-hover);
+}
+
+/* ===== CTA BANNER ===== */
+.pros-cons-calculator .cta-banner {
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-secondary) 100%);
+  border: 1px solid rgba(110, 158, 235, 0.2);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .pros-cons-calculator .cta-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.pros-cons-calculator .cta-text h3 {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+}
+
+.pros-cons-calculator .cta-text p {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.pros-cons-calculator .cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #5a8fe0 100%);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(110, 158, 235, 0.25);
+}
+
+.pros-cons-calculator .cta-btn:hover {
+  background: linear-gradient(135deg, #7aafff 0%, var(--color-accent-hover) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(110, 158, 235, 0.35);
+}
+
+/* ===== WINNER BADGE ===== */
+.pros-cons-calculator .winner-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  min-height: 24px; /* maintain space even when empty */
+}
+
+.pros-cons-calculator .winner-badge.is-winner {
+  background: rgba(110, 158, 235, 0.2);
+  color: var(--color-accent);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 375px) {
+  .pros-cons-calculator .container {
+    padding: 24px 16px 60px;
+  }
+
+  .pros-cons-calculator .header h1 {
+    font-size: 26px;
+  }
+
+  .pros-cons-calculator .factor-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pros-cons-calculator .factor-input {
+    width: 100%;
+    flex: unset;
+  }
+
+  .pros-cons-calculator .slider-wrapper {
+    flex: 1;
+  }
+
+  .pros-cons-calculator .weight-slider {
+    flex: 1;
+  }
+
+  .pros-cons-calculator .score-number {
+    font-size: 40px;
+  }
+
+  .pros-cons-calculator .score-ring-wrapper,
+  .pros-cons-calculator .score-ring-svg {
+    width: 120px;
+    height: 120px;
+  }
+}
