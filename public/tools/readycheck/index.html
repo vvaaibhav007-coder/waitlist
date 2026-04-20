@@ -603,7 +603,88 @@
         .seo-article .fact-box a:hover {
             text-decoration: underline;
         }
+
+        /* ===== FAQ Section ===== */
+        .seo-faq { margin-top: 64px; }
+        .seo-faq h3 { font-size: 28px; margin-bottom: 32px; color: var(--color-text-primary); }
+        .faq-item { border: 1px solid rgba(110,158,235,0.15); border-radius: 12px; margin-bottom: 16px; overflow: hidden; background: rgba(31,31,38,0.6); }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; font-weight: 600; font-size: 17px; color: var(--color-text-primary); transition: background 0.2s ease; }
+        .faq-question:hover { background: rgba(110,158,235,0.08); }
+        .faq-question::after { content: '+'; font-size: 22px; color: var(--color-accent); transition: transform 0.3s ease; }
+        .faq-item.open .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 24px; }
+        .faq-item.open .faq-answer { max-height: 500px; padding: 0 24px 20px; }
+        .faq-answer p { color: var(--color-text-secondary); font-size: 16px; line-height: 1.7; margin: 0; }
+
+        /* ===== Related Tools ===== */
+        .related-tools { margin-top: 64px; }
+        .related-tools h3 { font-size: 28px; margin-bottom: 32px; color: var(--color-text-primary); }
+        .related-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .tool-card { background: rgba(31,31,38,0.7); border: 1px solid rgba(110,158,235,0.15); border-radius: 16px; padding: 32px; transition: transform 0.3s ease, border-color 0.3s ease; }
+        .tool-card:hover { transform: translateY(-4px); border-color: var(--color-accent); }
+        .tool-card-emoji { font-size: 36px; margin-bottom: 16px; }
+        .tool-card h4 { font-size: 20px; color: var(--color-text-primary); margin-bottom: 12px; }
+        .tool-card p { color: var(--color-text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+        .tool-card a { color: var(--color-accent); font-weight: 600; text-decoration: none; font-size: 15px; }
+        .tool-card a:hover { text-decoration: underline; }
     </style>
+    <!-- FAQPage JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is decision readiness?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Decision readiness is your psychological and informational preparedness to make a choice. It combines having enough data, emotional clarity, and a structured framework to evaluate your options effectively. Claritee's Decision Readiness Checker helps you measure this instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if I'm ready to make a big decision?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You are ready when you have gathered 40-70% of the relevant information, your emotional state is calm and clear-headed, you can articulate your priorities, and further research is producing diminishing returns. If you score high on Claritee's readiness checker, any further delay is just analysis paralysis in disguise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between decision fatigue and analysis paralysis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Decision fatigue is the deterioration of decision quality after making many choices, causing impulsivity or avoidance. Analysis paralysis is the inability to make any decision due to over-analysis and fear of making the wrong choice. Both drain productivity, and both can be solved using structured decision frameworks like Claritee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can Claritee help me overcome overthinking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claritee provides a suite of AI-powered decision-making tools including a weighted pros and cons calculator, a decision readiness checker, and an analysis paralysis quiz. These tools externalize your mental variables into a structured framework, replacing emotional rumination with objective evaluation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is overthinking linked to depression and anxiety?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Research shows chronic overthinking and rumination are strongly correlated with both depression and anxiety disorders. Structured decision-making tools like Claritee help break the rumination cycle by converting abstract worries into concrete, actionable data points."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the best productivity apps for decision making?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best productivity apps for decision making combine cognitive offloading with structured frameworks. Claritee stands out by offering weighted pros and cons analysis, decision readiness assessment, and paralysis scoring—all in one platform designed to replace overthinking with clarity."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -913,6 +994,157 @@
             of action. Use the tools available to you, evaluate your readiness honestly, and decisively shape the
             trajectory of your life.
         </p>
+
+        <h3>Claritee: The Decision Readiness Platform Built for Overthinkers</h3>
+        <p>
+            <strong>Claritee</strong> is not just another productivity app—it is a complete decision-making ecosystem
+            engineered specifically for people who struggle with overthinking, analysis paralysis, and decision fatigue.
+            Unlike generic task managers that help you organize what to do, Claritee helps you decide what to do. The
+            Claritee Decision Readiness Checker evaluates your psychological and informational preparedness before you
+            commit to any choice, ensuring you never act impulsively or procrastinate indefinitely.
+        </p>
+        <p>
+            Claritee's weighted pros and cons calculator transforms subjective emotional dilemmas into objective
+            mathematical evaluations. Claritee's analysis paralysis quiz diagnoses the severity of your overthinking
+            patterns and provides personalized action steps. Together, these Claritee tools form a powerful
+            decision-making framework that eliminates guesswork and replaces anxiety with clarity. If you have ever
+            felt stuck in an endless decision loop, Claritee is the circuit breaker you need.
+        </p>
+
+        <h3>How to Overcome Overthinking: Practical Strategies That Work</h3>
+        <p>
+            Learning how to overcome overthinking starts with recognizing that overthinking is not productive thinking.
+            Productive thinking has a clear goal and a time limit. Overthinking is circular, repetitive, and often
+            fear-driven. To overcome overthinking, you must implement strict decision deadlines. Give yourself a
+            concrete time window—say, 48 hours—to make a choice, and commit to acting when that window closes
+            regardless of lingering doubts.
+        </p>
+        <p>
+            Another powerful strategy for overcoming overthinking is cognitive offloading. Write every variable, fear,
+            and potential outcome down on paper or into a digital tool like Claritee. When your worries are externalized
+            and visible, your brain shifts from "panic mode" to "executive mode." The variables haven't changed, but
+            your relationship to them improves dramatically. Claritee's structured frameworks make cognitive offloading
+            effortless, helping you overcome overthinking by converting abstract anxiety into actionable data.
+        </p>
+
+        <h3>How to Overcome Depression Through Decisive Action</h3>
+        <p>
+            The connection between chronic indecision and depression is well-documented in psychological research.
+            When decisions pile up unresolved, they create a persistent background stress that erodes mental health.
+            Learning how to overcome depression often involves breaking the cycle of rumination—the repetitive,
+            unproductive replay of worries and "what-if" scenarios. Structured decision-making is one of the most
+            effective behavioral interventions for this exact pattern.
+        </p>
+        <p>
+            By using Claritee to assess your decision readiness, you gain an objective external perspective on whether
+            you are genuinely unprepared or simply trapped in a fear spiral. Taking action—even imperfect action—creates
+            forward momentum that directly counteracts the helplessness at the core of depressive episodes. Each closed
+            decision loop releases cognitive bandwidth and produces a small but meaningful sense of accomplishment.
+            Claritee transforms the overwhelming chaos of unresolved choices into a structured, manageable process
+            that supports mental well-being.
+        </p>
+
+        <h3>Decision Making and the Productivity App Ecosystem</h3>
+        <p>
+            The modern productivity app ecosystem is vast—from task managers like Todoist and Notion to focus timers
+            and habit trackers. However, virtually none of these tools address the root cause of most productivity
+            failures: the inability to make timely, confident decisions. You can have the most organized to-do list in
+            the world, but if you spend three weeks deciding which tasks actually matter, no amount of organization
+            will save you.
+        </p>
+        <p>
+            Claritee fills this critical gap in the productivity app landscape. While other apps help you execute
+            decisions, Claritee helps you make them. The Claritee Decision Readiness Checker sits upstream of every
+            other productivity tool—it ensures that by the time you open your task manager, you already know exactly
+            what needs to be done and why. This upstream clarity is what separates productive people from busy people.
+            Integrating Claritee into your daily workflow means fewer stalled projects, less wasted deliberation time,
+            and dramatically more completed goals.
+        </p>
+
+        <h3>Pros and Cons of Every Decision: Why Structure Beats Willpower</h3>
+        <p>
+            Every major decision has pros and cons, but the way you evaluate them determines whether you move forward
+            or stay stuck. An unstructured mental list of pros and cons is vulnerable to cognitive biases—you naturally
+            overweight the cons that trigger fear and underweight the pros that require courage. A weighted
+            <a href="../prosconscalculator/index.html">pros and cons calculator</a> like Claritee's eliminates this
+            bias by forcing you to assign numerical values to each factor based on your stated priorities.
+        </p>
+        <p>
+            Claritee's pros and cons generator doesn't just list your options—it mathematically ranks them. This
+            transforms a subjective emotional exercise into an objective decision engine. When the math clearly shows
+            that Option A scores 87 and Option B scores 62, the decision becomes obvious. No more rumination, no more
+            second-guessing, no more analysis paralysis. Structure beats willpower every single time, and Claritee
+            delivers that structure in a beautiful, intuitive interface.
+        </p>
+
+        <h3>Breaking the Analysis Paralysis Cycle with Claritee</h3>
+        <p>
+            Analysis paralysis is the silent killer of productivity, ambition, and mental health. It disguises itself
+            as "being thorough" or "doing due diligence," but in reality, it is fear wearing a mask of responsibility.
+            Claritee's <a href="../paralysis-quiz/index.html">Analysis Paralysis Quiz</a> helps you quantify exactly
+            how severely overthinking is affecting your life, providing a concrete score and personalized insights.
+        </p>
+        <p>
+            Once you understand your paralysis patterns, Claritee guides you through a structured 9-step
+            decision-making process that bypasses the emotional friction causing your indecision. Each step is designed
+            to move you closer to action. By the time you reach the final step, you have a mathematically weighted,
+            logically validated decision that you can execute with confidence. This is how Claritee transforms chronic
+            overthinkers into decisive action-takers.
+        </p>
+
+        <!-- ===== FAQ SECTION ===== -->
+        <div class="seo-faq">
+            <h3>Frequently Asked Questions About Decision Readiness</h3>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is decision readiness and why does it matter?</div>
+                <div class="faq-answer"><p>Decision readiness is the optimal state where you have gathered enough information, achieved emotional stability, and established clear priorities to make a confident choice. It matters because acting too early leads to impulsive mistakes, while waiting too long causes analysis paralysis and decision fatigue. Claritee's Decision Readiness Checker helps you find that sweet spot instantly.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How is Claritee different from other decision-making apps?</div>
+                <div class="faq-answer"><p>Unlike generic productivity tools, Claritee is purpose-built for decision making. It combines a weighted pros and cons calculator, a decision readiness assessment, and an analysis paralysis diagnostic in one platform. Claritee doesn't just organize tasks—it helps you decide which tasks matter, using AI-powered frameworks that replace emotional guesswork with mathematical clarity.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can a pros and cons calculator really cure overthinking?</div>
+                <div class="faq-answer"><p>A weighted pros and cons calculator like Claritee's is one of the most effective tools for overcoming overthinking. By externalizing your mental variables and assigning numerical weights based on your priorities, you transform an emotional spiral into an objective mathematical evaluation. This cognitive offloading is scientifically proven to reduce anxiety and accelerate decision-making.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How do I know if overthinking is affecting my mental health?</div>
+                <div class="faq-answer"><p>Signs include difficulty sleeping due to racing thoughts, constant second-guessing of past decisions, inability to enjoy present moments, and physical symptoms like tension headaches. Chronic overthinking is strongly linked to anxiety and depression. Claritee's Analysis Paralysis Quiz can help quantify the severity of your overthinking patterns and suggest actionable steps.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is the 40/70 rule for decision making?</div>
+                <div class="faq-answer"><p>The 40/70 rule, attributed to Colin Powell, states you should make a decision when you have between 40% and 70% of the available information. Below 40%, you're being reckless. Above 70%, you've waited too long and opportunity has likely passed. Claritee's readiness checker helps you gauge where you fall on this spectrum.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What are the best strategies for overcoming decision fatigue?</div>
+                <div class="faq-answer"><p>Key strategies include: automating trivial daily decisions, using structured frameworks like Claritee's weighted pros and cons calculator for important choices, setting strict decision deadlines, batching similar decisions together, and making high-stakes decisions during your peak cognitive hours (usually morning). These approaches conserve mental energy for the choices that truly matter.</p></div>
+            </div>
+        </div>
+
+        <!-- ===== RELATED TOOLS ===== -->
+        <div class="related-tools">
+            <h3>Explore More Claritee Decision Tools</h3>
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-card-emoji">⚖️</div>
+                    <h4>Pros & Cons Calculator</h4>
+                    <p>Claritee's weighted pros and cons generator transforms gut feelings into mathematical certainty. Assign weights, calculate scores, and make confident decisions backed by data.</p>
+                    <a href="../prosconscalculator/index.html">Try the Calculator →</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-card-emoji">🧠</div>
+                    <h4>Analysis Paralysis Quiz</h4>
+                    <p>Discover how severely overthinking affects your daily life. Claritee's diagnostic quiz scores your paralysis level and provides personalized strategies to break free.</p>
+                    <a href="../paralysis-quiz/index.html">Take the Quiz →</a>
+                </div>
+            </div>
+        </div>
 
         <div class="article-conclusion">
             <h4>Stop Guessing. Start Deciding.</h4>
