@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Claritee — AI-Powered Decision Making App</title>
+  <meta name="description" content="Download Claritee, the AI-powered decision-making app that helps you overcome analysis paralysis and make confident decisions in minutes." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://claritee.app/download/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- HLS.js for video streaming -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Claritee",
+    "operatingSystem": "iOS",
+    "applicationCategory": "LifestyleApplication",
+    "description": "AI-powered decision-making app that helps you overcome analysis paralysis and make confident decisions in minutes.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <style>
+    /* ============================================ */
+    /* CSS RESET & BASE                            */
+    /* ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --background: 213 45% 67%;
+      --foreground: 0 0% 100%;
+      --card: 213 45% 62%;
+      --card-foreground: 0 0% 100%;
+      --primary: 0 0% 100%;
+      --primary-foreground: 213 45% 67%;
+      --secondary: 213 45% 72%;
+      --secondary-foreground: 0 0% 100%;
+      --muted: 213 35% 60%;
+      --muted-foreground: 0 0% 100% / 0.7;
+      --accent: 213 45% 72%;
+      --accent-foreground: 0 0% 100%;
+      --destructive: 0 84.2% 60.2%;
+      --border: 0 0% 100% / 0.2;
+      --input: 0 0% 100% / 0.2;
+      --ring: 0 0% 100% / 0.3;
+      --radius: 9999px;
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+      --glass-blur: 16px;
+      --claritee-blue: #6E9EEB;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-heading { font-family: 'Instrument Serif', serif; font-style: italic; }
+    .font-body { font-family: 'Barlow', sans-serif; }
+
+    a { text-decoration: none; color: inherit; }
+    img, video { display: block; max-width: 100%; }
+
+    /* ============================================ */
+    /* LIQUID GLASS                                 */
+    /* ============================================ */
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .liquid-glass-strong {
+      background: rgba(255, 255, 255, 0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border: none;
+      box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass-strong::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 20%,
+        rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.5) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ============================================ */
+    /* NAVBAR                                      */
+    /* ============================================ */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    @media (min-width: 1024px) { .navbar { padding: 12px 64px; } }
+
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #fff;
+    }
+    .navbar-logo svg { width: 32px; height: 32px; }
+
+    .navbar-links {
+      display: none;
+      align-items: center;
+      gap: 2px;
+      border-radius: 9999px;
+      padding: 4px 6px;
+    }
+    @media (min-width: 768px) { .navbar-links { display: flex; } }
+
+    .navbar-links a {
+      padding: 8px 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      font-family: 'Barlow', sans-serif;
+      transition: color 0.2s;
+      border-radius: 9999px;
+    }
+    .navbar-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    .btn-nav-cta {
+      background: #fff;
+      color: #000;
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Barlow', sans-serif;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,255,255,0.2); }
+
+    /* ============================================ */
+    /* HERO SECTION                                */
+    /* ============================================ */
+    .hero {
+      position: relative;
+      overflow: visible;
+      height: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      z-index: 0;
+      top: 20%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.05);
+      z-index: 0;
+    }
+
+    .hero-fade-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 300px;
+      background: linear-gradient(to bottom, transparent, #000);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding-top: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      width: 100%;
+      max-width: 900px;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    /* Hero badge */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 9999px;
+      padding: 4px 4px 4px 4px;
+      margin-bottom: 32px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.9);
+    }
+    .hero-badge-inner {
+      background: #fff;
+      color: #000;
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .hero-badge-text { padding-right: 12px; }
+
+    /* Hero heading */
+    .hero-heading {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      color: #fff;
+      line-height: 0.85;
+      max-width: 700px;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+    .hero-heading .blue { color: var(--claritee-blue); }
+
+    /* Hero subtext */
+    .hero-subtext {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.8);
+      max-width: 460px;
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+
+    /* CTA Buttons */
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      border-radius: 9999px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: 'Barlow', sans-serif;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(255,255,255,0.1); }
+
+    .btn-secondary-solid {
+      background: #fff;
+      color: #000;
+      border-radius: 9999px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: 'Barlow', sans-serif;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-secondary-solid:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(255,255,255,0.15); }
+
+    .btn-text {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: 'Barlow', sans-serif;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-text:hover { opacity: 0.8; }
+
+    /* Partners */
+    .partners {
+      margin-top: auto;
+      padding-bottom: 32px;
+      padding-top: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .partners-badge {
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+    }
+    .partners-logos {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    @media (min-width: 768px) { .partners-logos { gap: 64px; } }
+    .partners-logos span {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 1.875rem);
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ============================================ */
+    /* VIDEO SECTION (template)                    */
+    /* ============================================ */
+    .video-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-section video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-fade-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, #000, transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .video-fade-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to top, #000, transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .video-section .section-inner {
+      position: relative;
+      z-index: 10;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px;
+    }
+
+    /* ============================================ */
+    /* SECTION BADGE & HEADING PATTERNS            */
+    /* ============================================ */
+    .section-badge {
+      border-radius: 9999px;
+      padding: 4px 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #fff;
+      font-family: 'Barlow', sans-serif;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .section-heading {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .section-subtext {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+
+    /* ============================================ */
+    /* HOW IT WORKS (START SECTION)                 */
+    /* ============================================ */
+    .start-section {
+      background: #000;
+    }
+
+    /* ============================================ */
+    /* FEATURES CHESS                                */
+    /* ============================================ */
+    .features-chess {
+      background: #000;
+      padding: 100px 24px;
+    }
+    .features-chess .header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .chess-row {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+    }
+    .chess-row:last-child { margin-bottom: 0; }
+    .chess-row.reverse { flex-direction: row-reverse; }
+
+    .chess-content { flex: 1; }
+    .chess-content h3 {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .chess-content p {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      max-width: 480px;
+    }
+    .chess-image {
+      flex: 1;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .chess-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .chess-row, .chess-row.reverse { flex-direction: column; }
+      .chess-content { text-align: center; }
+      .chess-content p { max-width: 100%; margin-left: auto; margin-right: auto; }
+    }
+
+    /* ============================================ */
+    /* FEATURES GRID                                */
+    /* ============================================ */
+    .features-grid {
+      background: #000;
+      padding: 100px 24px;
+    }
+    .features-grid .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+    .grid-card {
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .grid-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .grid-card-icon svg { width: 18px; height: 18px; color: #fff; }
+    .grid-card h4 {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .grid-card p {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    /* ============================================ */
+    /* STATS SECTION                                */
+    /* ============================================ */
+    .stats-section video { filter: saturate(0); }
+    .stats-card {
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .stats-card { padding: 48px 64px; grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ============================================ */
+    /* TESTIMONIALS                                 */
+    /* ============================================ */
+    .testimonials-section {
+      background: #000;
+      padding: 100px 24px;
+    }
+    .testimonials-section .header { text-align: center; margin-bottom: 60px; }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .testimonial-card {
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .testimonial-quote {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .testimonial-name {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #fff;
+    }
+    .testimonial-role {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ============================================ */
+    /* CTA + FOOTER                                 */
+    /* ============================================ */
+    .cta-footer .section-inner { padding-bottom: 40px; }
+    .cta-heading {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: #fff;
+      line-height: 0.85;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+    .cta-subtext {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-bar {
+      margin-top: 128px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 128px;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ============================================ */
+    /* BLUR TEXT ANIMATION                          */
+    /* ============================================ */
+    .blur-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(50px);
+      transition: none;
+    }
+    .blur-word.animate {
+      animation: blurIn 0.7s forwards;
+    }
+    @keyframes blurIn {
+      0%   { filter: blur(10px); opacity: 0;   transform: translateY(50px); }
+      50%  { filter: blur(5px);  opacity: 0.5; transform: translateY(-5px); }
+      100% { filter: blur(0px);  opacity: 1;   transform: translateY(0px); }
+    }
+
+    /* Fade-in-up for general elements */
+    .fade-in {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(20px);
+    }
+    .fade-in.visible {
+      animation: fadeInUp 0.6s forwards;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+
+    /* ============================================ */
+    /* SCROLL-TRIGGERED SECTIONS                    */
+    /* ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================ */
+    /* DOWNLOAD PLATFORM CARDS                     */
+    /* ============================================ */
+    .download-platforms {
+      background: #000;
+      padding: 80px 24px;
+    }
+    .download-platforms .header { text-align: center; margin-bottom: 60px; }
+    .platform-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) { .platform-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .platform-card {
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .platform-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(110,158,235,0.1); }
+    .platform-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(110,158,235,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .platform-card-icon svg { width: 28px; height: 28px; color: var(--claritee-blue); }
+    .platform-card h4 {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .platform-card .status {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: var(--claritee-blue);
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .platform-card .status .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--claritee-blue);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .platform-card p {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #000;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.15); }
+    .btn-download.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ============================================ */
+    /* APP PREVIEW MOCKUP                     */
+    /* ============================================ */
+    .app-preview-section {
+      background: #000;
+      padding: 60px 24px 100px;
+      text-align: center;
+    }
+    .app-mockup-container {
+      max-width: 320px;
+      margin: 0 auto;
+      border-radius: 40px;
+      padding: 12px;
+      position: relative;
+    }
+    .app-mockup-screen {
+      border-radius: 32px;
+      overflow: hidden;
+      background: linear-gradient(135deg, hsl(213 45% 20%), hsl(213 45% 10%));
+      aspect-ratio: 9/19.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+    .app-mockup-screen .mock-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--claritee-blue), #8fb8f9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(110,158,235,0.4);
+    }
+    .app-mockup-screen .mock-icon svg { width: 32px; height: 32px; color: #fff; }
+    .app-mockup-screen h4 {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .app-mockup-screen h4 .blue { color: var(--claritee-blue); }
+    .app-mockup-screen p {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 200px;
+      line-height: 1.5;
+    }
+    .mock-features {
+      margin-top: 32px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mock-feature-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .mock-feature-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--claritee-blue);
+      flex-shrink: 0;
+    }
+    .mock-feature-row span {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      font-size: 0.6875rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ============================================ */
+    /* RESPONSIVE UTILITIES                         */
+    /* ============================================ */
+    @media (max-width: 768px) {
+      .hero { height: auto; min-height: 100vh; }
+      .hero-content { padding-top: 120px; padding-bottom: 40px; }
+      .hero-video { top: 10%; }
+      .partners-logos { gap: 24px; }
+      .partners-logos span { font-size: 1.125rem; }
+      .stats-card { padding: 32px 24px; }
+      .footer-bar { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ========================================== -->
+  <!-- NAVBAR                                      -->
+  <!-- ========================================== -->
+  <nav class="navbar" id="navbar">
+    <a href="/" class="navbar-logo">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#6E9EEB" fill-opacity="0.15"/>
+        <path d="M16 6C10.477 6 6 10.477 6 16s4.477 10 10 10 10-4.477 10-10S21.523 6 16 6zm0 2a8 8 0 110 16 8 8 0 010-16z" fill="#6E9EEB" fill-opacity="0.3"/>
+        <path d="M16 10a6 6 0 100 12 6 6 0 000-12zm-1 3.5a1 1 0 112 0v3.086l1.707 1.707a1 1 0 01-1.414 1.414l-2-2A1 1 0 0115 17v-3.5z" fill="#6E9EEB"/>
+      </svg>
+      <span>Clarit<span style="color: var(--claritee-blue)">ee</span></span>
+    </a>
+
+    <div class="navbar-links liquid-glass" style="border-radius: 9999px; padding: 4px 6px;">
+      <a href="/">Home</a>
+      <a href="/#features">Features</a>
+      <a href="/tools/prosconscalculator/">Tools</a>
+      <a href="/#how-it-works">Process</a>
+      <a href="/download/" style="font-weight:600; color: var(--claritee-blue);">Download</a>
+      <button class="btn-nav-cta" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})">
+        Get the App
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- HERO                                        -->
+  <!-- ========================================== -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay loop muted playsinline poster="/images/hero_bg.jpeg">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-fade-bottom"></div>
+
+    <div class="hero-content">
+      <!-- Badge -->
+      <div class="hero-badge liquid-glass">
+        <span class="hero-badge-inner">New</span>
+        <span class="hero-badge-text">Introducing Claritee — Download now for iOS</span>
+      </div>
+
+      <!-- Heading with blur animation -->
+      <h1 class="hero-heading" id="hero-heading">
+        <!-- Words are injected by JS for blur animation -->
+      </h1>
+
+      <!-- Subtext -->
+      <p class="hero-subtext fade-in" id="hero-subtext">
+        Overcome analysis paralysis in minutes. The AI-powered decision app that structures your thinking, scores your options, and gives you confident clarity.
+      </p>
+
+      <!-- CTA -->
+      <div class="hero-cta fade-in" id="hero-cta" style="animation-delay: 0.3s;">
+        <button class="btn-primary liquid-glass-strong" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})" style="border-radius: 9999px;">
+          Download Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="btn-text" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          See How It Works
+        </button>
+      </div>
+
+      <!-- Partners -->
+      <div class="partners">
+        <div class="partners-badge liquid-glass" style="border-radius: 9999px;">Trusted by decision-makers at</div>
+        <div class="partners-logos">
+          <span>Stripe</span>
+          <span>Vercel</span>
+          <span>Linear</span>
+          <span>Notion</span>
+          <span>Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- HOW IT WORKS                                -->
+  <!-- ========================================== -->
+  <div style="background: #000;">
+    <section class="video-section start-section" id="how-it-works">
+      <video id="hls-video-start" autoplay loop muted playsinline></video>
+      <div class="video-fade-top"></div>
+      <div class="video-fade-bottom"></div>
+      <div class="section-inner">
+        <div class="section-badge liquid-glass">How It Works</div>
+        <h2 class="section-heading reveal">Think clearly.<br>Decide fast.</h2>
+        <p class="section-subtext reveal">Share your dilemma. Claritee's AI structures your options, weighs trade-offs, and delivers a scored recommendation—all in under 5 minutes.</p>
+        <button class="btn-primary liquid-glass-strong reveal" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})" style="border-radius: 9999px; padding: 12px 24px;">
+          Get Started
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FEATURES CHESS                             -->
+    <!-- ========================================== -->
+    <section class="features-chess" id="features">
+      <div class="header">
+        <div class="section-badge liquid-glass">Capabilities</div>
+        <h2 class="section-heading reveal">Pro features.<br>Zero complexity.</h2>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="chess-row reveal">
+        <div class="chess-content">
+          <h3>AI that thinks with you, not for you.</h3>
+          <p>Claritee's 9-step framework mirrors how expert decision coaches work. It asks the right questions, surfaces hidden trade-offs, and scores every option—so you decide with total confidence.</p>
+          <button class="btn-primary liquid-glass-strong" style="border-radius: 9999px;" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})">Learn more</button>
+        </div>
+        <div class="chess-image liquid-glass" style="border-radius: 16px;">
+          <img src="https://motionsites.ai/assets/hero-finlytic-preview-CV9g0FHP.gif" alt="Claritee AI decision analysis" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="chess-row reverse reveal">
+        <div class="chess-content">
+          <h3>It gets smarter. Automatically.</h3>
+          <p>Every decision you run through Claritee refines its understanding of your priorities. Over time, recommendations become sharper, faster, and more accurately tailored to your values.</p>
+          <button class="btn-primary liquid-glass-strong" style="border-radius: 9999px;" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})">See how it works</button>
+        </div>
+        <div class="chess-image liquid-glass" style="border-radius: 16px;">
+          <img src="https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif" alt="Claritee adaptive learning" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FEATURES GRID — WHY CLARITEE              -->
+    <!-- ========================================== -->
+    <section class="features-grid">
+      <div class="header">
+        <div class="section-badge liquid-glass">Why Claritee</div>
+        <h2 class="section-heading reveal">The difference is everything.</h2>
+      </div>
+      <div class="grid-4">
+        <!-- Card 1 -->
+        <div class="grid-card liquid-glass reveal">
+          <div class="grid-card-icon liquid-glass-strong" style="border-radius: 9999px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h4>Clarity in Minutes</h4>
+          <p>From confused to confident in under 5 minutes. Because overthinking isn't a strategy.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="grid-card liquid-glass reveal">
+          <div class="grid-card-icon liquid-glass-strong" style="border-radius: 9999px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 3-2 5.5-5 8.5C9 12.5 7 10 7 7a5 5 0 015-5z"/><path d="M2 22c0-5.523 4.477-10 10-10s10 4.477 10 10"/></svg>
+          </div>
+          <h4>Obsessively Crafted</h4>
+          <p>Every interaction refined. Every screen considered. Design so elegant, it feels effortless.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="grid-card liquid-glass reveal">
+          <div class="grid-card-icon liquid-glass-strong" style="border-radius: 9999px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h4>Data-Backed Decisions</h4>
+          <p>Weighted scoring powered by behavioral science. Results you can trust and measure.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="grid-card liquid-glass reveal">
+          <div class="grid-card-icon liquid-glass-strong" style="border-radius: 9999px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Private & Secure</h4>
+          <p>Your decisions are deeply personal. End-to-end encryption and zero data selling. Always.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- STATS                                      -->
+    <!-- ========================================== -->
+    <section class="video-section stats-section">
+      <video id="hls-video-stats" autoplay loop muted playsinline></video>
+      <div class="video-fade-top"></div>
+      <div class="video-fade-bottom"></div>
+      <div class="section-inner">
+        <div class="stats-card liquid-glass reveal" style="border-radius: 24px;">
+          <div class="stat-item">
+            <div class="stat-value">1,000+</div>
+            <div class="stat-label">Waitlist signups</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">98%</div>
+            <div class="stat-label">Clarity confidence</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4.2x</div>
+            <div class="stat-label">Faster decisions</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">5 min</div>
+            <div class="stat-label">Average session</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TESTIMONIALS                               -->
+    <!-- ========================================== -->
+    <section class="testimonials-section">
+      <div class="header">
+        <div class="section-badge liquid-glass">What They Say</div>
+        <h2 class="section-heading reveal">Don't take our word for it.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card liquid-glass reveal">
+          <p class="testimonial-quote">"I agonized over a career move for weeks. Claritee helped me see the full picture in 10 minutes. The recommendation matched what my gut was telling me—but now I had the data to back it up."</p>
+          <p class="testimonial-name">Sarah Chen</p>
+          <p class="testimonial-role">Product Manager</p>
+        </div>
+        <div class="testimonial-card liquid-glass reveal">
+          <p class="testimonial-quote">"We used Claritee's framework to evaluate 5 vendor options. The weighted scoring cut our decision time by 80%. This is now standard at our company."</p>
+          <p class="testimonial-name">Marcus Johnson</p>
+          <p class="testimonial-role">Startup Founder</p>
+        </div>
+        <div class="testimonial-card liquid-glass reveal">
+          <p class="testimonial-quote">"The nine-step framework is genius. It doesn't tell you what to decide—it helps you understand what you actually value. That's the real superpower."</p>
+          <p class="testimonial-name">Emily Rodriguez</p>
+          <p class="testimonial-role">Software Engineer</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- APP PREVIEW + DOWNLOAD SECTION            -->
+    <!-- ========================================== -->
+    <section class="app-preview-section reveal" id="app-preview">
+      <div class="section-badge liquid-glass" style="margin-bottom: 24px;">App Preview</div>
+      <h2 class="section-heading" style="margin-bottom: 48px;">Beautiful inside and out.</h2>
+      <div class="app-mockup-container liquid-glass">
+        <div class="app-mockup-screen">
+          <div class="mock-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5v1h1a2 2 0 012 2v1a7 7 0 01-7 7h-2a7 7 0 01-7-7v-1a2 2 0 012-2h1V7a5 5 0 015-5z"/><circle cx="12" cy="13" r="1"/></svg>
+          </div>
+          <h4>Clarit<span class="blue">ee</span></h4>
+          <p>AI-powered decision clarity at your fingertips</p>
+          <div class="mock-features">
+            <div class="mock-feature-row">
+              <div class="mock-feature-dot"></div>
+              <span>9-Step Decision Framework</span>
+            </div>
+            <div class="mock-feature-row">
+              <div class="mock-feature-dot"></div>
+              <span>Weighted Criteria Scoring</span>
+            </div>
+            <div class="mock-feature-row">
+              <div class="mock-feature-dot"></div>
+              <span>AI Trade-off Analysis</span>
+            </div>
+            <div class="mock-feature-row">
+              <div class="mock-feature-dot"></div>
+              <span>Confidence Recommendations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- DOWNLOAD PLATFORMS                         -->
+    <!-- ========================================== -->
+    <section class="download-platforms" id="download-section">
+      <div class="header">
+        <div class="section-badge liquid-glass">Download</div>
+        <h2 class="section-heading reveal">Get Clarit<span style="color: var(--claritee-blue)">ee</span> on your device.</h2>
+        <p class="section-subtext reveal">Available for both iOS and Android. Download directly and start making better decisions today.</p>
+      </div>
+
+      <!-- Auto-detect banner -->
+      <div id="auto-detect-banner" class="reveal" style="max-width: 700px; margin: 0 auto 40px; text-align: center; display: none;">
+        <div class="liquid-glass" style="border-radius: 20px; padding: 28px 32px; display: inline-flex; flex-direction: column; align-items: center; gap: 16px;">
+          <p style="font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.875rem; color: rgba(255,255,255,0.7);">
+            We detected you're on <strong id="detected-platform" style="color: #fff; font-weight: 500;"></strong>
+          </p>
+          <a id="auto-download-btn" class="btn-download" style="padding: 14px 32px; font-size: 1rem; font-weight: 600; box-shadow: 0 0 20px rgba(110,158,235,0.3);" download>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="auto-download-text">Download</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="platform-grid">
+        <!-- iOS -->
+        <div class="platform-card liquid-glass reveal" id="ios-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          </div>
+          <h4>iOS</h4>
+          <div class="status">
+            <span class="dot"></span>
+            Available Now
+          </div>
+          <p>Requires iOS 16.0 or later. Optimized for iPhone.</p>
+          <div style="margin-top: 12px; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);">
+            <span style="font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.7rem; color: rgba(255,255,255,0.4); display: block;">Version 1.0.0 • IPA Package</span>
+          </div>
+          <a href="/claritee.ipa" class="btn-download" download="claritee.ipa" id="ios-download-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for iOS
+          </a>
+        </div>
+
+        <!-- Android -->
+        <div class="platform-card liquid-glass reveal" id="android-card">
+          <div class="platform-card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.238a.843.843 0 00-1.157.305l-1.157 2.004A8.472 8.472 0 0012.002 4c-1.131 0-2.208.192-3.207.547L7.638 2.543a.843.843 0 10-1.463.843L7.27 5.298A8.456 8.456 0 003.545 12h16.91A8.456 8.456 0 0016.73 5.298l1.098-1.903a.843.843 0 00-.305-1.157zM8.5 10a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2zM3.545 13C3.2 13 3 13.3 3 13.545v5.91C3 19.998 3.502 20.5 4.045 20.5H5.5v2.655c0 .876.57 1.345 1.273 1.345s1.273-.469 1.273-1.345V20.5h3.908v2.655c0 .876.57 1.345 1.273 1.345s1.273-.469 1.273-1.345V20.5h1.455c.543 0 1.045-.502 1.045-1.045v-5.91c0-.245-.2-.545-.545-.545H3.545zm-2.318 0c-.703 0-1.227.57-1.227 1.273v4.454c0 .703.524 1.273 1.227 1.273S2.5 19.43 2.5 18.727v-4.454C2.5 13.57 1.93 13 1.227 13zm21.546 0c-.703 0-1.273.57-1.273 1.273v4.454c0 .703.57 1.273 1.273 1.273S24 19.43 24 18.727v-4.454c0-.703-.524-1.273-1.227-1.273z"/></svg>
+          </div>
+          <h4>Android</h4>
+          <div class="status">
+            <span class="dot"></span>
+            Available Now
+          </div>
+          <p>Requires Android 8.0+. Works on all Android devices.</p>
+          <div style="margin-top: 12px; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);">
+            <span style="font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.7rem; color: rgba(255,255,255,0.4); display: block;">Version 1.0.0 • APK Package</span>
+          </div>
+          <a href="/claritee.apk" class="btn-download" download="claritee.apk" id="android-download-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for Android
+          </a>
+        </div>
+      </div>
+
+      <!-- Installation instructions -->
+      <div class="reveal" style="max-width: 700px; margin: 48px auto 0; text-align: center;">
+        <div class="liquid-glass" style="border-radius: 16px; padding: 24px 32px;">
+          <h4 style="font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.9375rem; color: #fff; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--claritee-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Installation Guide
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px; text-align: left;">
+            <div style="padding: 14px 16px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
+              <p style="font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.8125rem; color: var(--claritee-blue); margin-bottom: 4px;">Android (APK)</p>
+              <p style="font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.5;">
+                Tap "Download for Android" → Open the downloaded file → Allow installation from unknown sources if prompted → Tap "Install".
+              </p>
+            </div>
+            <div style="padding: 14px 16px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
+              <p style="font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.8125rem; color: var(--claritee-blue); margin-bottom: 4px;">iOS (IPA)</p>
+              <p style="font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.5;">
+                Tap "Download for iOS" → Install via AltStore or Sideloadly on your computer → Trust the developer profile in Settings → General → Device Management.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- CTA + FOOTER                               -->
+    <!-- ========================================== -->
+    <section class="video-section cta-footer">
+      <video id="hls-video-cta" autoplay loop muted playsinline></video>
+      <div class="video-fade-top"></div>
+      <div class="video-fade-bottom"></div>
+      <div class="section-inner" style="padding-bottom: 40px;">
+        <h2 class="cta-heading reveal">Your next decision starts here.</h2>
+        <p class="cta-subtext reveal">Download Claritee for free. Make your next important choice with confidence. No commitment, no pressure. Just clarity.</p>
+        <div class="cta-buttons reveal">
+          <button class="btn-primary liquid-glass-strong" onclick="document.getElementById('download-section').scrollIntoView({behavior:'smooth'})" style="border-radius: 9999px; padding: 12px 24px;">
+            Download Now
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </button>
+          <a href="/" class="btn-secondary-solid" style="border-radius: 9999px; padding: 12px 24px;">
+            Join Waitlist
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-bar" style="padding-left: 24px; padding-right: 24px;">
+          <div class="footer-left">&copy; 2026 Claritee. All rights reserved.</div>
+          <div class="footer-links">
+            <a href="/privacypolicy/">Privacy</a>
+            <a href="/terms/">Terms</a>
+            <a href="mailto:hello@claritee.app">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT                                  -->
+  <!-- ========================================== -->
+  <script>
+    // ============================================
+    // HLS Video Setup
+    // ============================================
+    function initHLS(videoId, src) {
+      const video = document.getElementById(videoId);
+      if (!video) return;
+      if (Hls.isSupported()) {
+        const hls = new Hls({ enableWorker: true, lowLatencyMode: false });
+        hls.loadSource(src);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => { video.play().catch(() => {}); });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = src;
+        video.addEventListener('loadedmetadata', () => { video.play().catch(() => {}); });
+      }
+    }
+
+    initHLS('hls-video-start', 'https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8');
+    initHLS('hls-video-stats', 'https://stream.mux.com/NcU3HlHeF7CUL86azTTzpy3Tlb00d6iF3BmCdFslMJYM.m3u8');
+    initHLS('hls-video-cta',   'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8');
+
+    // ============================================
+    // BlurText Hero Animation
+    // ============================================
+    (function() {
+      const heading = document.getElementById('hero-heading');
+      const text = "The Clarity Your Decisions Deserve";
+      const words = text.split(' ');
+
+      words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'blur-word';
+        span.textContent = word + ' ';
+        span.style.animationDelay = (i * 0.15) + 's';
+        heading.appendChild(span);
+      });
+
+      // trigger after small delay for page load
+      setTimeout(() => {
+        const spans = heading.querySelectorAll('.blur-word');
+        spans.forEach((s, i) => {
+          setTimeout(() => s.classList.add('animate'), i * 150);
+        });
+      }, 300);
+    })();
+
+    // ============================================
+    // Fade-in for hero elements
+    // ============================================
+    setTimeout(() => {
+      document.getElementById('hero-subtext').classList.add('visible');
+    }, 800);
+    setTimeout(() => {
+      document.getElementById('hero-cta').classList.add('visible');
+    }, 1100);
+
+    // ============================================
+    // Scroll-based reveal (IntersectionObserver)
+    // ============================================
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ============================================
+    // Navbar blur on scroll
+    // ============================================
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.style.backdropFilter = 'blur(16px)';
+        navbar.style.webkitBackdropFilter = 'blur(16px)';
+        navbar.style.background = 'rgba(0,0,0,0.4)';
+      } else {
+        navbar.style.backdropFilter = 'none';
+        navbar.style.webkitBackdropFilter = 'none';
+        navbar.style.background = 'transparent';
+      }
+    });
+
+    // ============================================
+    // Platform Auto-Detection
+    // ============================================
+    (function() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      let platform = null;
+
+      if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+        platform = 'ios';
+      } else if (/android/i.test(ua)) {
+        platform = 'android';
+      }
+
+      const banner = document.getElementById('auto-detect-banner');
+      const detectedText = document.getElementById('detected-platform');
+      const autoBtn = document.getElementById('auto-download-btn');
+      const autoBtnText = document.getElementById('auto-download-text');
+      const iosCard = document.getElementById('ios-card');
+      const androidCard = document.getElementById('android-card');
+
+      if (platform === 'ios') {
+        banner.style.display = 'block';
+        detectedText.textContent = 'an iPhone / iPad';
+        autoBtn.href = '/claritee.ipa';
+        autoBtn.setAttribute('download', 'claritee.ipa');
+        autoBtnText.textContent = 'Download for iOS';
+        iosCard.style.border = '1px solid rgba(110,158,235,0.4)';
+        iosCard.style.boxShadow = '0 0 30px rgba(110,158,235,0.15)';
+      } else if (platform === 'android') {
+        banner.style.display = 'block';
+        detectedText.textContent = 'an Android device';
+        autoBtn.href = '/claritee.apk';
+        autoBtn.setAttribute('download', 'claritee.apk');
+        autoBtnText.textContent = 'Download for Android';
+        androidCard.style.border = '1px solid rgba(110,158,235,0.4)';
+        androidCard.style.boxShadow = '0 0 30px rgba(110,158,235,0.15)';
+      }
+      // On desktop, banner stays hidden — user picks manually
+    })();
+  </script>
+</body>
+</html>
