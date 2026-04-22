@@ -9,13 +9,23 @@
   <link rel="canonical" href="https://claritee.app/download/" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-  <!-- Fonts -->
+  <!-- LCP: Preload hero poster (the visual LCP candidate) -->
+  <link rel="preload" as="image" href="/images/hero_bg.jpeg" fetchpriority="high" />
+
+  <!-- Preconnect to external origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" />
+  <link rel="preconnect" href="https://stream.mux.com" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 
-  <!-- HLS.js for video streaming -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
+  <!-- Fonts: preload the critical italic heading font, then load full stylesheet -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
+
+  <!-- HLS.js: deferred — not needed for initial paint -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js" defer></script>
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -959,6 +969,26 @@
       .stats-card { padding: 32px 24px; }
       .footer-bar { flex-direction: column; text-align: center; }
     }
+
+    /* ============================================ */
+    /* LCP / PERFORMANCE                            */
+    /* ============================================ */
+    /* Contain layout for off-screen sections to skip rendering cost */
+    .features-chess,
+    .features-grid,
+    .stats-section,
+    .testimonials-section,
+    .app-preview-section,
+    .download-platforms,
+    .cta-footer {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 600px;
+    }
+
+    /* Font fallback stack to prevent FOIT on LCP heading */
+    .hero-heading {
+      font-display: swap;
+    }
   </style>
 </head>
 
@@ -968,11 +998,7 @@
   <!-- ========================================== -->
   <nav class="navbar" id="navbar">
     <a href="/" class="navbar-logo">
-      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="32" height="32" rx="8" fill="#6E9EEB" fill-opacity="0.15"/>
-        <path d="M16 6C10.477 6 6 10.477 6 16s4.477 10 10 10 10-4.477 10-10S21.523 6 16 6zm0 2a8 8 0 110 16 8 8 0 010-16z" fill="#6E9EEB" fill-opacity="0.3"/>
-        <path d="M16 10a6 6 0 100 12 6 6 0 000-12zm-1 3.5a1 1 0 112 0v3.086l1.707 1.707a1 1 0 01-1.414 1.414l-2-2A1 1 0 0115 17v-3.5z" fill="#6E9EEB"/>
-      </svg>
+      <img src="/claritee.jpeg" alt="Claritee logo" style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover;" />
       <span>Clarit<span style="color: var(--claritee-blue)">ee</span></span>
     </a>
 
@@ -993,7 +1019,7 @@
   <!-- HERO                                        -->
   <!-- ========================================== -->
   <section class="hero" id="hero">
-    <video class="hero-video" autoplay loop muted playsinline poster="/images/hero_bg.jpeg">
+    <video class="hero-video" autoplay loop muted playsinline poster="/images/hero_bg.jpeg" preload="auto">
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
@@ -1006,10 +1032,8 @@
         <span class="hero-badge-text">Introducing Claritee — Download now for iOS</span>
       </div>
 
-      <!-- Heading with blur animation -->
-      <h1 class="hero-heading" id="hero-heading">
-        <!-- Words are injected by JS for blur animation -->
-      </h1>
+      <!-- Heading: text in HTML for instant LCP, JS enhances with animation -->
+      <h1 class="hero-heading" id="hero-heading">The Clarity Your Decisions Deserve</h1>
 
       <!-- Subtext -->
       <p class="hero-subtext fade-in" id="hero-subtext">
@@ -1028,17 +1052,6 @@
         </button>
       </div>
 
-      <!-- Partners -->
-      <div class="partners">
-        <div class="partners-badge liquid-glass" style="border-radius: 9999px;">Trusted by decision-makers at</div>
-        <div class="partners-logos">
-          <span>Stripe</span>
-          <span>Vercel</span>
-          <span>Linear</span>
-          <span>Notion</span>
-          <span>Figma</span>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1358,11 +1371,12 @@
   <!-- ========================================== -->
   <script>
     // ============================================
-    // HLS Video Setup
+    // HLS Video Setup (lazy — defer until visible)
     // ============================================
     function initHLS(videoId, src) {
       const video = document.getElementById(videoId);
       if (!video) return;
+      if (typeof Hls === 'undefined') return;
       if (Hls.isSupported()) {
         const hls = new Hls({ enableWorker: true, lowLatencyMode: false });
         hls.loadSource(src);
@@ -1374,33 +1388,64 @@
       }
     }
 
-    initHLS('hls-video-start', 'https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8');
-    initHLS('hls-video-stats', 'https://stream.mux.com/NcU3HlHeF7CUL86azTTzpy3Tlb00d6iF3BmCdFslMJYM.m3u8');
-    initHLS('hls-video-cta',   'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8');
+    // Lazy-init HLS videos only when their section scrolls into view
+    const hlsVideos = [
+      { id: 'hls-video-start', src: 'https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8' },
+      { id: 'hls-video-stats', src: 'https://stream.mux.com/NcU3HlHeF7CUL86azTTzpy3Tlb00d6iF3BmCdFslMJYM.m3u8' },
+      { id: 'hls-video-cta',   src: 'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8' }
+    ];
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const videoEl = entry.target;
+          const config = hlsVideos.find(v => v.id === videoEl.id);
+          if (config) initHLS(config.id, config.src);
+          videoObserver.unobserve(videoEl);
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+
+    // Start observing once HLS.js has loaded (deferred)
+    window.addEventListener('DOMContentLoaded', () => {
+      // Wait for defer script to be ready
+      const startObserving = () => {
+        hlsVideos.forEach(v => {
+          const el = document.getElementById(v.id);
+          if (el) videoObserver.observe(el);
+        });
+      };
+      if (typeof Hls !== 'undefined') startObserving();
+      else window.addEventListener('load', startObserving);
+    });
 
     // ============================================
-    // BlurText Hero Animation
+    // BlurText Hero Animation (progressive)
     // ============================================
+    // Heading text is already in HTML for instant LCP.
+    // JS wraps words in spans for the blur animation.
     (function() {
       const heading = document.getElementById('hero-heading');
-      const text = "The Clarity Your Decisions Deserve";
-      const words = text.split(' ');
+      const text = heading.textContent.trim();
+      const words = text.split(/\s+/);
+      heading.textContent = ''; // clear original text
 
       words.forEach((word, i) => {
         const span = document.createElement('span');
         span.className = 'blur-word';
         span.textContent = word + ' ';
-        span.style.animationDelay = (i * 0.15) + 's';
         heading.appendChild(span);
       });
 
-      // trigger after small delay for page load
-      setTimeout(() => {
-        const spans = heading.querySelectorAll('.blur-word');
-        spans.forEach((s, i) => {
-          setTimeout(() => s.classList.add('animate'), i * 150);
+      // Trigger animation with minimal delay (after first paint)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const spans = heading.querySelectorAll('.blur-word');
+          spans.forEach((s, i) => {
+            setTimeout(() => s.classList.add('animate'), i * 120);
+          });
         });
-      }, 300);
+      });
     })();
 
     // ============================================
@@ -1408,10 +1453,10 @@
     // ============================================
     setTimeout(() => {
       document.getElementById('hero-subtext').classList.add('visible');
-    }, 800);
+    }, 500);
     setTimeout(() => {
       document.getElementById('hero-cta').classList.add('visible');
-    }, 1100);
+    }, 750);
 
     // ============================================
     // Scroll-based reveal (IntersectionObserver)
