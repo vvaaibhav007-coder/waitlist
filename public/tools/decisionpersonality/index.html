@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>What's Your Decision Personality?</title>
+	<meta name="description" content="Discover your decision personality across speed, data, risk, and scope." />
+	<!-- Google Analytics 4 -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-47CVCRT6G8"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-47CVCRT6G8');
+	</script>
+	<!-- End Google Analytics 4 -->
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+	<!-- End Google Tag Manager -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #131319;
+			--surface: #1f1f26;
+			--surface-secondary: #2a2930;
+			--surface-glass: rgba(31, 31, 38, 0.85);
+			--line: #424751;
+			--text: #e4e1ea;
+			--muted: #c2c6d2;
+			--accent: #6e9eeb;
+			--accent-hover: #5a95ff;
+			--accent-ink: #e4eeff;
+			--ok: #8cb4f1;
+			--radius: 12px;
+			--glass-blur: 20px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			min-height: 100%;
+			background: var(--bg);
+			color: var(--text);
+			font-family: "Inter", sans-serif;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		body {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			flex-direction: column;
+			padding: 24px;
+			overflow-x: hidden;
+			background:
+				radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+				radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+				var(--bg);
+		}
+
+		body::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		.container {
+			width: 100%;
+			max-width: 640px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.logo-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 18px;
+			gap: 8px;
+		}
+
+		.claritee-brand-text {
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: 0.2em;
+			color: var(--muted);
+		}
+
+		.claritee-logo {
+			width: 48px;
+			height: 48px;
+			background: #000;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+			overflow: hidden;
+		}
+
+		.claritee-logo img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		.shell {
+			width: 100%;
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: var(--radius);
+			background: var(--surface-glass);
+			backdrop-filter: blur(var(--glass-blur));
+			-webkit-backdrop-filter: blur(var(--glass-blur));
+			box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+			display: grid;
+			grid-template-rows: auto auto;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.top {
+			padding: 18px 18px 14px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			background: rgba(19, 19, 25, 0.65);
+			backdrop-filter: blur(8px);
+		}
+
+		.kicker {
+			font-family: "JetBrains Mono", monospace;
+			font-size: 11px;
+			letter-spacing: 0.09em;
+			color: var(--accent);
+			text-transform: uppercase;
+			margin-bottom: 10px;
+		}
+
+		.progress-meta {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-family: "JetBrains Mono", monospace;
+			font-size: 12px;
+			color: var(--muted);
+			margin-bottom: 8px;
+		}
+
+		.progress-track {
+			width: 100%;
+			height: 8px;
+			border-radius: 999px;
+			background: var(--surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			overflow: hidden;
+		}
+
+		.progress-fill {
+			width: 0%;
+			height: 100%;
+			background: var(--accent);
+			transition: width 260ms ease;
+		}
+
+		.stage {
+			position: relative;
+			overflow: visible;
+			padding: 16px;
+			perspective: 900px;
+		}
+
+		.card {
+			height: auto;
+			min-height: 420px;
+			border-radius: var(--radius);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			background: radial-gradient(circle at top right, rgba(110, 158, 235, 0.08), transparent 34%), rgba(26, 26, 34, 0.75);
+			padding: 22px;
+			display: flex;
+			flex-direction: column;
+			gap: 18px;
+			transform-origin: center;
+			transition: opacity 240ms ease, transform 240ms ease;
+		}
+
+		.card.out {
+			opacity: 0;
+			transform: rotateY(12deg) translateX(8px) scale(0.98);
+		}
+
+		.card.in {
+			opacity: 1;
+			transform: rotateY(0deg) translateX(0) scale(1);
+		}
+
+		h1,
+		h2,
+		p {
+			margin: 0;
+		}
+
+		.title {
+			font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+			font-weight: 800;
+			line-height: 1.18;
+			letter-spacing: -0.01em;
+		}
+
+		.subtitle {
+			color: var(--muted);
+			line-height: 1.55;
+			font-size: 0.96rem;
+		}
+
+		.options {
+			display: grid;
+			gap: 10px;
+			margin-top: 4px;
+		}
+
+		.opt {
+			width: 100%;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			background: var(--surface);
+			color: var(--text);
+			border-radius: 8px;
+			padding: 12px;
+			text-align: left;
+			display: grid;
+			grid-template-columns: auto 1fr;
+			align-items: start;
+			gap: 10px;
+			cursor: pointer;
+			transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+		}
+
+		.opt:hover {
+			border-color: var(--accent);
+			transform: translateY(-1px);
+			background: var(--surface-secondary);
+		}
+
+		.opt:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 1px;
+		}
+
+		.opt.selected {
+			border-color: var(--accent);
+			background: rgba(110, 158, 235, 0.12);
+			color: var(--accent-ink);
+			box-shadow: 0 0 0 1px var(--accent);
+		}
+
+		.tag {
+			font-family: "JetBrains Mono", monospace;
+			font-size: 12px;
+			padding: 2px 7px;
+			border-radius: 999px;
+			border: 1px solid rgba(110, 158, 235, 0.45);
+			color: #c2d6ff;
+			margin-top: 1px;
+		}
+
+		.result-type {
+			font-size: clamp(1.7rem, 6vw, 2.4rem);
+			font-weight: 800;
+			line-height: 1.1;
+			letter-spacing: -0.015em;
+			margin-bottom: 2px;
+		}
+
+		.tagline {
+			color: var(--muted);
+			line-height: 1.6;
+			white-space: pre-line;
+		}
+
+		.trait-grid {
+			display: grid;
+			gap: 12px;
+			margin-top: 8px;
+		}
+
+		.trait-row {
+			display: grid;
+			gap: 6px;
+		}
+
+		.trait-head {
+			display: flex;
+			justify-content: space-between;
+			font-family: "JetBrains Mono", monospace;
+			font-size: 11px;
+			color: #c6cbde;
+			letter-spacing: 0.03em;
+		}
+
+		.trait-track {
+			height: 7px;
+			border-radius: 999px;
+			background: var(--surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			overflow: hidden;
+		}
+
+		.trait-fill {
+			height: 100%;
+			width: 50%;
+			background: var(--ok);
+			transition: width 680ms cubic-bezier(.22, .8, .2, 1);
+		}
+
+		.note {
+			margin-top: 2px;
+			padding: 12px;
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			background: var(--surface);
+		}
+
+		.note-label {
+			font-family: "JetBrains Mono", monospace;
+			font-size: 11px;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--accent);
+			margin-bottom: 6px;
+		}
+
+		.note p {
+			color: #c6cade;
+			line-height: 1.56;
+			font-size: 0.95rem;
+		}
+
+		.actions {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-top: auto;
+		}
+
+		.btn {
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: var(--surface);
+			color: #eff2ff;
+			font-weight: 600;
+			font-family: "Inter", sans-serif;
+			cursor: pointer;
+			padding: 12px 14px;
+			transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+		}
+
+		.btn:hover {
+			transform: translateY(-1px);
+			border-color: var(--accent);
+			background: var(--surface-secondary);
+		}
+
+		.btn.primary {
+			background: var(--accent);
+			border-color: var(--accent);
+			color: #000;
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 22px rgba(110, 158, 235, 0.45);
+			animation: glowPulse 2.2s ease-in-out infinite;
+		}
+
+		.btn.primary:hover {
+			background: var(--accent-hover);
+			border-color: var(--accent-hover);
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.5), 0 0 26px rgba(110, 158, 235, 0.6);
+		}
+
+		@keyframes glowPulse {
+			0%,
+			100% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 18px rgba(110, 158, 235, 0.38);
+			}
+			50% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.55), 0 0 30px rgba(110, 158, 235, 0.62);
+			}
+		}
+
+		.cta {
+			margin-top: 10px;
+			color: #9ea5c0;
+			font-size: 0.9rem;
+			text-align: center;
+		}
+
+		.cta a {
+			color: #c7dbff;
+			text-underline-offset: 2px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.seo-article {
+			margin-top: 28px;
+			background: rgba(31, 31, 38, 0.85);
+			padding: 28px 22px;
+			border: 1px solid rgba(110, 158, 235, 0.15);
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+			border-radius: 12px;
+		}
+
+		.seo-article h2.article-title {
+			font-size: 28px;
+			font-weight: 700;
+			color: #e4e1ea;
+			margin-bottom: 20px;
+			line-height: 1.3;
+		}
+
+		.seo-article .article-lead {
+			font-size: 17px;
+			color: #c2c6d2;
+			line-height: 1.6;
+			margin-bottom: 28px;
+			border-left: 4px solid #6e9eeb;
+			padding-left: 16px;
+		}
+
+		.seo-article h3 {
+			font-size: 21px;
+			font-weight: 600;
+			color: #fff;
+			margin: 26px 0 12px;
+		}
+
+		.seo-article p,
+		.seo-article li,
+		.seo-article .faq-answer {
+			font-size: 15px;
+			color: #c2c6d2;
+			line-height: 1.7;
+		}
+
+		.seo-article ul {
+			padding-left: 20px;
+		}
+
+		.seo-article .faq-item {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			padding: 18px 0;
+		}
+
+		.seo-article .faq-item:last-child {
+			border-bottom: none;
+		}
+
+		.seo-article .faq-question {
+			font-size: 17px;
+			font-weight: 600;
+			color: #e4e1ea;
+			margin-bottom: 8px;
+		}
+
+		.seo-article .article-conclusion {
+			margin-top: 24px;
+			padding: 20px;
+			background: rgba(110, 158, 235, 0.05);
+			border-radius: 10px;
+			border: 1px solid rgba(110, 158, 235, 0.1);
+		}
+
+		.seo-article a {
+			color: #6e9eeb;
+		}
+
+		.related-tools {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 14px;
+			margin: 16px 0 20px;
+		}
+
+		.related-tool-card {
+			display: block;
+			padding: 16px;
+			background: rgba(110, 158, 235, 0.06);
+			border: 1px solid rgba(110, 158, 235, 0.15);
+			border-radius: 10px;
+			text-decoration: none;
+		}
+
+		.related-tool-card h4 {
+			color: #6e9eeb;
+			font-size: 15px;
+			margin-bottom: 6px;
+		}
+
+		.related-tool-card p {
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		@media (max-width: 520px) {
+			body {
+				padding: 8px;
+			}
+
+			.card {
+				padding: 16px;
+				min-height: 390px;
+			}
+
+			.actions {
+				grid-template-columns: 1fr;
+			}
+
+			.related-tools {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<div class="container">
+		<div class="logo-wrapper" aria-hidden="true">
+			<div class="claritee-brand-text">CLARITEE</div>
+			<div class="claritee-logo">
+				<img src="../../claritee.jpeg" alt="Claritee logo" />
+			</div>
+		</div>
+
+		<main class="shell" role="application" aria-label="Decision personality quiz">
+			<header class="top">
+				<div class="kicker">What's Your Decision Personality?</div>
+				<div class="progress-meta">
+					<span id="progressLabel">Question 1/12</span>
+					<span id="progressPercent">8%</span>
+				</div>
+				<div class="progress-track" aria-hidden="true">
+					<div class="progress-fill" id="progressFill"></div>
+				</div>
+			</header>
+
+			<section class="stage" id="stage" aria-live="polite"></section>
+		</main>
+
+		<section class="seo-article card" aria-label="Educational article">
+			<h2 class="article-title">The Ultimate Guide to Decisive Action: How to Break Free From Analysis Paralysis and Stop Endless Overthinking</h2>
+			<p class="article-lead">
+				We have all been there, staring blankly at a screen, scrolling endlessly through options, and feeling stuck.
+				When important life, relationship, or career choices show up, the <strong>decision paralysis problem</strong>
+				kicks in and turns uncertainty into inaction.
+			</p>
+
+			<div class="article-content">
+				<h3>Part 1: Understanding Analysis Paralysis and Why It Happens</h3>
+				<p>
+					In plain terms, <strong>analysis paralysis</strong> is what happens when over-analysis blocks execution.
+					You keep comparing, researching, and second-guessing, but you never commit.
+				</p>
+				<p>
+					Usually this comes from too many options, too much uncertainty, and the belief that a perfect choice exists.
+					The hidden cost is lost momentum and rising stress.
+				</p>
+
+				<h3>Part 2: Why Endless Overthinking Kills Progress</h3>
+				<p>
+					Overthinking is not harmless. It drains cognitive bandwidth, delays action, and creates decision fatigue.
+					At work, indecision stalls projects. In life, it keeps you in situations you already know are not working.
+				</p>
+
+				<h3>Part 3: Why a Framework Works Better Than Gut Feel Alone</h3>
+				<p>
+					Your brain is excellent at pattern recognition, but poor at juggling many weighted tradeoffs internally.
+					A structured <strong>decision framework</strong> externalizes variables so you can compare options clearly.
+				</p>
+
+				<h3>Part 4: Why Weighted Scoring Beats Basic Pros and Cons</h3>
+				<p>
+					A basic list treats all points as equal. Real decisions are not equal. A weighted method reflects reality:
+					high-impact factors should count more than minor inconveniences.
+				</p>
+
+				<h3>Frequently Asked Questions About Pros and Cons Calculators and Decision Making</h3>
+				<div class="faq-section">
+					<div class="faq-item">
+						<h4 class="faq-question">What is a pros and cons calculator?</h4>
+						<div class="faq-answer">
+							<p>A digital decision tool that helps you compare options using weighted factors, not just raw lists.</p>
+						</div>
+					</div>
+					<div class="faq-item">
+						<h4 class="faq-question">How does it help with analysis paralysis?</h4>
+						<div class="faq-answer">
+							<p>It moves your thoughts from vague mental loops into a concrete scoring structure, which makes action easier.</p>
+						</div>
+					</div>
+					<div class="faq-item">
+						<h4 class="faq-question">Is it a replacement for professional support?</h4>
+						<div class="faq-answer">
+							<p>No. It is a decision aid. For serious mental health concerns, use licensed professional support.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="article-conclusion">
+					<h4>Ready to Stop Overthinking and Make Cleaner Decisions?</h4>
+					<p>
+						Use a structured process, choose a direction, and move. Clarity grows from action, not endless rumination.
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		const traitKeys = [
+			"impulsive",
+			"deliberate",
+			"intuitive",
+			"analytical",
+			"riskAverse",
+			"riskTolerant",
+			"self",
+			"collective"
+		];
+
+		const questions = [
+			{
+				prompt: "A major decision lands on your desk with a tight deadline. You usually:",
+				options: [
+					{ label: "Go with your gut and move.", effect: { impulsive: 2, intuitive: 1 } },
+					{ label: "List data points and compare options quickly.", effect: { analytical: 2, deliberate: 1 } },
+					{ label: "Ask who else will be affected before choosing.", effect: { collective: 2, deliberate: 1 } },
+					{ label: "Pick the option with the biggest upside.", effect: { riskTolerant: 2, self: 1 } }
+				]
+			},
+			{
+				prompt: "When information is incomplete, your default move is:",
+				options: [
+					{ label: "Act now and adjust later.", effect: { impulsive: 2, riskTolerant: 1 } },
+					{ label: "Pause until the signals are clearer.", effect: { deliberate: 2, riskAverse: 1 } },
+					{ label: "Trust your instincts over spreadsheets.", effect: { intuitive: 2, self: 1 } },
+					{ label: "Model different scenarios first.", effect: { analytical: 2, deliberate: 1 } }
+				]
+			},
+			{
+				prompt: "In team choices, your priority is usually:",
+				options: [
+					{ label: "Protecting relationships and alignment.", effect: { collective: 2, riskAverse: 1 } },
+					{ label: "Maintaining your own autonomy.", effect: { self: 2, riskTolerant: 1 } },
+					{ label: "Finding the logically strongest path.", effect: { analytical: 2, deliberate: 1 } },
+					{ label: "Backing the boldest vision.", effect: { intuitive: 2, riskTolerant: 1 } }
+				]
+			},
+			{
+				prompt: "You are offered a high-reward, high-uncertainty opportunity. You:",
+				options: [
+					{ label: "Take it if the upside is exceptional.", effect: { riskTolerant: 2, impulsive: 1 } },
+					{ label: "Take it only with safeguards in place.", effect: { riskAverse: 2, deliberate: 1 } },
+					{ label: "Test assumptions with numbers first.", effect: { analytical: 2, riskAverse: 1 } },
+					{ label: "Check if it benefits your wider circle.", effect: { collective: 2, deliberate: 1 } }
+				]
+			},
+			{
+				prompt: "A conflict appears between speed and precision. You typically:",
+				options: [
+					{ label: "Choose speed and keep momentum.", effect: { impulsive: 2, self: 1 } },
+					{ label: "Choose precision and reduce regrets.", effect: { deliberate: 2, analytical: 1 } },
+					{ label: "Follow what feels contextually right.", effect: { intuitive: 2, collective: 1 } },
+					{ label: "Take whichever option creates leverage.", effect: { riskTolerant: 2, analytical: 1 } }
+				]
+			},
+			{
+				prompt: "Before deciding, what do you seek first?",
+				options: [
+					{ label: "A clean spreadsheet and confidence ranges.", effect: { analytical: 2, deliberate: 1 } },
+					{ label: "A sense of direction and meaning.", effect: { intuitive: 2, collective: 1 } },
+					{ label: "A fast path to execution.", effect: { impulsive: 2, self: 1 } },
+					{ label: "A plan that minimizes downside.", effect: { riskAverse: 2, deliberate: 1 } }
+				]
+			},
+			{
+				prompt: "When stakes are personal, you are most likely to:",
+				options: [
+					{ label: "Optimize for your own outcomes first.", effect: { self: 2, analytical: 1 } },
+					{ label: "Balance your outcome with group harmony.", effect: { collective: 2, riskAverse: 1 } },
+					{ label: "Jump at opportunities others miss.", effect: { riskTolerant: 2, impulsive: 1 } },
+					{ label: "Take your time and avoid avoidable errors.", effect: { deliberate: 2, riskAverse: 1 } }
+				]
+			},
+			{
+				prompt: "How do you react to expert disagreement?",
+				options: [
+					{ label: "Follow the analysis you can verify.", effect: { analytical: 2, deliberate: 1 } },
+					{ label: "Go with your pattern recognition.", effect: { intuitive: 2, impulsive: 1 } },
+					{ label: "Back the option with higher upside.", effect: { riskTolerant: 2, self: 1 } },
+					{ label: "Choose what keeps everyone stable.", effect: { collective: 2, riskAverse: 1 } }
+				]
+			},
+			{
+				prompt: "Your decision timeline usually looks like:",
+				options: [
+					{ label: "Minutes, not days.", effect: { impulsive: 2, riskTolerant: 1 } },
+					{ label: "Measured and staged over time.", effect: { deliberate: 2, riskAverse: 1 } },
+					{ label: "Fast once your intuition clicks.", effect: { intuitive: 2, self: 1 } },
+					{ label: "Fast only after validating evidence.", effect: { analytical: 2, deliberate: 1 } }
+				]
+			},
+			{
+				prompt: "When deciding for a team, you tend to:",
+				options: [
+					{ label: "Prioritize collective resilience.", effect: { collective: 2, riskAverse: 1 } },
+					{ label: "Prioritize measurable performance.", effect: { analytical: 2, self: 1 } },
+					{ label: "Prioritize bold breakthroughs.", effect: { riskTolerant: 2, intuitive: 1 } },
+					{ label: "Prioritize speed of commitment.", effect: { impulsive: 2, self: 1 } }
+				]
+			},
+			{
+				prompt: "After making a call, you mostly evaluate by:",
+				options: [
+					{ label: "Whether it felt right in the moment.", effect: { intuitive: 2, impulsive: 1 } },
+					{ label: "Whether outcomes matched the model.", effect: { analytical: 2, deliberate: 1 } },
+					{ label: "Whether people were protected.", effect: { collective: 2, riskAverse: 1 } },
+					{ label: "Whether it created disproportionate upside.", effect: { riskTolerant: 2, self: 1 } }
+				]
+			},
+			{
+				prompt: "If two options are equally strong, you break ties by:",
+				options: [
+					{ label: "Choosing the lower downside path.", effect: { riskAverse: 2, deliberate: 1 } },
+					{ label: "Choosing the bolder trajectory.", effect: { riskTolerant: 2, intuitive: 1 } },
+					{ label: "Choosing what serves the whole group.", effect: { collective: 2, deliberate: 1 } },
+					{ label: "Choosing whichever can be executed immediately.", effect: { impulsive: 2, self: 1 } }
+				]
+			}
+		];
+
+		const profiles = {
+			"deliberate-analytical-riskTolerant-collective": {
+				type: "The Strategist",
+				tagline: "You zoom out before you commit, then move with intent.\nBig decisions become systems, not guesses.",
+				blindSpot: "You can over-optimize for outcomes and miss emotional buy-in in the room.",
+				bestWhen: "You have time to map tradeoffs, stress-test assumptions, and align key people early."
+			},
+			"impulsive-intuitive-riskTolerant-self": {
+				type: "The Maverick",
+				tagline: "You decide through instinct, speed, and conviction.\nYou would rather act boldly than over-deliberate.",
+				blindSpot: "You can underestimate second-order consequences when momentum feels strong.",
+				bestWhen: "You pair your fast instincts with one trusted person who pressure-tests your call."
+			},
+			"deliberate-analytical-riskAverse-collective": {
+				type: "The Guardian",
+				tagline: "You protect what matters through careful, structured judgment.\nReliability and stewardship guide your choices.",
+				blindSpot: "You may delay necessary change while trying to eliminate every uncertainty.",
+				bestWhen: "You have clear criteria, trusted evidence, and enough runway to sequence decisions well."
+			},
+			"deliberate-intuitive-riskTolerant-collective": {
+				type: "The Visionary",
+				tagline: "You blend foresight with courage to shape what is next.\nYour choices carry both meaning and momentum.",
+				blindSpot: "You can lean into possibility faster than your team can absorb operational risk.",
+				bestWhen: "You anchor your vision with milestones and feedback loops that keep people aligned."
+			},
+			"deliberate-analytical-riskAverse-self": {
+				type: "The Pragmatist",
+				tagline: "You favor practical wins over dramatic swings.\nDecisions are tools for stable progress.",
+				blindSpot: "You may pass on asymmetric upside by prioritizing certainty too aggressively.",
+				bestWhen: "You can compare realistic options with clear downside limits and direct ownership."
+			},
+			"deliberate-intuitive-riskAverse-collective": {
+				type: "The Empath",
+				tagline: "You choose with care, context, and human impact in mind.\nTrust and stability shape your final call.",
+				blindSpot: "You can over-carry others' concerns and underweight your own strategic edge.",
+				bestWhen: "You are in environments that value psychological safety, reflection, and thoughtful pacing."
+			},
+			"impulsive-analytical-riskTolerant-self": {
+				type: "The Opportunist",
+				tagline: "You spot leverage quickly and move before windows close.\nYou decide for advantage, not perfection.",
+				blindSpot: "You can optimize short-term wins at the expense of long-term cohesion.",
+				bestWhen: "You have real-time data, clear personal accountability, and room to execute fast."
+			},
+			"impulsive-intuitive-riskAverse-collective": {
+				type: "The Peacekeeper",
+				tagline: "You read the room fast and choose what preserves harmony.\nYou keep momentum without igniting chaos.",
+				blindSpot: "You may avoid hard but necessary calls when tension rises.",
+				bestWhen: "You frame decisions around shared values and create space for honest, low-friction input."
+			}
+		};
+
+		const profileFallbackOrder = [
+			"deliberate-analytical-riskTolerant-collective",
+			"impulsive-intuitive-riskTolerant-self",
+			"deliberate-analytical-riskAverse-collective",
+			"deliberate-intuitive-riskTolerant-collective",
+			"deliberate-analytical-riskAverse-self",
+			"deliberate-intuitive-riskAverse-collective",
+			"impulsive-analytical-riskTolerant-self",
+			"impulsive-intuitive-riskAverse-collective"
+		];
+
+		const state = {
+			index: 0,
+			locked: false,
+			scores: {
+				impulsive: 0,
+				deliberate: 0,
+				intuitive: 0,
+				analytical: 0,
+				riskAverse: 0,
+				riskTolerant: 0,
+				self: 0,
+				collective: 0
+			}
+		};
+
+		const stage = document.getElementById("stage");
+		const progressFill = document.getElementById("progressFill");
+		const progressLabel = document.getElementById("progressLabel");
+		const progressPercent = document.getElementById("progressPercent");
+
+		const axisConfig = [
+			{ left: "impulsive", right: "deliberate", label: "Speed", leftText: "Impulsive", rightText: "Deliberate" },
+			{ left: "intuitive", right: "analytical", label: "Data", leftText: "Intuitive", rightText: "Analytical" },
+			{ left: "riskAverse", right: "riskTolerant", label: "Risk", leftText: "Risk-Averse", rightText: "Risk-Tolerant" },
+			{ left: "self", right: "collective", label: "Scope", leftText: "Self-Focused", rightText: "Collective-Focused" }
+		];
+
+		function dominant(left, right) {
+			return state.scores[left] > state.scores[right] ? left : right;
+		}
+
+		function normalizeScore(left, right) {
+			const total = state.scores[left] + state.scores[right] || 1;
+			return Math.round((state.scores[right] / total) * 100);
+		}
+
+		function updateProgress() {
+			const total = questions.length;
+			const current = Math.min(state.index + 1, total);
+			const pct = Math.round((current / total) * 100);
+			progressFill.style.width = pct + "%";
+			progressLabel.textContent = state.index < total ? `Question ${current}/${total}` : "Results";
+			progressPercent.textContent = pct + "%";
+		}
+
+		function fadeSwap(nextRender) {
+			const card = stage.querySelector(".card");
+			if (card) {
+				card.classList.remove("in");
+				card.classList.add("out");
+			}
+			window.setTimeout(() => {
+				nextRender();
+				const fresh = stage.querySelector(".card");
+				if (fresh) {
+					fresh.classList.add("out");
+					requestAnimationFrame(() => {
+						fresh.classList.remove("out");
+						fresh.classList.add("in");
+					});
+				}
+			}, 180);
+		}
+
+		function applyEffect(effect) {
+			traitKeys.forEach((k) => {
+				if (effect[k]) state.scores[k] += effect[k];
+			});
+		}
+
+		function handleOptionClick(button, effect) {
+			if (state.locked) return;
+			state.locked = true;
+			button.classList.add("selected");
+			applyEffect(effect);
+
+			window.setTimeout(() => {
+				state.index += 1;
+				if (state.index >= questions.length) {
+					fadeSwap(renderResult);
+				} else {
+					fadeSwap(renderQuestion);
+				}
+				state.locked = false;
+			}, 400);
+		}
+
+		function findProfile() {
+			const key = [
+				dominant("impulsive", "deliberate"),
+				dominant("intuitive", "analytical"),
+				dominant("riskAverse", "riskTolerant"),
+				dominant("self", "collective")
+			].join("-");
+
+			if (profiles[key]) return { key, ...profiles[key] };
+
+			const bits = key.split("-");
+			let best = profileFallbackOrder[0];
+			let bestScore = -1;
+
+			profileFallbackOrder.forEach((candidate) => {
+				const cBits = candidate.split("-");
+				let score = 0;
+				for (let i = 0; i < bits.length; i += 1) {
+					if (bits[i] === cBits[i]) score += 1;
+				}
+				if (score > bestScore) {
+					bestScore = score;
+					best = candidate;
+				}
+			});
+
+			return { key: best, ...profiles[best] };
+		}
+
+		function renderQuestion() {
+			updateProgress();
+			const q = questions[state.index];
+
+			const optionsMarkup = q.options
+				.map((opt, i) => {
+					const tag = String.fromCharCode(65 + i);
+					return `
+						<button class="opt" data-index="${i}" type="button" aria-label="Option ${tag}: ${opt.label}">
+							<span class="tag">${tag}</span>
+							<span>${opt.label}</span>
+						</button>
+					`;
+				})
+				.join("");
+
+			stage.innerHTML = `
+				<article class="card in" aria-label="Question card">
+					<p class="kicker">Decision Lens ${state.index + 1}</p>
+					<h1 class="title">${q.prompt}</h1>
+					<p class="subtitle">Choose one option. Your selection advances automatically.</p>
+					<div class="options">${optionsMarkup}</div>
+				</article>
+			`;
+
+			const optionButtons = stage.querySelectorAll(".opt");
+			optionButtons.forEach((btn) => {
+				btn.addEventListener("click", () => {
+					const idx = Number(btn.getAttribute("data-index"));
+					handleOptionClick(btn, q.options[idx].effect);
+				});
+			});
+		}
+
+		function renderResult() {
+			updateProgress();
+			const profile = findProfile();
+
+			const bars = axisConfig
+				.map((axis) => {
+					const rightPct = normalizeScore(axis.left, axis.right);
+					return `
+						<div class="trait-row">
+							<div class="trait-head">
+								<span>${axis.label}: ${axis.leftText}</span>
+								<span>${axis.rightText}</span>
+							</div>
+							<div class="trait-track">
+								<div class="trait-fill" data-target="${rightPct}"></div>
+							</div>
+						</div>
+					`;
+				})
+				.join("");
+
+			stage.innerHTML = `
+				<article class="card in" aria-label="Result card">
+					<p class="kicker">Your Type</p>
+					<h2 class="result-type">${profile.type}</h2>
+					<p class="tagline">${profile.tagline}</p>
+
+					<div class="trait-grid">${bars}</div>
+
+					<div class="note">
+						<div class="note-label">Your blind spot:</div>
+						<p>${profile.blindSpot}</p>
+					</div>
+
+					<div class="note">
+						<div class="note-label">You decide best when:</div>
+						<p>${profile.bestWhen}</p>
+					</div>
+
+					<div class="actions">
+						<button class="btn primary" id="shareBtn" type="button">Share Result</button>
+						<button class="btn" id="restartBtn" type="button">Restart</button>
+					</div>
+
+					  <p class="cta">Make your next decision with full clarity → <a href="https://clariteeai.me" target="_blank" rel="noopener">clariteeai.me</a></p>
+				</article>
+			`;
+
+			requestAnimationFrame(() => {
+				stage.querySelectorAll(".trait-fill").forEach((bar, idx) => {
+					window.setTimeout(() => {
+						bar.style.width = `${bar.dataset.target}%`;
+					}, idx * 95);
+				});
+			});
+
+			const shareBtn = document.getElementById("shareBtn");
+			const restartBtn = document.getElementById("restartBtn");
+
+			shareBtn.addEventListener("click", async () => {
+				const text = `I'm a ${profile.type} decision-maker. Find your type → clariteeai.me/tools/decision-personality`;
+				const shareData = {
+					title: "What's Your Decision Personality?",
+					text,
+					url: "https://clariteeai.me/tools/decision-personality"
+				};
+
+				try {
+					if (navigator.share) {
+						await navigator.share(shareData);
+						shareBtn.textContent = "Shared";
+					} else {
+						await navigator.clipboard.writeText(text);
+						shareBtn.textContent = "Copied";
+					}
+					window.setTimeout(() => {
+						shareBtn.textContent = "Share Result";
+					}, 1400);
+				} catch (err) {
+					if (err && err.name === "AbortError") {
+						shareBtn.textContent = "Share Result";
+						return;
+					}
+
+					try {
+						await navigator.clipboard.writeText(text);
+						shareBtn.textContent = "Copied";
+					} catch (clipboardErr) {
+						shareBtn.textContent = "Share Failed";
+					}
+					window.setTimeout(() => {
+						shareBtn.textContent = "Share Result";
+					}, 1400);
+				}
+			});
+
+			restartBtn.addEventListener("click", () => {
+				state.index = 0;
+				state.locked = false;
+				traitKeys.forEach((k) => {
+					state.scores[k] = 0;
+				});
+				fadeSwap(renderQuestion);
+			});
+		}
+
+		renderQuestion();
+	</script>
+</body>
+</html>

@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>What Are You Actually Giving Up? | Opportunity Cost Calculator</title>
+	<meta
+		name="description"
+		content="Compare two options across time, money, and energy to see the real opportunity cost of your decision."
+	/>
+	<link rel="canonical" href="https://clariteeai.me/tools/opportunity-cost/" />
+	<!-- Google Analytics 4 -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-47CVCRT6G8"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-47CVCRT6G8');
+	</script>
+	<!-- End Google Analytics 4 -->
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+	<!-- End Google Tag Manager -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+		rel="stylesheet"
+	/>
+	<style>
+		:root {
+			--color-bg: #09090f;
+			--color-surface: #1f1f26;
+			--color-surface-secondary: #2a2930;
+			--color-surface-glass: rgba(31, 31, 38, 0.85);
+			--color-border: #424751;
+			--color-text-primary: #e4e1ea;
+			--color-text-secondary: #c2c6d2;
+			--color-accent: #6e9eeb;
+			--color-accent-hover: #5a95ff;
+			--color-accent-glow: rgba(110, 158, 235, 0.3);
+			--color-green: #7ccf9f;
+			--color-red: #f08a8a;
+			--font-ui: "Inter", sans-serif;
+			--font-mono: "JetBrains Mono", monospace;
+			--radius-lg: 12px;
+			--radius-md: 8px;
+			--glass-blur: 20px;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background-color: var(--color-bg);
+			color: var(--color-text-primary);
+			font-family: var(--font-ui);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 22px 14px;
+			overflow-x: hidden;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			background:
+				radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+				radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+				var(--color-bg);
+		}
+
+		body::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			z-index: 0;
+			background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+		}
+
+		.container {
+			width: 100%;
+			max-width: 620px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.logo-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 16px;
+			gap: 8px;
+		}
+
+		.claritee-brand-text {
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: 0.2em;
+			color: var(--color-text-secondary);
+		}
+
+		.claritee-logo {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+		}
+
+		.claritee-logo img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		.shell {
+			background: var(--color-surface-glass);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: var(--radius-lg);
+			backdrop-filter: blur(var(--glass-blur));
+			-webkit-backdrop-filter: blur(var(--glass-blur));
+			box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+			overflow: hidden;
+		}
+
+		.top {
+			padding: 16px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			background: rgba(19, 19, 25, 0.65);
+		}
+
+		.tool-kicker {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			letter-spacing: 0.09em;
+			text-transform: uppercase;
+			color: var(--color-accent);
+			margin-bottom: 8px;
+		}
+
+		.progress-meta {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-family: var(--font-mono);
+			font-size: 12px;
+			color: var(--color-text-secondary);
+			margin-bottom: 8px;
+		}
+
+		.progress-track {
+			width: 100%;
+			height: 8px;
+			border-radius: 999px;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			overflow: hidden;
+		}
+
+		.progress-fill {
+			width: 20%;
+			height: 100%;
+			background: var(--color-accent);
+			transition: width 280ms ease;
+		}
+
+		.stage {
+			position: relative;
+			min-height: 650px;
+			overflow: hidden;
+			transition: height 260ms ease;
+		}
+
+		.screen {
+			display: none;
+			position: absolute;
+			inset: 0;
+			opacity: 0;
+			transform: translateX(0);
+			transition: opacity 320ms ease, transform 320ms ease;
+			padding: 18px 16px 20px;
+			pointer-events: none;
+		}
+
+		.screen.active {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.screen.visible {
+			opacity: 1;
+			transform: translateX(0);
+			pointer-events: auto;
+		}
+
+		.screen.enter-from-left {
+			transform: translateX(-22px);
+		}
+
+		.screen.enter-from-right {
+			transform: translateX(22px);
+		}
+
+		.screen.exit-to-left {
+			opacity: 0;
+			transform: translateX(-22px);
+		}
+
+		.screen.exit-to-right {
+			opacity: 0;
+			transform: translateX(22px);
+		}
+
+		.screen-tag {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--color-accent);
+		}
+
+		.title {
+			font-size: clamp(1.25rem, 4.2vw, 1.66rem);
+			line-height: 1.2;
+			letter-spacing: -0.015em;
+			font-weight: 800;
+			color: var(--color-text-primary);
+		}
+
+		.subtitle {
+			color: var(--color-text-secondary);
+			line-height: 1.48;
+			font-size: 0.94rem;
+		}
+
+		.card-grid {
+			display: grid;
+			gap: 10px;
+		}
+
+		.split {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+
+		.field {
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 10px;
+			display: grid;
+			gap: 7px;
+		}
+
+		.field label {
+			color: #dce0ef;
+			font-size: 0.88rem;
+			line-height: 1.3;
+		}
+
+		input,
+		select {
+			width: 100%;
+			background: #161620;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			color: var(--color-text-primary);
+			border-radius: 7px;
+			padding: 10px;
+			font-size: 14px;
+			font-family: var(--font-ui);
+			outline: none;
+		}
+
+		input:focus,
+		select:focus {
+			border-color: var(--color-accent);
+			box-shadow: 0 0 0 3px rgba(110, 158, 235, 0.12);
+		}
+
+		.dual-col {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+
+		.option-block {
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 10px;
+			display: grid;
+			gap: 8px;
+		}
+
+		.option-block h3 {
+			font-size: 0.88rem;
+			color: var(--color-accent);
+			letter-spacing: 0.02em;
+		}
+
+		.slider-wrap {
+			display: grid;
+			gap: 6px;
+		}
+
+		.slider-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 8px;
+			font-size: 0.84rem;
+			color: #d8dcef;
+			line-height: 1.32;
+		}
+
+		.mono-pill {
+			font-family: var(--font-mono);
+			font-size: 12px;
+			color: var(--color-accent);
+			border: 1px solid rgba(110, 158, 235, 0.5);
+			border-radius: 999px;
+			padding: 2px 6px;
+			min-width: 36px;
+			text-align: center;
+		}
+
+		input[type="range"] {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 6px;
+			border-radius: 99px;
+			background: var(--color-surface-secondary);
+			outline: none;
+			cursor: pointer;
+		}
+
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 17px;
+			height: 17px;
+			border-radius: 50%;
+			background: #fff;
+			border: 2px solid var(--color-accent);
+			box-shadow: 0 0 12px rgba(110, 158, 235, 0.35);
+		}
+
+		input[type="range"]::-moz-range-thumb {
+			width: 17px;
+			height: 17px;
+			border-radius: 50%;
+			background: #fff;
+			border: 2px solid var(--color-accent);
+			box-shadow: 0 0 12px rgba(110, 158, 235, 0.35);
+		}
+
+		.live-note {
+			background: #1b1b25;
+			border: 1px solid rgba(255, 255, 255, 0.07);
+			border-radius: 8px;
+			padding: 10px;
+			color: #d8ddf0;
+			font-size: 0.9rem;
+			line-height: 1.45;
+		}
+
+		.live-note strong {
+			color: #ebeffc;
+			font-family: var(--font-mono);
+			font-size: 12px;
+		}
+
+		.rank-list {
+			display: grid;
+			gap: 8px;
+		}
+
+		.rank-item {
+			display: grid;
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			gap: 8px;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 8px;
+			padding: 10px;
+			cursor: grab;
+		}
+
+		.rank-item.dragging {
+			opacity: 0.6;
+		}
+
+		.rank-num {
+			font-family: var(--font-mono);
+			color: var(--color-accent);
+			font-size: 12px;
+			width: 18px;
+			text-align: center;
+		}
+
+		.rank-text {
+			font-size: 0.92rem;
+			color: #e2e6f3;
+		}
+
+		.rank-controls {
+			display: inline-flex;
+			gap: 5px;
+		}
+
+		.mini-btn {
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			background: #23232f;
+			color: #dce0ef;
+			border-radius: 6px;
+			padding: 4px 7px;
+			font-size: 12px;
+			cursor: pointer;
+		}
+
+		.mini-btn:hover {
+			border-color: var(--color-accent);
+		}
+
+		.actions {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-top: 4px;
+		}
+
+		.btn {
+			border-radius: var(--radius-md);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: var(--color-surface);
+			color: #eff2ff;
+			font-family: var(--font-ui);
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+			padding: 12px 14px;
+			transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+		}
+
+		.btn:hover {
+			transform: translateY(-1px);
+			border-color: var(--color-accent);
+			background: var(--color-surface-secondary);
+		}
+
+		.btn.primary {
+			background: var(--color-accent);
+			border-color: var(--color-accent);
+			color: #000;
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 22px rgba(110, 158, 235, 0.45);
+			animation: glowPulse 2.2s ease-in-out infinite;
+		}
+
+		.btn.primary:hover {
+			background: var(--color-accent-hover);
+			border-color: var(--color-accent-hover);
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.5), 0 0 26px rgba(110, 158, 235, 0.6);
+		}
+
+		@keyframes glowPulse {
+			0%,
+			100% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 18px rgba(110, 158, 235, 0.38);
+			}
+
+			50% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.55), 0 0 30px rgba(110, 158, 235, 0.62);
+			}
+		}
+
+		.privacy-note {
+			margin-top: auto;
+			color: var(--color-text-secondary);
+			font-size: 12px;
+			opacity: 0.9;
+			line-height: 1.4;
+		}
+
+		.results-columns {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+
+		.result-card {
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 8px;
+			padding: 10px;
+			display: grid;
+			gap: 8px;
+		}
+
+		.result-card h3 {
+			color: var(--color-accent);
+			font-size: 0.92rem;
+			line-height: 1.3;
+		}
+
+		.metric {
+			display: grid;
+			gap: 4px;
+		}
+
+		.metric-label {
+			color: #bdc3d8;
+			font-size: 0.79rem;
+		}
+
+		.metric-value {
+			font-family: var(--font-mono);
+			color: #eef2ff;
+			font-size: 13px;
+		}
+
+		.cost-summary,
+		.reflection,
+		.next-step {
+			background: #1b1b25;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 8px;
+			padding: 10px;
+			display: grid;
+			gap: 6px;
+		}
+
+		.cost-summary h4,
+		.reflection h4,
+		.next-step h4 {
+			font-family: var(--font-mono);
+			color: var(--color-accent);
+			font-size: 11px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+
+		.cost-summary p,
+		.reflection p,
+		.next-step p {
+			color: #dce0ef;
+			line-height: 1.45;
+			font-size: 0.9rem;
+		}
+
+		.money-good {
+			color: var(--color-green);
+		}
+
+		.money-bad {
+			color: var(--color-red);
+		}
+
+		.cta {
+			text-align: center;
+			color: #9ea5c0;
+			font-size: 0.9rem;
+			line-height: 1.4;
+		}
+
+		.cta a {
+			color: #c7dbff;
+			text-underline-offset: 2px;
+		}
+
+		@media (max-width: 540px) {
+			.split,
+			.dual-col,
+			.results-columns,
+			.actions {
+				grid-template-columns: 1fr;
+			}
+
+			.stage {
+				min-height: 760px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<div class="container">
+		<div class="logo-wrapper" aria-hidden="true">
+			<div class="claritee-brand-text">CLARITEE</div>
+			<div class="claritee-logo">
+				<img src="../../claritee.jpeg" alt="Claritee logo" />
+			</div>
+		</div>
+
+		<main class="shell" role="application" aria-label="Opportunity cost calculator">
+			<header class="top">
+				<div class="tool-kicker">What Are You Actually Giving Up?</div>
+				<div class="progress-meta">
+					<span id="progressLabel">Screen 1/5</span>
+					<span id="progressPercent">20%</span>
+				</div>
+				<div class="progress-track" aria-hidden="true">
+					<div class="progress-fill" id="progressFill"></div>
+				</div>
+			</header>
+
+			<section class="stage">
+				<article class="screen active visible" data-step="0">
+					<p class="screen-tag">Screen 1 · Decision Setup</p>
+					<h1 class="title">What's the decision you're facing?</h1>
+					<p class="subtitle">Name both paths clearly. Vague options create vague decisions.</p>
+
+					<div class="card-grid">
+						<div class="field">
+							<label for="optionAName">Option A name</label>
+							<input id="optionAName" type="text" placeholder="e.g. Take the job offer" />
+						</div>
+						<div class="field">
+							<label for="optionBName">Option B name</label>
+							<input id="optionBName" type="text" placeholder="e.g. Stay and freelance" />
+						</div>
+						<div class="field">
+							<label for="timeframe">Decision timeframe</label>
+							<select id="timeframe">
+								<option value="3">Next 3 months</option>
+								<option value="6">Next 6 months</option>
+								<option value="12" selected>Next 1 year</option>
+								<option value="36">Next 3 years</option>
+								<option value="60">Next 5 years</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+
+					<div class="actions">
+						<button class="btn" disabled>Back</button>
+						<button class="btn primary" data-next="1">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="1">
+					<p class="screen-tag">Screen 2 · Time Dimension</p>
+					<h2 class="title">How much time does each option actually take?</h2>
+					<p class="subtitle">Include hidden transition cost, not just weekly steady-state.</p>
+
+					<div class="dual-col">
+						<div class="option-block" id="timeA"></div>
+						<div class="option-block" id="timeB"></div>
+					</div>
+
+					<div class="live-note" id="timeLive"></div>
+
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+
+					<div class="actions">
+						<button class="btn" data-back="0">Back</button>
+						<button class="btn primary" data-next="2">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="2">
+					<p class="screen-tag">Screen 3 · Money Dimension</p>
+					<h2 class="title">What does each option net you, after costs?</h2>
+					<p class="subtitle">Revenue without costs is fantasy math. This uses net position only.</p>
+
+					<div class="dual-col">
+						<div class="option-block" id="moneyA"></div>
+						<div class="option-block" id="moneyB"></div>
+					</div>
+
+					<div class="live-note" id="moneyLive"></div>
+
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+
+					<div class="actions">
+						<button class="btn" data-back="1">Back</button>
+						<button class="btn primary" data-next="3">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="3">
+					<p class="screen-tag">Screen 4 · Energy Dimension</p>
+					<h2 class="title">Rate each option honestly</h2>
+					<p class="subtitle">Energy score = (alignment × 2) - mental load - emotional cost - physical demand.</p>
+
+					<div class="dual-col">
+						<div class="option-block" id="energyA"></div>
+						<div class="option-block" id="energyB"></div>
+					</div>
+
+					<div class="live-note" id="energyLive"></div>
+
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+
+					<div class="actions">
+						<button class="btn" data-back="2">Back</button>
+						<button class="btn primary" data-next="4">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="4">
+					<p class="screen-tag">Screen 5 · Personal Weighting</p>
+					<h2 class="title">In this season, rank what matters most</h2>
+					<p class="subtitle">Drag to reorder, or use the arrow buttons. Top item gets highest weight.</p>
+
+					<div class="rank-list" id="rankList"></div>
+
+					<div class="live-note" id="weightLive"></div>
+
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+
+					<div class="actions">
+						<button class="btn" data-back="3">Back</button>
+						<button class="btn primary" id="showResultsBtn">See The Real Cost</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="5">
+					<p class="screen-tag">Result · The Real Cost</p>
+					<h2 class="title" id="resultTitle">The Real Cost</h2>
+
+					<div class="results-columns">
+						<div class="result-card">
+							<h3 id="resAName">Option A</h3>
+							<div class="metric"><span class="metric-label">Time invested</span><span class="metric-value" id="resATime"></span></div>
+							<div class="metric"><span class="metric-label">Net financial outcome</span><span class="metric-value" id="resAMoney"></span></div>
+							<div class="metric"><span class="metric-label">Energy score</span><span class="metric-value" id="resAEnergy"></span></div>
+							<div class="metric"><span class="metric-label">Weighted Opportunity Cost Score</span><span class="metric-value" id="resAScore"></span></div>
+						</div>
+
+						<div class="result-card">
+							<h3 id="resBName">Option B</h3>
+							<div class="metric"><span class="metric-label">Time invested</span><span class="metric-value" id="resBTime"></span></div>
+							<div class="metric"><span class="metric-label">Net financial outcome</span><span class="metric-value" id="resBMoney"></span></div>
+							<div class="metric"><span class="metric-label">Energy score</span><span class="metric-value" id="resBEnergy"></span></div>
+							<div class="metric"><span class="metric-label">Weighted Opportunity Cost Score</span><span class="metric-value" id="resBScore"></span></div>
+						</div>
+					</div>
+
+					<div class="cost-summary" id="costSummary"></div>
+					<div class="reflection" id="reflection"></div>
+					<div class="next-step" id="nextStep"></div>
+
+					<div class="actions">
+						<button class="btn" data-back="4">Back</button>
+						<button class="btn" id="startOverBtn">Start over</button>
+					</div>
+
+					<div class="actions">
+						<button class="btn" id="copySummaryBtn">Copy my results summary</button>
+						<button class="btn primary" id="shareBtn">Share</button>
+					</div>
+
+					<p class="cta">Ready to make this decision with a full weighted framework? &rarr; <a href="https://clariteeai.me" target="_blank" rel="noopener">clariteeai.me</a></p>
+					<div class="privacy-note">Nothing you enter is sent anywhere. All calculations happen in your browser.</div>
+				</article>
+			</section>
+		</main>
+	</div>
+
+	<script>
+		const RANK_ITEMS = [
+			"Financial security",
+			"Time freedom",
+			"Energy & wellbeing",
+			"Long-term potential"
+		];
+
+		const state = {
+			step: 0,
+			optionAName: "Option A",
+			optionBName: "Option B",
+			timeframeMonths: 12,
+			optionA: {
+				time: { hoursPerWeek: 40, rampWeeks: 4, flexibility: 5 },
+				money: { monthlyIncome: 5000, monthlyCosts: 1000, upfrontCost: 0 },
+				energy: { mental: 5, emotional: 5, physical: 5, alignment: 5 }
+			},
+			optionB: {
+				time: { hoursPerWeek: 30, rampWeeks: 6, flexibility: 6 },
+				money: { monthlyIncome: 4500, monthlyCosts: 700, upfrontCost: 0 },
+				energy: { mental: 4, emotional: 4, physical: 4, alignment: 7 }
+			},
+			ranking: [...RANK_ITEMS]
+		};
+
+		const screens = Array.from(document.querySelectorAll(".screen"));
+		const stage = document.querySelector(".stage");
+		const progressFill = document.getElementById("progressFill");
+		const progressLabel = document.getElementById("progressLabel");
+		const progressPercent = document.getElementById("progressPercent");
+
+		function clamp(value, min, max) {
+			return Math.max(min, Math.min(max, value));
+		}
+
+		function toNumber(value) {
+			const num = Number(value);
+			return Number.isFinite(num) ? num : 0;
+		}
+
+		function formatHours(num) {
+			return Math.round(num).toLocaleString() + " hrs";
+		}
+
+		function formatCurrency(num) {
+			const rounded = Math.round(num);
+			return "$" + rounded.toLocaleString();
+		}
+
+		function currentTimeframeText() {
+			const m = state.timeframeMonths;
+			if (m === 3) return "next 3 months";
+			if (m === 6) return "next 6 months";
+			if (m === 12) return "next 1 year";
+			if (m === 36) return "next 3 years";
+			return "next 5 years";
+		}
+
+		function getWeeksInTimeframe() {
+			return state.timeframeMonths * 4.345;
+		}
+
+		function getOptionName(which) {
+			const raw = which === "A" ? state.optionAName : state.optionBName;
+			return raw && raw.trim().length ? raw.trim() : "Option " + which;
+		}
+
+		function energyScore(energy) {
+			const raw = energy.alignment * 2 - energy.mental - energy.emotional - energy.physical;
+			const scaled = ((raw + 28) / 45) * 100;
+			return clamp(Math.round(scaled), 0, 100);
+		}
+
+		function compute() {
+			const weeks = getWeeksInTimeframe();
+
+			const timeA = (state.optionA.time.hoursPerWeek * weeks) + (state.optionA.time.rampWeeks * state.optionA.time.hoursPerWeek);
+			const timeB = (state.optionB.time.hoursPerWeek * weeks) + (state.optionB.time.rampWeeks * state.optionB.time.hoursPerWeek);
+
+			const netA = ((state.optionA.money.monthlyIncome - state.optionA.money.monthlyCosts) * state.timeframeMonths) - state.optionA.money.upfrontCost;
+			const netB = ((state.optionB.money.monthlyIncome - state.optionB.money.monthlyCosts) * state.timeframeMonths) - state.optionB.money.upfrontCost;
+
+			const energyA = energyScore(state.optionA.energy);
+			const energyB = energyScore(state.optionB.energy);
+
+			const moneySpread = Math.abs(netA - netB);
+			const monthlySpread = moneySpread / state.timeframeMonths;
+			const timeSpread = Math.abs(timeA - timeB);
+			const energySpread = Math.abs(energyA - energyB);
+
+			const maxTime = Math.max(timeA, timeB, 1);
+			const minTime = Math.min(timeA, timeB);
+			const timeFreedomA = Math.round(((maxTime - timeA) / (maxTime - minTime || 1)) * 100);
+			const timeFreedomB = Math.round(((maxTime - timeB) / (maxTime - minTime || 1)) * 100);
+
+			const maxMoney = Math.max(netA, netB);
+			const minMoney = Math.min(netA, netB);
+			const financeA = Math.round(((netA - minMoney) / (maxMoney - minMoney || 1)) * 100);
+			const financeB = Math.round(((netB - minMoney) / (maxMoney - minMoney || 1)) * 100);
+
+			const longA = Math.round(clamp((financeA * 0.6) + (energyA * 0.4) + ((state.optionA.time.flexibility - 5) * 2), 0, 100));
+			const longB = Math.round(clamp((financeB * 0.6) + (energyB * 0.4) + ((state.optionB.time.flexibility - 5) * 2), 0, 100));
+
+			const weights = rankingToWeights(state.ranking);
+
+			const scoreA = weightedScore({
+				finance: financeA,
+				time: timeFreedomA,
+				energy: energyA,
+				longTerm: longA
+			}, weights);
+
+			const scoreB = weightedScore({
+				finance: financeB,
+				time: timeFreedomB,
+				energy: energyB,
+				longTerm: longB
+			}, weights);
+
+			return {
+				weeks,
+				timeA,
+				timeB,
+				netA,
+				netB,
+				energyA,
+				energyB,
+				moneySpread,
+				monthlySpread,
+				timeSpread,
+				energySpread,
+				scoreA,
+				scoreB,
+				financeA,
+				financeB,
+				timeFreedomA,
+				timeFreedomB,
+				longA,
+				longB
+			};
+		}
+
+		function rankingToWeights(ranking) {
+			const base = [4, 3, 2, 1];
+			const mapping = {};
+			ranking.forEach((item, index) => {
+				mapping[item] = base[index];
+			});
+
+			return {
+				finance: mapping["Financial security"],
+				time: mapping["Time freedom"],
+				energy: mapping["Energy & wellbeing"],
+				longTerm: mapping["Long-term potential"]
+			};
+		}
+
+		function weightedScore(metrics, weights) {
+			const totalWeight = weights.finance + weights.time + weights.energy + weights.longTerm;
+			const weighted =
+				(metrics.finance * weights.finance) +
+				(metrics.time * weights.time) +
+				(metrics.energy * weights.energy) +
+				(metrics.longTerm * weights.longTerm);
+			return Math.round(weighted / totalWeight);
+		}
+
+		function updateProgress() {
+			const total = 5;
+			const visual = state.step >= total ? total : state.step + 1;
+			const pct = Math.round((visual / total) * 100);
+
+			progressFill.style.width = pct + "%";
+			progressLabel.textContent = state.step >= total ? "Result" : "Screen " + visual + "/5";
+			progressPercent.textContent = pct + "%";
+		}
+
+		function showStep(targetStep) {
+			if (targetStep === state.step) return;
+
+			const previous = state.step;
+			const movingBack = targetStep < previous;
+			const current = screens[previous];
+			const target = screens[targetStep];
+
+			target.classList.remove("enter-from-left", "enter-from-right", "exit-to-left", "exit-to-right", "visible");
+			target.classList.add("active", movingBack ? "enter-from-left" : "enter-from-right");
+
+			const nextHeight = Math.max(target.scrollHeight, 650);
+			stage.style.height = nextHeight + "px";
+
+			requestAnimationFrame(() => {
+				target.classList.add("visible");
+				target.classList.remove("enter-from-left", "enter-from-right");
+
+				if (current) {
+					current.classList.remove("exit-to-left", "exit-to-right");
+					current.classList.add(movingBack ? "exit-to-right" : "exit-to-left");
+					current.classList.remove("visible");
+				}
+			});
+
+			window.setTimeout(() => {
+				if (current) {
+					current.classList.remove("active", "exit-to-left", "exit-to-right", "enter-from-left", "enter-from-right");
+				}
+			}, 340);
+
+			state.step = targetStep;
+
+			updateProgress();
+		}
+
+		function renderTimeInputs() {
+			document.getElementById("timeA").innerHTML =
+				"<h3>" + getOptionName("A") + "</h3>" +
+				inputField("AhoursPerWeek", "Hours per week this requires", state.optionA.time.hoursPerWeek, "number", 0) +
+				inputField("ArampWeeks", "Weeks of focused ramp-up/transition", state.optionA.time.rampWeeks, "number", 0) +
+				sliderField("Aflexibility", "Flexibility score (control over your time)", state.optionA.time.flexibility);
+
+			document.getElementById("timeB").innerHTML =
+				"<h3>" + getOptionName("B") + "</h3>" +
+				inputField("BhoursPerWeek", "Hours per week this requires", state.optionB.time.hoursPerWeek, "number", 0) +
+				inputField("BrampWeeks", "Weeks of focused ramp-up/transition", state.optionB.time.rampWeeks, "number", 0) +
+				sliderField("Bflexibility", "Flexibility score (control over your time)", state.optionB.time.flexibility);
+		}
+
+		function renderMoneyInputs() {
+			document.getElementById("moneyA").innerHTML =
+				"<h3>" + getOptionName("A") + "</h3>" +
+				inputField("AmonthlyIncome", "Expected monthly income/revenue", state.optionA.money.monthlyIncome, "number", 0) +
+				inputField("AmonthlyCosts", "Monthly costs/investment required", state.optionA.money.monthlyCosts, "number", 0) +
+				inputField("AupfrontCost", "One-time upfront cost", state.optionA.money.upfrontCost, "number", 0);
+
+			document.getElementById("moneyB").innerHTML =
+				"<h3>" + getOptionName("B") + "</h3>" +
+				inputField("BmonthlyIncome", "Expected monthly income/revenue", state.optionB.money.monthlyIncome, "number", 0) +
+				inputField("BmonthlyCosts", "Monthly costs/investment required", state.optionB.money.monthlyCosts, "number", 0) +
+				inputField("BupfrontCost", "One-time upfront cost", state.optionB.money.upfrontCost, "number", 0);
+		}
+
+		function renderEnergyInputs() {
+			document.getElementById("energyA").innerHTML =
+				"<h3>" + getOptionName("A") + "</h3>" +
+				sliderField("Amental", "Mental load", state.optionA.energy.mental) +
+				sliderField("Aemotional", "Emotional cost", state.optionA.energy.emotional) +
+				sliderField("Aphysical", "Physical demand", state.optionA.energy.physical) +
+				sliderField("Aalignment", "Alignment with what excites you right now", state.optionA.energy.alignment);
+
+			document.getElementById("energyB").innerHTML =
+				"<h3>" + getOptionName("B") + "</h3>" +
+				sliderField("Bmental", "Mental load", state.optionB.energy.mental) +
+				sliderField("Bemotional", "Emotional cost", state.optionB.energy.emotional) +
+				sliderField("Bphysical", "Physical demand", state.optionB.energy.physical) +
+				sliderField("Balignment", "Alignment with what excites you right now", state.optionB.energy.alignment);
+		}
+
+		function inputField(id, label, value, type, min) {
+			return (
+				'<div class="field">' +
+				"<label for=\"" + id + "\">" + label + "</label>" +
+				'<input id="' + id + '" type="' + type + '" min="' + min + '" value="' + value + '" />' +
+				"</div>"
+			);
+		}
+
+		function sliderField(id, label, value) {
+			return (
+				'<div class="slider-wrap">' +
+				'<div class="slider-top"><span>' + label + '</span><span class="mono-pill" id="' + id + 'Value">' + value + "</span></div>" +
+				'<input id="' + id + '" type="range" min="1" max="10" value="' + value + '" />' +
+				"</div>"
+			);
+		}
+
+		function renderRanking() {
+			const container = document.getElementById("rankList");
+			container.innerHTML = "";
+
+			state.ranking.forEach((item, index) => {
+				const row = document.createElement("div");
+				row.className = "rank-item";
+				row.draggable = true;
+				row.dataset.index = String(index);
+				row.innerHTML =
+					'<span class="rank-num">' + (index + 1) + '</span>' +
+					'<span class="rank-text">' + item + "</span>" +
+					'<div class="rank-controls">' +
+					'<button class="mini-btn" type="button" data-move="up" data-index="' + index + '">↑</button>' +
+					'<button class="mini-btn" type="button" data-move="down" data-index="' + index + '">↓</button>' +
+					"</div>";
+				container.appendChild(row);
+			});
+
+			updateWeightLive();
+			wireDragAndDrop();
+		}
+
+		function wireDragAndDrop() {
+			const items = Array.from(document.querySelectorAll(".rank-item"));
+			let draggedIndex = -1;
+
+			items.forEach((item) => {
+				item.addEventListener("dragstart", () => {
+					draggedIndex = Number(item.dataset.index);
+					item.classList.add("dragging");
+				});
+
+				item.addEventListener("dragend", () => {
+					item.classList.remove("dragging");
+				});
+
+				item.addEventListener("dragover", (event) => {
+					event.preventDefault();
+				});
+
+				item.addEventListener("drop", () => {
+					const dropIndex = Number(item.dataset.index);
+					if (draggedIndex === dropIndex || draggedIndex < 0) return;
+
+					const updated = [...state.ranking];
+					const [moved] = updated.splice(draggedIndex, 1);
+					updated.splice(dropIndex, 0, moved);
+					state.ranking = updated;
+					renderRanking();
+					updateAllLive();
+				});
+			});
+		}
+
+		function moveRank(index, direction) {
+			const nextIndex = direction === "up" ? index - 1 : index + 1;
+			if (nextIndex < 0 || nextIndex >= state.ranking.length) return;
+			const updated = [...state.ranking];
+			[updated[index], updated[nextIndex]] = [updated[nextIndex], updated[index]];
+			state.ranking = updated;
+			renderRanking();
+			updateAllLive();
+		}
+
+		function updateWeightLive() {
+			const w = rankingToWeights(state.ranking);
+			document.getElementById("weightLive").innerHTML =
+				"<strong>Current weighting:</strong> " +
+				"Financial " + w.finance + "x, " +
+				"Time " + w.time + "x, " +
+				"Energy " + w.energy + "x, " +
+				"Long-term " + w.longTerm + "x.";
+		}
+
+		function updateTimeLive(result) {
+			const aName = getOptionName("A");
+			const bName = getOptionName("B");
+			const aHours = formatHours(result.timeA);
+			const bHours = formatHours(result.timeB);
+			const delta = formatHours(result.timeSpread);
+
+			const choosingALoses = Math.max(0, result.timeA - result.timeB);
+			const choosingBLoses = Math.max(0, result.timeB - result.timeA);
+
+			let deltaLine;
+			if (choosingALoses > 0) {
+				deltaLine = "Choosing " + aName + " costs you " + formatHours(choosingALoses) + " you cannot get back.";
+			} else if (choosingBLoses > 0) {
+				deltaLine = "Choosing " + bName + " costs you " + formatHours(choosingBLoses) + " you cannot get back.";
+			} else {
+				deltaLine = "Time cost is currently equal across both options.";
+			}
+
+			document.getElementById("timeLive").innerHTML =
+				"<strong>Live time view:</strong> " +
+				aName + " will consume " + aHours + ". " +
+				bName + " will consume " + bHours + ". " +
+				"Delta: " + delta + ". " + deltaLine;
+		}
+
+		function updateMoneyLive(result) {
+			const aName = getOptionName("A");
+			const bName = getOptionName("B");
+			const tf = currentTimeframeText();
+			const gap = formatCurrency(result.moneySpread);
+			const monthlyGap = formatCurrency(result.monthlySpread);
+
+			document.getElementById("moneyLive").innerHTML =
+				"<strong>Live money view:</strong> " +
+				aName + " nets " + formatCurrency(result.netA) + " over " + tf + ". " +
+				bName + " nets " + formatCurrency(result.netB) + ". " +
+				"The financial gap is " + gap + " - or " + monthlyGap + "/month.";
+		}
+
+		function updateEnergyLive(result) {
+			const aName = getOptionName("A");
+			const bName = getOptionName("B");
+			document.getElementById("energyLive").innerHTML =
+				"<strong>Live energy view:</strong> " +
+				aName + " energy score: " + result.energyA + "/100. " +
+				bName + " energy score: " + result.energyB + "/100.";
+		}
+
+		function updateResultScreen(result) {
+			const aName = getOptionName("A");
+			const bName = getOptionName("B");
+			const winner = result.scoreA >= result.scoreB ? "A" : "B";
+			const loser = winner === "A" ? "B" : "A";
+			const winnerName = winner === "A" ? aName : bName;
+			const loserName = loser === "A" ? aName : bName;
+
+			document.getElementById("resAName").textContent = aName;
+			document.getElementById("resBName").textContent = bName;
+			document.getElementById("resATime").textContent = formatHours(result.timeA);
+			document.getElementById("resBTime").textContent = formatHours(result.timeB);
+			document.getElementById("resAMoney").textContent = formatCurrency(result.netA);
+			document.getElementById("resBMoney").textContent = formatCurrency(result.netB);
+			document.getElementById("resAEnergy").textContent = result.energyA + "/100";
+			document.getElementById("resBEnergy").textContent = result.energyB + "/100";
+			document.getElementById("resAScore").textContent = result.scoreA + "/100";
+			document.getElementById("resBScore").textContent = result.scoreB + "/100";
+
+			const higherTime = winner === "A" ? result.timeA : result.timeB;
+			const lowerTime = winner === "A" ? result.timeB : result.timeA;
+			const higherMoney = winner === "A" ? result.netA : result.netB;
+			const lowerMoney = winner === "A" ? result.netB : result.netA;
+			const higherEnergy = winner === "A" ? result.energyA : result.energyB;
+			const lowerEnergy = winner === "A" ? result.energyB : result.energyA;
+
+			const hoursGivenUp = Math.max(0, higherTime - lowerTime);
+			const moneyGivenUp = Math.max(0, lowerMoney - higherMoney);
+			const energyGivenUp = Math.max(0, lowerEnergy - higherEnergy);
+
+			document.getElementById("costSummary").innerHTML =
+				"<h4>By choosing " + winnerName + ", you give up:</h4>" +
+				"<p>- " + formatHours(hoursGivenUp) + " that could go toward " + loserName + ".</p>" +
+				"<p>- " + formatCurrency(moneyGivenUp) + " in potential income or savings.</p>" +
+				"<p>- " + energyGivenUp + " points of energy alignment.</p>";
+
+			const reflectionText = reflectionPrompt(result, winner, loser);
+			document.getElementById("reflection").innerHTML = "<h4>Reflection prompt</h4><p>" + reflectionText + "</p>";
+
+			document.getElementById("nextStep").innerHTML =
+				"<h4>Your next step</h4>" +
+				"<p>Run a 2-week test for " + winnerName +
+				" with one measurable success metric and one non-negotiable boundary. At the end, decide based on tracked outcomes, not mood.</p>";
+
+			document.getElementById("resultTitle").textContent = "The Real Cost: " + winnerName + " currently leads.";
+		}
+
+		function reflectionPrompt(result, winner, loser) {
+			const scoreGap = Math.abs(result.scoreA - result.scoreB);
+			const winnerMoney = winner === "A" ? result.netA : result.netB;
+			const loserMoney = loser === "A" ? result.netA : result.netB;
+			const winnerEnergy = winner === "A" ? result.energyA : result.energyB;
+			const loserEnergy = loser === "A" ? result.energyA : result.energyB;
+
+			const moneyGap = Math.abs(result.netA - result.netB);
+			const monthlyGap = Math.round(moneyGap / state.timeframeMonths);
+			const energyDelta = Math.abs(result.energyA - result.energyB);
+
+			const winnerWinsMoney = winnerMoney >= loserMoney;
+			const loserWinsEnergy = loserEnergy > winnerEnergy;
+			if (monthlyGap >= 500 && winnerWinsMoney && loserWinsEnergy) {
+				return "Is the extra $" + monthlyGap.toLocaleString() + "/month worth " + energyDelta + " points of daily energy?";
+			}
+
+			const perYearHours = Math.round(result.timeSpread * (12 / state.timeframeMonths));
+			const dominantTime = result.timeSpread >= (result.moneySpread / 200) && result.timeSpread >= (result.energySpread * 20);
+			if (dominantTime) {
+				return "What would you do with " + perYearHours.toLocaleString() + " extra hours a year? Is that worth more than the financial upside?";
+			}
+
+			if (scoreGap <= 8) {
+				return "These are genuinely close. What does that tell you about what you actually want?";
+			}
+
+			return "If this decision repeated every quarter for two years, which regret would compound faster for you: lost money, lost time, or drained energy?";
+		}
+
+		function updateAllLive() {
+			const result = compute();
+			updateTimeLive(result);
+			updateMoneyLive(result);
+			updateEnergyLive(result);
+			updateWeightLive();
+			if (state.step === 5) {
+				updateResultScreen(result);
+			}
+		}
+
+		function wireBaseEvents() {
+			document.getElementById("optionAName").addEventListener("input", (e) => {
+				state.optionAName = e.target.value;
+				renderTimeInputs();
+				renderMoneyInputs();
+				renderEnergyInputs();
+				updateAllLive();
+			});
+
+			document.getElementById("optionBName").addEventListener("input", (e) => {
+				state.optionBName = e.target.value;
+				renderTimeInputs();
+				renderMoneyInputs();
+				renderEnergyInputs();
+				updateAllLive();
+			});
+
+			document.getElementById("timeframe").addEventListener("change", (e) => {
+				state.timeframeMonths = toNumber(e.target.value) || 12;
+				updateAllLive();
+			});
+
+			document.body.addEventListener("input", (event) => {
+				const target = event.target;
+				if (!target || !target.id) return;
+
+				const optionRef = target.id.startsWith("A") ? state.optionA : state.optionB;
+
+				if (target.id.endsWith("hoursPerWeek")) {
+					optionRef.time.hoursPerWeek = Math.max(0, toNumber(target.value));
+				}
+				if (target.id.endsWith("rampWeeks")) {
+					optionRef.time.rampWeeks = Math.max(0, toNumber(target.value));
+				}
+				if (target.id.endsWith("monthlyIncome")) {
+					optionRef.money.monthlyIncome = Math.max(0, toNumber(target.value));
+				}
+				if (target.id.endsWith("monthlyCosts")) {
+					optionRef.money.monthlyCosts = Math.max(0, toNumber(target.value));
+				}
+				if (target.id.endsWith("upfrontCost")) {
+					optionRef.money.upfrontCost = Math.max(0, toNumber(target.value));
+				}
+
+				if (target.type === "range") {
+					const val = toNumber(target.value);
+					if (target.id.endsWith("flexibility")) {
+						optionRef.time.flexibility = val;
+					}
+					if (target.id.endsWith("mental")) {
+						optionRef.energy.mental = val;
+					}
+					if (target.id.endsWith("emotional")) {
+						optionRef.energy.emotional = val;
+					}
+					if (target.id.endsWith("physical")) {
+						optionRef.energy.physical = val;
+					}
+					if (target.id.endsWith("alignment")) {
+						optionRef.energy.alignment = val;
+					}
+
+					const valueTag = document.getElementById(target.id + "Value");
+					if (valueTag) {
+						valueTag.textContent = String(val);
+					}
+				}
+
+				updateAllLive();
+			});
+
+			document.body.addEventListener("click", async (event) => {
+				const target = event.target;
+				if (!target) return;
+
+				if (target.dataset.next) {
+					const next = toNumber(target.dataset.next);
+					showStep(next);
+					return;
+				}
+
+				if (target.dataset.back) {
+					const prev = toNumber(target.dataset.back);
+					showStep(prev);
+					return;
+				}
+
+				if (target.dataset.move) {
+					const index = toNumber(target.dataset.index);
+					moveRank(index, target.dataset.move);
+					return;
+				}
+
+				if (target.id === "showResultsBtn") {
+					updateResultScreen(compute());
+					showStep(5);
+					return;
+				}
+
+				if (target.id === "startOverBtn") {
+					resetAll();
+					return;
+				}
+
+				if (target.id === "shareBtn") {
+					const text = "I calculated what I was really giving up between two options. This changed how I see it → clariteeai.me/tools/opportunity-cost";
+					try {
+						await navigator.clipboard.writeText(text);
+						target.textContent = "Copied";
+						setTimeout(() => {
+							target.textContent = "Share";
+						}, 1400);
+					} catch (err) {
+						target.textContent = "Copy Failed";
+						setTimeout(() => {
+							target.textContent = "Share";
+						}, 1400);
+					}
+					return;
+				}
+
+				if (target.id === "copySummaryBtn") {
+					const summary = plainTextSummary(compute());
+					try {
+						await navigator.clipboard.writeText(summary);
+						target.textContent = "Summary Copied";
+						setTimeout(() => {
+							target.textContent = "Copy my results summary";
+						}, 1500);
+					} catch (err) {
+						target.textContent = "Copy Failed";
+						setTimeout(() => {
+							target.textContent = "Copy my results summary";
+						}, 1500);
+					}
+				}
+			});
+		}
+
+		function plainTextSummary(result) {
+			const aName = getOptionName("A");
+			const bName = getOptionName("B");
+			const winner = result.scoreA >= result.scoreB ? aName : bName;
+			const loser = winner === aName ? bName : aName;
+
+			return (
+				"Opportunity Cost Summary\n" +
+				"Timeframe: " + currentTimeframeText() + "\n" +
+				aName + ": " + formatHours(result.timeA) + ", " + formatCurrency(result.netA) + ", Energy " + result.energyA + "/100, Score " + result.scoreA + "/100\n" +
+				bName + ": " + formatHours(result.timeB) + ", " + formatCurrency(result.netB) + ", Energy " + result.energyB + "/100, Score " + result.scoreB + "/100\n" +
+				"Current lead: " + winner + "\n" +
+				"Choosing " + winner + " means giving up some upside from " + loser + " in time, money, or energy depending on metric-level tradeoffs."
+			);
+		}
+
+		function resetAll() {
+			state.optionAName = "";
+			state.optionBName = "";
+			state.timeframeMonths = 12;
+			state.optionA = {
+				time: { hoursPerWeek: 40, rampWeeks: 4, flexibility: 5 },
+				money: { monthlyIncome: 5000, monthlyCosts: 1000, upfrontCost: 0 },
+				energy: { mental: 5, emotional: 5, physical: 5, alignment: 5 }
+			};
+			state.optionB = {
+				time: { hoursPerWeek: 30, rampWeeks: 6, flexibility: 6 },
+				money: { monthlyIncome: 4500, monthlyCosts: 700, upfrontCost: 0 },
+				energy: { mental: 4, emotional: 4, physical: 4, alignment: 7 }
+			};
+			state.ranking = [...RANK_ITEMS];
+
+			document.getElementById("optionAName").value = "";
+			document.getElementById("optionBName").value = "";
+			document.getElementById("timeframe").value = "12";
+
+			renderTimeInputs();
+			renderMoneyInputs();
+			renderEnergyInputs();
+			renderRanking();
+			updateAllLive();
+			showStep(0);
+		}
+
+		function init() {
+			renderTimeInputs();
+			renderMoneyInputs();
+			renderEnergyInputs();
+			renderRanking();
+			wireBaseEvents();
+			updateAllLive();
+			stage.style.height = Math.max(screens[0].scrollHeight, 650) + "px";
+			updateProgress();
+		}
+
+		init();
+	</script>
+</body>
+</html>

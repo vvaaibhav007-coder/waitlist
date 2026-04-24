@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Should I Quit? The Honest Calculator</title>
+	<meta
+		name="description"
+		content="A direct, non-judgmental calculator to help you evaluate whether to quit your job, business, client, or project."
+	/>
+	<link rel="canonical" href="https://clariteeai.me/tools/should-i-quit/" />
+	<!-- Google Analytics 4 -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-47CVCRT6G8"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-47CVCRT6G8');
+	</script>
+	<!-- End Google Analytics 4 -->
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-T8ZN27GG');</script>
+	<!-- End Google Tag Manager -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+		rel="stylesheet"
+	/>
+	<style>
+		:root {
+			--color-bg: #09090f;
+			--color-surface: #1f1f26;
+			--color-surface-secondary: #2a2930;
+			--color-surface-glass: rgba(31, 31, 38, 0.85);
+			--color-border: #424751;
+			--color-text-primary: #e4e1ea;
+			--color-text-secondary: #c2c6d2;
+			--color-accent: #6e9eeb;
+			--color-accent-hover: #5a95ff;
+			--color-accent-glow: rgba(110, 158, 235, 0.3);
+			--color-green-soft: #7ccf9f;
+			--color-yellow: #f2c75c;
+			--color-orange: #f4a259;
+			--color-red-soft: #f08a8a;
+			--font-ui: "Inter", sans-serif;
+			--font-mono: "JetBrains Mono", monospace;
+			--radius-lg: 12px;
+			--radius-md: 8px;
+			--glass-blur: 20px;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background-color: var(--color-bg);
+			color: var(--color-text-primary);
+			font-family: var(--font-ui);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 22px 14px;
+			overflow-x: hidden;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			background:
+				radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 158, 235, 0.25) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(110, 158, 235, 0.15) 0%, transparent 30%),
+				radial-gradient(circle at 20% 80%, rgba(110, 158, 235, 0.1) 0%, transparent 30%),
+				var(--color-bg);
+		}
+
+		body::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			z-index: 0;
+			background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110, 158, 235, 0.12), transparent);
+		}
+
+		.container {
+			width: 100%;
+			max-width: 600px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.logo-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 16px;
+			gap: 8px;
+		}
+
+		.claritee-brand-text {
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: 0.2em;
+			color: var(--color-text-secondary);
+		}
+
+		.claritee-logo {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+		}
+
+		.claritee-logo img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		.shell {
+			background: var(--color-surface-glass);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: var(--radius-lg);
+			backdrop-filter: blur(var(--glass-blur));
+			-webkit-backdrop-filter: blur(var(--glass-blur));
+			box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+			overflow: hidden;
+		}
+
+		.top {
+			padding: 16px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			background: rgba(19, 19, 25, 0.65);
+		}
+
+		.tool-kicker {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			letter-spacing: 0.09em;
+			text-transform: uppercase;
+			color: var(--color-accent);
+			margin-bottom: 8px;
+		}
+
+		.progress-meta {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-family: var(--font-mono);
+			font-size: 12px;
+			color: var(--color-text-secondary);
+			margin-bottom: 8px;
+		}
+
+		.progress-track {
+			width: 100%;
+			height: 8px;
+			border-radius: 999px;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			overflow: hidden;
+		}
+
+		.progress-fill {
+			width: 20%;
+			height: 100%;
+			background: var(--color-accent);
+			transition: width 260ms ease;
+		}
+
+		.stage {
+			position: relative;
+			min-height: 560px;
+			overflow: hidden;
+		}
+
+		.screen {
+			display: none;
+			opacity: 0;
+			transform: translateX(26px);
+			transition: opacity 320ms ease, transform 320ms ease;
+			padding: 18px 16px 20px;
+		}
+
+		.screen.active {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.screen.visible {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		.screen-tag {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--color-accent);
+		}
+
+		h1,
+		h2,
+		p {
+			margin: 0;
+		}
+
+		.section-title {
+			font-size: clamp(1.25rem, 4.4vw, 1.7rem);
+			line-height: 1.2;
+			letter-spacing: -0.015em;
+			font-weight: 800;
+			color: var(--color-text-primary);
+		}
+
+		.section-subtitle {
+			color: var(--color-text-secondary);
+			line-height: 1.5;
+			font-size: 0.95rem;
+		}
+
+		.option-list,
+		.slider-list,
+		.toggle-list {
+			display: grid;
+			gap: 10px;
+			margin-top: 2px;
+		}
+
+		.radio-card {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			gap: 10px;
+			align-items: center;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 12px;
+			cursor: pointer;
+			transition: border-color 160ms ease, background-color 160ms ease;
+		}
+
+		.radio-card:hover {
+			border-color: var(--color-accent);
+			background: var(--color-surface-secondary);
+		}
+
+		.radio-card input {
+			accent-color: var(--color-accent);
+			width: 16px;
+			height: 16px;
+			cursor: pointer;
+		}
+
+		.slider-card {
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 10px 12px;
+		}
+
+		.slider-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+			margin-bottom: 8px;
+			color: var(--color-text-primary);
+			font-size: 0.93rem;
+			line-height: 1.4;
+		}
+
+		.slider-value {
+			min-width: 36px;
+			text-align: center;
+			font-family: var(--font-mono);
+			font-size: 13px;
+			color: var(--color-accent);
+			border: 1px solid rgba(110, 158, 235, 0.45);
+			border-radius: 999px;
+			padding: 3px 6px;
+		}
+
+		input[type="range"] {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 6px;
+			border-radius: 99px;
+			background: var(--color-surface-secondary);
+			outline: none;
+			cursor: pointer;
+		}
+
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: #fff;
+			border: 2px solid var(--color-accent);
+			box-shadow: 0 0 12px rgba(110, 158, 235, 0.35);
+		}
+
+		input[type="range"]::-moz-range-thumb {
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: #fff;
+			border: 2px solid var(--color-accent);
+			box-shadow: 0 0 12px rgba(110, 158, 235, 0.35);
+		}
+
+		.range-legend {
+			margin-top: 8px;
+			display: flex;
+			justify-content: space-between;
+			color: var(--color-text-secondary);
+			font-size: 12px;
+			font-family: var(--font-mono);
+		}
+
+		.toggle-card {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 10px;
+			align-items: center;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 12px;
+		}
+
+		.toggle-question {
+			color: var(--color-text-primary);
+			font-size: 0.93rem;
+			line-height: 1.4;
+		}
+
+		.toggle-buttons {
+			display: inline-flex;
+			border-radius: 999px;
+			overflow: hidden;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.toggle-btn {
+			border: none;
+			background: #24242f;
+			color: #d8dced;
+			padding: 7px 12px;
+			cursor: pointer;
+			font-size: 12px;
+			font-weight: 600;
+			font-family: var(--font-ui);
+			transition: background-color 150ms ease;
+		}
+
+		.toggle-btn.active {
+			background: var(--color-accent);
+			color: #000;
+		}
+
+		.priority-wrap {
+			margin-top: 2px;
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: var(--radius-md);
+			padding: 14px;
+		}
+
+		.priority-readout {
+			margin-top: 10px;
+			font-family: var(--font-mono);
+			color: var(--color-accent);
+			font-size: 12px;
+			text-align: center;
+		}
+
+		.privacy-note {
+			margin-top: auto;
+			padding-top: 6px;
+			color: var(--color-text-secondary);
+			font-size: 12px;
+			opacity: 0.86;
+		}
+
+		.actions {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-top: 4px;
+		}
+
+		.btn {
+			border-radius: var(--radius-md);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: var(--color-surface);
+			color: #eff2ff;
+			font-family: var(--font-ui);
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+			padding: 12px 14px;
+			transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+		}
+
+		.btn:hover {
+			transform: translateY(-1px);
+			border-color: var(--color-accent);
+			background: var(--color-surface-secondary);
+		}
+
+		.btn.primary {
+			background: var(--color-accent);
+			border-color: var(--color-accent);
+			color: #000;
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 22px rgba(110, 158, 235, 0.45);
+			animation: glowPulse 2.2s ease-in-out infinite;
+		}
+
+		.btn.primary:hover {
+			background: var(--color-accent-hover);
+			border-color: var(--color-accent-hover);
+			box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.5), 0 0 26px rgba(110, 158, 235, 0.6);
+		}
+
+		.btn:disabled {
+			opacity: 0.45;
+			cursor: not-allowed;
+			transform: none;
+			box-shadow: none;
+		}
+
+		@keyframes glowPulse {
+			0%,
+			100% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.35), 0 0 18px rgba(110, 158, 235, 0.38);
+			}
+
+			50% {
+				box-shadow: 0 0 0 1px rgba(110, 158, 235, 0.55), 0 0 30px rgba(110, 158, 235, 0.62);
+			}
+		}
+
+		.verdict {
+			font-size: clamp(1.45rem, 5.8vw, 2rem);
+			line-height: 1.18;
+			letter-spacing: -0.012em;
+			font-weight: 800;
+		}
+
+		.score-line {
+			font-family: var(--font-mono);
+			color: var(--color-text-secondary);
+			font-size: 12px;
+		}
+
+		.bars {
+			display: grid;
+			gap: 10px;
+			margin-top: 4px;
+		}
+
+		.bar-item {
+			display: grid;
+			gap: 5px;
+		}
+
+		.bar-head {
+			display: flex;
+			justify-content: space-between;
+			font-family: var(--font-mono);
+			font-size: 12px;
+			color: #ced3e6;
+		}
+
+		.bar-track {
+			height: 9px;
+			border-radius: 999px;
+			background: #181821;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			overflow: hidden;
+		}
+
+		.bar-fill {
+			width: 0;
+			height: 100%;
+			transition: width 700ms cubic-bezier(.22, .8, .2, 1);
+		}
+
+		.bar-pull {
+			background: #86d0a6;
+		}
+
+		.bar-push {
+			background: #f3a36b;
+		}
+
+		.insights {
+			display: grid;
+			gap: 8px;
+			margin-top: 4px;
+		}
+
+		.insight-line {
+			background: var(--color-surface);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 8px;
+			padding: 10px;
+			color: #d7dbeb;
+			line-height: 1.45;
+			font-size: 0.92rem;
+		}
+
+		.next-step {
+			margin-top: 4px;
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			background: #1c1c27;
+			padding: 11px;
+		}
+
+		.next-step strong {
+			color: var(--color-accent);
+			font-family: var(--font-mono);
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			display: block;
+			margin-bottom: 6px;
+		}
+
+		.next-step p {
+			color: #dde1f0;
+			line-height: 1.45;
+			font-size: 0.93rem;
+		}
+
+		.seo-article {
+			margin-top: 28px;
+			background: rgba(31, 31, 38, 0.85);
+			padding: 28px 22px;
+			border: 1px solid rgba(110, 158, 235, 0.15);
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+			border-radius: 12px;
+		}
+
+		.seo-article h2.article-title {
+			font-size: 28px;
+			font-weight: 700;
+			color: #e4e1ea;
+			margin-bottom: 20px;
+			line-height: 1.3;
+		}
+
+		.seo-article .article-lead {
+			font-size: 17px;
+			color: #c2c6d2;
+			line-height: 1.6;
+			margin-bottom: 28px;
+			border-left: 4px solid #6e9eeb;
+			padding-left: 16px;
+		}
+
+		.seo-article h3 {
+			font-size: 21px;
+			font-weight: 600;
+			color: #fff;
+			margin: 26px 0 12px;
+		}
+
+		.seo-article p,
+		.seo-article li,
+		.seo-article .faq-answer {
+			font-size: 15px;
+			color: #c2c6d2;
+			line-height: 1.7;
+		}
+
+		.seo-article ul {
+			padding-left: 20px;
+		}
+
+		.seo-article .faq-item {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			padding: 18px 0;
+		}
+
+		.seo-article .faq-item:last-child {
+			border-bottom: none;
+		}
+
+		.seo-article .faq-question {
+			font-size: 17px;
+			font-weight: 600;
+			color: #e4e1ea;
+			margin-bottom: 8px;
+		}
+
+		.seo-article .article-conclusion {
+			margin-top: 24px;
+			padding: 20px;
+			background: rgba(110, 158, 235, 0.05);
+			border-radius: 10px;
+			border: 1px solid rgba(110, 158, 235, 0.1);
+		}
+
+		.seo-article a {
+			color: #6e9eeb;
+		}
+
+		.related-tools {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 14px;
+			margin: 16px 0 20px;
+		}
+
+		.related-tool-card {
+			display: block;
+			padding: 16px;
+			background: rgba(110, 158, 235, 0.06);
+			border: 1px solid rgba(110, 158, 235, 0.15);
+			border-radius: 10px;
+			text-decoration: none;
+		}
+
+		.related-tool-card h4 {
+			color: #6e9eeb;
+			font-size: 15px;
+			margin-bottom: 6px;
+		}
+
+		.related-tool-card p {
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		.cta {
+			text-align: center;
+			color: #9ea5c0;
+			font-size: 0.9rem;
+			margin-top: 2px;
+		}
+
+		.cta a {
+			color: #c7dbff;
+			text-underline-offset: 2px;
+		}
+
+		@media (max-width: 480px) {
+			.actions {
+				grid-template-columns: 1fr;
+			}
+
+			.stage {
+				min-height: 610px;
+			}
+
+			.toggle-card {
+				grid-template-columns: 1fr;
+				gap: 8px;
+			}
+
+			.toggle-buttons {
+				justify-self: start;
+			}
+
+			.related-tools {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZN27GG"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<div class="container">
+		<div class="logo-wrapper" aria-hidden="true">
+			<div class="claritee-brand-text">CLARITEE</div>
+			<div class="claritee-logo">
+				<img src="../../claritee.jpeg" alt="Claritee logo" />
+			</div>
+		</div>
+
+		<main class="shell" role="application" aria-label="Should I Quit calculator">
+			<header class="top">
+				<div class="tool-kicker">Should I Quit? The Honest Calculator</div>
+				<div class="progress-meta">
+					<span id="progressLabel">Section 1/5</span>
+					<span id="progressPercent">20%</span>
+				</div>
+				<div class="progress-track" aria-hidden="true">
+					<div class="progress-fill" id="progressFill"></div>
+				</div>
+			</header>
+
+			<section class="stage">
+				<article class="screen active visible" data-step="0">
+					<p class="screen-tag">Section 1 · Context</p>
+					<h1 class="section-title">What are you thinking of quitting?</h1>
+					<p class="section-subtitle">Pick the context so the output is grounded in your actual situation.</p>
+
+					<div class="option-list" id="contextOptions">
+						<label class="radio-card"><input type="radio" name="context" value="My job / career" />My job / career</label>
+						<label class="radio-card"><input type="radio" name="context" value="My business / startup" />My business / startup</label>
+						<label class="radio-card"><input type="radio" name="context" value="A freelance client" />A freelance client</label>
+						<label class="radio-card"><input type="radio" name="context" value="A side project" />A side project</label>
+						<label class="radio-card"><input type="radio" name="context" value="A professional relationship" />A professional relationship (partner, co-founder)</label>
+					</div>
+
+					<div class="privacy-note">Your answers stay on your device.</div>
+					<div class="actions">
+						<button class="btn" id="back0" disabled>Back</button>
+						<button class="btn primary" id="next0">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="1">
+					<p class="screen-tag">Section 2 · Pull Factors</p>
+					<h2 class="section-title">How strong is each reason to stay?</h2>
+					<p class="section-subtitle">Rate each from 1 to 10. Keep it honest, not aspirational.</p>
+
+					<div class="slider-list" id="pullList"></div>
+					<div class="privacy-note">Your answers stay on your device.</div>
+					<div class="actions">
+						<button class="btn" id="back1">Back</button>
+						<button class="btn primary" id="next1">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="2">
+					<p class="screen-tag">Section 3 · Push Factors</p>
+					<h2 class="section-title">How strong is each reason to leave?</h2>
+					<p class="section-subtitle">Use the same scale: 1 means low force, 10 means strong force.</p>
+
+					<div class="slider-list" id="pushList"></div>
+					<div class="privacy-note">Your answers stay on your device.</div>
+					<div class="actions">
+						<button class="btn" id="back2">Back</button>
+						<button class="btn primary" id="next2">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="3">
+					<p class="screen-tag">Section 4 · Reality Check</p>
+					<h2 class="section-title">Reality check before the final score</h2>
+					<p class="section-subtitle">Binary inputs, because behavior matters as much as feelings.</p>
+
+					<div class="toggle-list" id="realityList"></div>
+					<div class="privacy-note">Your answers stay on your device.</div>
+					<div class="actions">
+						<button class="btn" id="back3">Back</button>
+						<button class="btn primary" id="next3">Next</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="4">
+					<p class="screen-tag">Section 5 · Priority Weight</p>
+					<h2 class="section-title">Right now, what matters more to you?</h2>
+					<p class="section-subtitle">This slider shifts weighting between stability and fulfillment.</p>
+
+					<div class="priority-wrap">
+						<input id="prioritySlider" type="range" min="0" max="100" value="50" />
+						<div class="range-legend">
+							<span>&larr; Financial Security</span>
+							<span>Personal Fulfillment &rarr;</span>
+						</div>
+						<div class="priority-readout" id="priorityReadout">Balanced weighting</div>
+					</div>
+
+					<div class="privacy-note">Your answers stay on your device.</div>
+					<div class="actions">
+						<button class="btn" id="back4">Back</button>
+						<button class="btn primary" id="calculateBtn">See My Result</button>
+					</div>
+				</article>
+
+				<article class="screen" data-step="5" id="resultScreen">
+					<p class="screen-tag">Result</p>
+					<h2 class="verdict" id="verdictText"></h2>
+					<p class="score-line" id="scoreLine"></p>
+
+					<div class="bars">
+						<div class="bar-item">
+							<div class="bar-head"><span>Stay Pull</span><span id="pullLabel">0</span></div>
+							<div class="bar-track"><div class="bar-fill bar-pull" id="pullBar"></div></div>
+						</div>
+						<div class="bar-item">
+							<div class="bar-head"><span>Leave Push</span><span id="pushLabel">0</span></div>
+							<div class="bar-track"><div class="bar-fill bar-push" id="pushBar"></div></div>
+						</div>
+					</div>
+
+					<div class="insights" id="insightList"></div>
+
+					<div class="next-step">
+						<strong>Your next step:</strong>
+						<p id="nextStepText"></p>
+					</div>
+
+					<div class="actions">
+						<button class="btn" id="back5">Back</button>
+						<button class="btn primary" id="shareBtn">Share Result</button>
+					</div>
+
+					<p class="cta">Want to evaluate your next move with a full decision framework? &rarr; <a href="https://clariteeai.me" target="_blank" rel="noopener">clariteeai.me</a></p>
+					<div class="privacy-note">Your answers stay on your device.</div>
+				</article>
+			</section>
+		</main>
+
+		<section class="seo-article card" aria-label="Educational article">
+			<h2 class="article-title">The Ultimate Guide to Decisive Action: How to Break Free From Analysis Paralysis and Stop Endless Overthinking</h2>
+			<p class="article-lead">
+				We have all been there, staring blankly at a screen, scrolling endlessly through options, and feeling stuck.
+				When important life, relationship, or career choices show up, the <strong>decision paralysis problem</strong>
+				kicks in and turns uncertainty into inaction.
+			</p>
+
+			<div class="article-content">
+				<h3>Part 1: Understanding Analysis Paralysis and Why It Happens</h3>
+				<p>
+					In plain terms, <strong>analysis paralysis</strong> is what happens when over-analysis blocks execution.
+					You keep comparing, researching, and second-guessing, but you never commit.
+				</p>
+				<p>
+					Usually this comes from too many options, too much uncertainty, and the belief that a perfect choice exists.
+					The hidden cost is lost momentum and rising stress.
+				</p>
+
+				<h3>Part 2: Why Endless Overthinking Kills Progress</h3>
+				<p>
+					Overthinking is not harmless. It drains cognitive bandwidth, delays action, and creates decision fatigue.
+					At work, indecision stalls projects. In life, it keeps you in situations you already know are not working.
+				</p>
+
+				<h3>Part 3: Why a Framework Works Better Than Gut Feel Alone</h3>
+				<p>
+					Your brain is excellent at pattern recognition, but poor at juggling many weighted tradeoffs internally.
+					A structured <strong>decision framework</strong> externalizes variables so you can compare options clearly.
+				</p>
+
+				<h3>Part 4: Why Weighted Scoring Beats Basic Pros and Cons</h3>
+				<p>
+					A basic list treats all points as equal. Real decisions are not equal. A weighted method reflects reality:
+					high-impact factors should count more than minor inconveniences.
+				</p>
+
+				<h3>Frequently Asked Questions About Pros and Cons Calculators and Decision Making</h3>
+				<div class="faq-section">
+					<div class="faq-item">
+						<h4 class="faq-question">What is a pros and cons calculator?</h4>
+						<div class="faq-answer">
+							<p>A digital decision tool that helps you compare options using weighted factors, not just raw lists.</p>
+						</div>
+					</div>
+					<div class="faq-item">
+						<h4 class="faq-question">How does it help with analysis paralysis?</h4>
+						<div class="faq-answer">
+							<p>It moves your thoughts from vague mental loops into a concrete scoring structure, which makes action easier.</p>
+						</div>
+					</div>
+					<div class="faq-item">
+						<h4 class="faq-question">Is it a replacement for professional support?</h4>
+						<div class="faq-answer">
+							<p>No. It is a decision aid. For serious mental health concerns, use licensed professional support.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="article-conclusion">
+					<h4>Ready to Stop Overthinking and Make Cleaner Decisions?</h4>
+					<p>
+						Use a structured process, choose a direction, and move. Clarity grows from action, not endless rumination.
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		const pullFactors = [
+			"Compensation & financial security",
+			"Growth & learning opportunities",
+			"Relationships with people there",
+			"Alignment with your long-term goals",
+			"Day-to-day enjoyment"
+		];
+
+		const pushFactors = [
+			"Stress / burnout level",
+			"Misalignment with your values",
+			"Feeling stuck or unchallenged",
+			"Toxic environment or bad leadership",
+			"You have a better opportunity waiting"
+		];
+
+		const realityChecks = [
+			"Have you tried to fix what's wrong?",
+			"Do you have 3+ months of savings?",
+			"Have you talked to someone you trust about this?",
+			"Is fear (not logic) the main reason you're staying?",
+			"Could you see yourself still here in 2 years and feel okay?"
+		];
+
+		const state = {
+			step: 0,
+			context: "",
+			pull: [5, 5, 5, 5, 5],
+			push: [5, 5, 5, 5, 5],
+			reality: [false, false, false, false, false],
+			priority: 50
+		};
+
+		const screens = Array.from(document.querySelectorAll(".screen"));
+		const progressFill = document.getElementById("progressFill");
+		const progressLabel = document.getElementById("progressLabel");
+		const progressPercent = document.getElementById("progressPercent");
+
+		function average(arr) {
+			return arr.reduce((sum, n) => sum + n, 0) / arr.length;
+		}
+
+		function clamp(num, min, max) {
+			return Math.max(min, Math.min(max, num));
+		}
+
+		function buildSliderList(containerId, items, key) {
+			const container = document.getElementById(containerId);
+			container.innerHTML = "";
+
+			items.forEach((label, idx) => {
+				const card = document.createElement("div");
+				card.className = "slider-card";
+				card.innerHTML =
+					'<div class="slider-row"><span>' + (idx + 1) + ". " + label + '</span><span class="slider-value" id="' + key + "Val" + idx + '">' + state[key][idx] + "</span></div>" +
+					'<input type="range" min="1" max="10" value="' + state[key][idx] + '" data-key="' + key + '" data-idx="' + idx + '">';
+				container.appendChild(card);
+			});
+		}
+
+		function buildRealityList() {
+			const container = document.getElementById("realityList");
+			container.innerHTML = "";
+
+			realityChecks.forEach((q, idx) => {
+				const item = document.createElement("div");
+				item.className = "toggle-card";
+				item.innerHTML =
+					'<div class="toggle-question">' + q + '</div>' +
+					'<div class="toggle-buttons">' +
+					'<button class="toggle-btn ' + (state.reality[idx] ? "active" : "") + '" data-toggle="yes" data-idx="' + idx + '">Yes</button>' +
+					'<button class="toggle-btn ' + (!state.reality[idx] ? "active" : "") + '" data-toggle="no" data-idx="' + idx + '">No</button>' +
+					"</div>";
+				container.appendChild(item);
+			});
+		}
+
+		function updateProgress() {
+			const sectionCount = 5;
+			const visualStep = state.step >= sectionCount ? sectionCount : state.step + 1;
+			const pct = Math.round((visualStep / sectionCount) * 100);
+
+			progressFill.style.width = pct + "%";
+			progressLabel.textContent = state.step >= sectionCount ? "Result" : "Section " + visualStep + "/5";
+			progressPercent.textContent = pct + "%";
+		}
+
+		function showStep(step) {
+			screens.forEach((screen) => {
+				screen.classList.remove("active", "visible");
+			});
+
+			state.step = step;
+			const target = screens[step];
+			target.classList.add("active");
+
+			requestAnimationFrame(() => {
+				target.classList.add("visible");
+			});
+
+			updateProgress();
+		}
+
+		function multiplierFromPriority(priority) {
+			const p = priority / 100;
+			return {
+				pull: 1.25 - p * 0.5,
+				push: 0.75 + p * 0.5
+			};
+		}
+
+		function computeResult() {
+			let pullScore = average(state.pull) * 10;
+			let pushScore = average(state.push) * 10;
+
+			if (state.reality[0]) pullScore += 8;
+			if (state.reality[1]) pushScore += 10;
+			if (state.reality[3]) pushScore += 12;
+			if (state.reality[4]) pullScore += 10;
+
+			const multipliers = multiplierFromPriority(state.priority);
+			pullScore *= multipliers.pull;
+			pushScore *= multipliers.push;
+
+			let rawGap = pushScore - pullScore;
+			if (state.reality[2]) rawGap *= 0.82;
+
+			const finalGap = clamp(Math.round(rawGap), -100, 100);
+
+			return {
+				pullScore: clamp(Math.round(pullScore), 0, 100),
+				pushScore: clamp(Math.round(pushScore), 0, 100),
+				finalGap
+			};
+		}
+
+		function verdictFromGap(gap) {
+			if (gap <= -40) {
+				return {
+					text: "Don't quit. Not yet.",
+					color: "var(--color-green-soft)",
+					nextStep: "Set one non-negotiable improvement request this week and define a 30-day test window before making any exit decision."
+				};
+			}
+
+			if (gap <= -10) {
+				return {
+					text: "Something needs to change. Quitting isn't the only option.",
+					color: "var(--color-yellow)",
+					nextStep: "Write a direct change plan with 3 specific conditions, then discuss it with the person who can actually approve those changes."
+				};
+			}
+
+			if (gap <= 9) {
+				return {
+					text: "Genuinely on the fence. That's okay - here's what to do.",
+					color: "var(--color-accent)",
+					nextStep: "Run a 14-day decision sprint: gather missing facts, track daily energy, and set a hard decision date at the end."
+				};
+			}
+
+			if (gap <= 39) {
+				return {
+					text: "The signs are pointing toward the door.",
+					color: "var(--color-orange)",
+					nextStep: "Build your transition plan now: timeline, income bridge, and the exact first move you will make in the next 72 hours."
+				};
+			}
+
+			return {
+				text: "You already know. Trust yourself.",
+				color: "var(--color-red-soft)",
+				nextStep: "Choose your exit date, communicate clearly, and protect your runway so your next chapter starts with stability."
+			};
+		}
+
+		function generateInsights(result) {
+			const insights = [];
+			const burnout = state.push[0];
+			const values = state.push[1];
+			const stuck = state.push[2];
+			const toxic = state.push[3];
+			const better = state.push[4];
+
+			const compensation = state.pull[0];
+			const growth = state.pull[1];
+			const relationships = state.pull[2];
+			const goals = state.pull[3];
+			const enjoyment = state.pull[4];
+
+			if (burnout >= 9 && enjoyment <= 3) {
+				insights.push("Your energy is gone. That's not laziness - it's data showing the current setup is draining you.");
+			}
+
+			if (values >= 8) {
+				insights.push("Your values and your environment are out of sync, which makes every week feel heavier than it should.");
+			}
+
+			if (toxic >= 8) {
+				insights.push("Leadership or culture is a real risk factor here. Prolonged exposure usually gets more expensive, not less.");
+			}
+
+			if (growth <= 4 && stuck >= 7) {
+				insights.push("You are signaling plateau risk: low growth plus high stagnation often turns into slow burnout.");
+			}
+
+			if (compensation >= 8 && !state.reality[1]) {
+				insights.push("Financial security is doing real work for you right now. Build savings before making a hard move.");
+			}
+
+			if (better >= 8) {
+				insights.push("You already see a stronger path ahead. That changes this from theory to timing.");
+			}
+
+			if (state.reality[3]) {
+				insights.push("You flagged fear as a staying driver. That is a signal to separate safety planning from emotional inertia.");
+			}
+
+			if (goals >= 8 && values <= 4 && toxic <= 4) {
+				insights.push("Your long-term direction still matches this path. The issue may be role design, not total exit.");
+			}
+
+			if (relationships >= 8 && result.finalGap > 20) {
+				insights.push("Strong relationships are a real anchor, but they do not erase sustained misalignment on the bigger factors.");
+			}
+
+			if (insights.length < 3) {
+				insights.push("Your inputs are mixed, which means this is less about a dramatic leap and more about tightening your decision criteria.");
+			}
+
+			if (insights.length < 3) {
+				insights.push("The pattern in your scores suggests this is a strategic transition decision, not a mood-based reaction.");
+			}
+
+			return insights.slice(0, 3);
+		}
+
+		function renderResult() {
+			const result = computeResult();
+			const verdict = verdictFromGap(result.finalGap);
+			const insights = generateInsights(result);
+
+			const verdictText = document.getElementById("verdictText");
+			const scoreLine = document.getElementById("scoreLine");
+			const pullLabel = document.getElementById("pullLabel");
+			const pushLabel = document.getElementById("pushLabel");
+			const pullBar = document.getElementById("pullBar");
+			const pushBar = document.getElementById("pushBar");
+			const insightList = document.getElementById("insightList");
+			const nextStepText = document.getElementById("nextStepText");
+
+			verdictText.textContent = verdict.text;
+			verdictText.style.color = verdict.color;
+			scoreLine.textContent = "Context: " + state.context + " | Final score: " + result.finalGap + " (-100 to +100)";
+
+			pullLabel.textContent = result.pullScore;
+			pushLabel.textContent = result.pushScore;
+
+			pullBar.style.width = "0%";
+			pushBar.style.width = "0%";
+			requestAnimationFrame(() => {
+				pullBar.style.width = result.pullScore + "%";
+				pushBar.style.width = result.pushScore + "%";
+			});
+
+			insightList.innerHTML = "";
+			insights.forEach((line) => {
+				const div = document.createElement("div");
+				div.className = "insight-line";
+				div.textContent = line;
+				insightList.appendChild(div);
+			});
+
+			nextStepText.textContent = verdict.nextStep;
+		}
+
+		function attachEvents() {
+			document.getElementById("contextOptions").addEventListener("change", (event) => {
+				if (event.target && event.target.name === "context") {
+					state.context = event.target.value;
+				}
+			});
+
+			document.body.addEventListener("input", (event) => {
+				const target = event.target;
+				if (!target || target.tagName !== "INPUT" || target.type !== "range") return;
+
+				const key = target.getAttribute("data-key");
+				const idx = Number(target.getAttribute("data-idx"));
+				const value = Number(target.value);
+
+				if (key === "pull" || key === "push") {
+					state[key][idx] = value;
+					const valueNode = document.getElementById(key + "Val" + idx);
+					if (valueNode) valueNode.textContent = value;
+				}
+
+				if (target.id === "prioritySlider") {
+					state.priority = value;
+					const drift = value - 50;
+					const text =
+						Math.abs(drift) < 8
+							? "Balanced weighting"
+							: drift < 0
+							? "Leaning Financial Security"
+							: "Leaning Personal Fulfillment";
+					document.getElementById("priorityReadout").textContent = text + " (" + value + "/100)";
+				}
+			});
+
+			document.getElementById("realityList").addEventListener("click", (event) => {
+				const target = event.target;
+				if (!target || !target.classList.contains("toggle-btn")) return;
+
+				const idx = Number(target.getAttribute("data-idx"));
+				const yes = target.getAttribute("data-toggle") === "yes";
+				state.reality[idx] = yes;
+				buildRealityList();
+			});
+
+			document.getElementById("back0").addEventListener("click", () => showStep(0));
+			document.getElementById("back1").addEventListener("click", () => showStep(0));
+			document.getElementById("back2").addEventListener("click", () => showStep(1));
+			document.getElementById("back3").addEventListener("click", () => showStep(2));
+			document.getElementById("back4").addEventListener("click", () => showStep(3));
+			document.getElementById("back5").addEventListener("click", () => showStep(4));
+
+			document.getElementById("next0").addEventListener("click", () => {
+				if (!state.context) {
+					alert("Pick one context before continuing.");
+					return;
+				}
+				showStep(1);
+			});
+
+			document.getElementById("next1").addEventListener("click", () => showStep(2));
+			document.getElementById("next2").addEventListener("click", () => showStep(3));
+			document.getElementById("next3").addEventListener("click", () => showStep(4));
+
+			document.getElementById("calculateBtn").addEventListener("click", () => {
+				renderResult();
+				showStep(5);
+			});
+
+			document.getElementById("shareBtn").addEventListener("click", async () => {
+				const text = "I ran the numbers on whether I should quit. The result surprised me → clariteeai.me/tools/should-i-quit";
+				const shareData = {
+					title: "Should I Quit? The Honest Calculator",
+					text,
+					url: "https://clariteeai.me/tools/should-i-quit"
+				};
+
+				const shareBtn = document.getElementById("shareBtn");
+
+				try {
+					if (navigator.share) {
+						await navigator.share(shareData);
+						shareBtn.textContent = "Shared";
+					} else {
+						await navigator.clipboard.writeText(text);
+						shareBtn.textContent = "Copied";
+					}
+				} catch (err) {
+					if (err && err.name === "AbortError") {
+						return;
+					}
+
+					try {
+						await navigator.clipboard.writeText(text);
+						shareBtn.textContent = "Copied";
+					} catch (clipboardErr) {
+						shareBtn.textContent = "Share Failed";
+					}
+				}
+
+				window.setTimeout(() => {
+					shareBtn.textContent = "Share Result";
+				}, 1400);
+			});
+		}
+
+		function init() {
+			buildSliderList("pullList", pullFactors, "pull");
+			buildSliderList("pushList", pushFactors, "push");
+			buildRealityList();
+			attachEvents();
+			updateProgress();
+
+			const checked = document.querySelector('input[name="context"]:checked');
+			if (checked) state.context = checked.value;
+			document.getElementById("priorityReadout").textContent = "Balanced weighting (50/100)";
+		}
+
+		init();
+	</script>
+</body>
+</html>
