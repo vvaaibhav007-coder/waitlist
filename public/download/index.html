@@ -1215,30 +1215,8 @@
       <div class="section-badge liquid-glass" style="margin-bottom: 24px;">App Preview</div>
       <h2 class="section-heading" style="margin-bottom: 48px;">Beautiful inside and out.</h2>
       <div class="app-mockup-container liquid-glass">
-        <div class="app-mockup-screen">
-          <div class="mock-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5v1h1a2 2 0 012 2v1a7 7 0 01-7 7h-2a7 7 0 01-7-7v-1a2 2 0 012-2h1V7a5 5 0 015-5z"/><circle cx="12" cy="13" r="1"/></svg>
-          </div>
-          <h4>Clarit<span class="blue">ee</span></h4>
-          <p>AI-powered decision clarity at your fingertips</p>
-          <div class="mock-features">
-            <div class="mock-feature-row">
-              <div class="mock-feature-dot"></div>
-              <span>9-Step Decision Framework</span>
-            </div>
-            <div class="mock-feature-row">
-              <div class="mock-feature-dot"></div>
-              <span>Weighted Criteria Scoring</span>
-            </div>
-            <div class="mock-feature-row">
-              <div class="mock-feature-dot"></div>
-              <span>AI Trade-off Analysis</span>
-            </div>
-            <div class="mock-feature-row">
-              <div class="mock-feature-dot"></div>
-              <span>Confidence Recommendations</span>
-            </div>
-          </div>
+        <div class="app-mockup-screen" style="padding: 0; display: block;">
+          <img src="/images/screenshot.jpeg" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Claritee App Preview" />
         </div>
       </div>
     </section>
@@ -1395,28 +1373,15 @@
       { id: 'hls-video-cta',   src: 'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8' }
     ];
 
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const videoEl = entry.target;
-          const config = hlsVideos.find(v => v.id === videoEl.id);
-          if (config) initHLS(config.id, config.src);
-          videoObserver.unobserve(videoEl);
-        }
-      });
-    }, { rootMargin: '200px 0px' });
-
-    // Start observing once HLS.js has loaded (deferred)
+    // Initialize immediately to recover video backgrounds
     window.addEventListener('DOMContentLoaded', () => {
-      // Wait for defer script to be ready
-      const startObserving = () => {
+      const initAllVideos = () => {
         hlsVideos.forEach(v => {
-          const el = document.getElementById(v.id);
-          if (el) videoObserver.observe(el);
+          initHLS(v.id, v.src);
         });
       };
-      if (typeof Hls !== 'undefined') startObserving();
-      else window.addEventListener('load', startObserving);
+      if (typeof Hls !== 'undefined') initAllVideos();
+      else window.addEventListener('load', initAllVideos);
     });
 
     // ============================================
