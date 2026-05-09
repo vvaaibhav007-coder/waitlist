@@ -13,6 +13,11 @@ import { GTMTracker } from "./components/GTMTracker";
 
 const queryClient = new QueryClient();
 
+const RedirectToDownload = () => {
+  window.location.href = "/download/index.html";
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -25,6 +30,8 @@ const App = () => (
           <Route path="/waitlist" element={<Index />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/tools/pros-cons-calculator" element={<ProsConsCalculator />} />
+          <Route path="/download" element={<RedirectToDownload />} />
+          <Route path="/download/*" element={<RedirectToDownload />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
