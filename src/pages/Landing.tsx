@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Brain,
@@ -36,6 +36,7 @@ const AppNameColored = () => (
 
 const Landing = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-void min-h-screen selection:bg-[#6e9eeb]/30 text-white font-sans overflow-x-hidden">
@@ -92,7 +93,7 @@ const Landing = () => {
               <LiquidButton
                 size="xl"
                 className="rounded-full font-['Poppins'] bg-[#6e9eeb] text-black border-none bg-opacity-100 lg:bg-transparent lg:text-white"
-                onClick={() => document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => navigate('/download')}
               >
                 <div className="w-8 h-8 rounded-full bg-black/20 lg:bg-white/15 flex items-center justify-center shrink-0">
                   <Download className="w-4 h-4 text-black lg:text-white" />
@@ -158,11 +159,11 @@ const Landing = () => {
               <button 
                 onClick={() => {
                   setIsMenuOpen(false);
-                  document.getElementById('waitlist-cta')?.scrollIntoView({ behavior: 'smooth' });
+                  navigate('/download');
                 }}
                 className="w-full py-4 rounded-xl bg-[#6e9eeb]/20 text-[#6e9eeb] font-semibold text-center font-['Poppins'] border border-[#6e9eeb]/30"
               >
-                Join the Waitlist
+                Download App
               </button>
             </motion.div>
           )}
@@ -404,9 +405,9 @@ const Landing = () => {
             <h2 className="text-4xl md:text-6xl font-medium text-white tracking-tight mb-8 font-['Poppins']">
               Make your next decision <br /> your <em className="font-['Source_Serif_4'] italic text-white/90">best decision.</em>
             </h2>
-            <Link to="/waitlist" className="inline-block mt-4" onClick={() => trackEvent("click", { button_name: "join_waitlist_landing" })}>
+            <Link to="/download" className="inline-block mt-4" onClick={() => trackEvent("click", { button_name: "download_app_landing" })}>
               <LiquidButton size="xl" className="font-['Poppins'] bg-[#6E9EEB] text-[#09090F] hover:bg-[#6E9EEB]/90 font-semibold border-none">
-                Join the waitlist today <ArrowRight className="w-5 h-5 ml-2" />
+                Download Claritee now <ArrowRight className="w-5 h-5 ml-2" />
               </LiquidButton>
             </Link>
           </motion.div>

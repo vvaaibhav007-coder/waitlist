@@ -307,11 +307,11 @@ export default function ProsConsCalculator() {
 
             <div className="cta-banner">
               <div className="cta-text">
-                <h3>Want the full 6-step decision analysis?</h3>
-                <p>Claritee is launching soon — join the waitlist for early access.</p>
+                <h3>Want the full 9-step decision analysis?</h3>
+                <p>Claritee is now available — download the app today.</p>
               </div>
-              <a href="https://clariteeai.me/waitlist" className="cta-btn" target="_blank" rel="noopener noreferrer">
-                Join the Waitlist →
+              <a href="https://clariteeai.me/download" className="cta-btn" target="_blank" rel="noopener noreferrer">
+                Download App →
               </a>
             </div>
           </section>
